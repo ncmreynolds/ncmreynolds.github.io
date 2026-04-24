@@ -40,7 +40,6 @@
           "src": "images/icons/launchericon-512x512.png",
           "type": "image/png",
           "sizes": "512x512",
-          "purpose": "maskable"
        }
     ]
  }
