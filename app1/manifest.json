@@ -8,7 +8,7 @@
     "theme_color": "#7b4b7d",
 	"description": "A minimal BLE PWA app just to test what's needed for the install experience",
 	"display_override": ["fullscreen", "minimal-ui"],
-	"display": "standalone"
+	"display": "standalone",
 	"icons": [
        {
           "src": "/app1/images/icons/launchericon-48x48.png",
