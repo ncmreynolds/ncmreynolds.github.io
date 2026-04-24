@@ -45,11 +45,17 @@
     ]
 	"screenshots": [
 		{
-		"src": "/app1/screenshots/screenshot1.png",
-		"sizes": "956x488",
-		"type": "image/png",
-		"form_factor": "wide",
-		"label": "Simple PWA"
+			"src": "/app1/screenshots/screenshot1.png",
+			"sizes": "956x488",
+			"type": "image/png",
+			"form_factor": "wide",
+			"label": "Simple PWA"
+		},
+		{
+			"src": "/app1/screenshots/screenshot2.png",
+			"sizes": "420x488",
+			"type": "image/png",
+			"label": "Simple PWA"
 		}
 	]
 }
