@@ -2,57 +2,58 @@
     "name": "Simple PWA",
     "short_name": "PWA",
     "display": "standalone",
+	"id": "/app1/index.html",
     "start_url": "/app1/index.html",
     "background_color": "#ffffff",
     "theme_color": "#7b4b7d",
 	"description": "A minimal BLE PWA app just to test what's needed for the install experience",
     "icons": [
        {
-          "src": "images/icons/launchericon-48x48.png",
+          "src": "/app1/images/icons/launchericon-48x48.png",
           "type": "image/png",
           "sizes": "48x48",
           "purpose": "maskable"
        },
        {
-          "src": "images/icons/launchericon-72x72.png",
+          "src": "/app1/images/icons/launchericon-72x72.png",
           "type": "image/png",
           "sizes": "72x72",
           "purpose": "maskable"
        },
        {
-          "src": "images/icons/launchericon-96x96.png",
+          "src": "/app1/images/icons/launchericon-96x96.png",
           "type": "image/png",
           "sizes": "96x96",
           "purpose": "maskable"
        },
        {
-          "src": "images/icons/launchericon-144x144.png",
+          "src": "/app1/images/icons/launchericon-144x144.png",
           "type": "image/png",
           "sizes": "144x144",
           "purpose": "maskable"
        },
        {
-          "src": "images/icons/launchericon-192x192.png",
+          "src": "/app1/images/icons/launchericon-192x192.png",
           "type": "image/png",
           "sizes": "192x192",
           "purpose": "maskable"
        },
        {
-          "src": "images/icons/launchericon-512x512.png",
+          "src": "/app1/images/icons/launchericon-512x512.png",
           "type": "image/png",
           "sizes": "512x512"
        }
     ],
 	"screenshots": [
 		{
-			"src": "images/screenshots/screenshot1.png",
+			"src": "/app1/images/screenshots/screenshot1.png",
 			"sizes": "956x488",
 			"type": "image/png",
 			"form_factor": "wide",
 			"label": "Simple PWA"
 		},
 		{
-			"src": "images/screenshots/screenshot2.png",
+			"src": "/app1/images/screenshots/screenshot2.png",
 			"sizes": "420x488",
 			"type": "image/png",
 			"form_factor": "narrow",
