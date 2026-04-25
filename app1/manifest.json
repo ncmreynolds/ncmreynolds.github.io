@@ -51,14 +51,14 @@
 	"screenshots": [
 		{
 			"src": "/app1/images/screenshots/screenshot1.png",
-			"sizes": "956x488",
+			"sizes": "897x618",
 			"type": "image/png",
 			"form_factor": "wide",
 			"label": "Simple PWA"
 		},
 		{
 			"src": "/app1/images/screenshots/screenshot2.png",
-			"sizes": "420x488",
+			"sizes": "467x673",
 			"type": "image/png",
 			"form_factor": "narrow",
 			"label": "Simple PWA"

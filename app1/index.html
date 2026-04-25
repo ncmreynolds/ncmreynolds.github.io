@@ -150,8 +150,6 @@
             console.log('Device Selected:', device.name);
             bleStateContainer.innerHTML = 'Connected to device ' + device.name;
             bleStateContainer.style.color = "#24af37";
-			connectButton.className = '';
-			disconnectButton.className = 'primary';
             device.addEventListener('gattserverdisconnected', onDisconnected);
             return device.gatt.connect();
         })
@@ -188,9 +186,6 @@
         console.log('Device Disconnected:', event.target.device.name);
         bleStateContainer.innerHTML = "Device disconnected";
         bleStateContainer.style.color = "#d13a30";
-		connectButton.className = 'primary';
-		disconnectButton.className = '';
-
         connectToDevice();
     }
 
