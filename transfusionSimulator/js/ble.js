@@ -10,7 +10,7 @@ const bleStateContainer = document.getElementById('bleState');
 //const timestampContainer = document.getElementById('timestamp');
 
 //Define BLE Device Specs
-var deviceName ='BLE Transfusion game';
+var deviceName ='TransfusionSimulator';
 var bleService = '5eaf2551-5714-48e7-bcb4-249c74c56839';
 var ledCharacteristic = '19b10002-e8f2-537e-4f6c-d104768a1214';
 var sensorCharacteristic= '19b10001-e8f2-537e-4f6c-d104768a1214';
@@ -45,7 +45,8 @@ function isWebBluetoothEnabled() {
 function connectToDevice(){
 	console.log('Initializing Bluetooth...');
 	navigator.bluetooth.requestDevice({
-		acceptAllDevices: true
+		filters: [{ name: deviceName}]
+		/*acceptAllDevices: true*/
 	})
 	.then(device => {
 		console.log('Device Selected:', device.name);
