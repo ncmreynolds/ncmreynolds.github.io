@@ -1,0 +1,67 @@
+ {
+    "name": "Transfusion Simulator admin",
+    "short_name": "TS admin",
+	"description": "Companion app to the Transfusion Simulator. Allows provision of bags, editing of scenarios etc.",
+	"categories": ["utilities"],
+	"id": "/transfusionSimulator/index.html",
+    "start_url": "/transfusionSimulator/index.html",
+	"lang": "en",
+    "display": "standalone",
+	"display_override": ["standalone", "minimal-ui", "browser"],
+	"orientation": "portrait",
+    "background_color": "#ffffff",
+    "theme_color": "#33c3f0",
+	"icons": [
+       {
+          "src": "/transfusionSimulator/images/icons/launchericon-48x48.png",
+          "type": "image/png",
+          "sizes": "48x48",
+          "purpose": "maskable"
+       },
+       {
+          "src": "/transfusionSimulator/images/icons/launchericon-72x72.png",
+          "type": "image/png",
+          "sizes": "72x72",
+          "purpose": "maskable"
+       },
+       {
+          "src": "/transfusionSimulator/images/icons/launchericon-96x96.png",
+          "type": "image/png",
+          "sizes": "96x96",
+          "purpose": "maskable"
+       },
+       {
+          "src": "/transfusionSimulator/images/icons/launchericon-144x144.png",
+          "type": "image/png",
+          "sizes": "144x144",
+          "purpose": "maskable"
+       },
+       {
+          "src": "/transfusionSimulator/images/icons/launchericon-192x192.png",
+          "type": "image/png",
+          "sizes": "192x192",
+          "purpose": "maskable"
+       },
+       {
+          "src": "/transfusionSimulator/images/icons/launchericon-512x512.png",
+          "type": "image/png",
+          "sizes": "512x512"
+       }
+    ],
+	"screenshots": [
+		{
+			"src": "/transfusionSimulator/images/screenshots/landscapeScreenshotPlaceholder.png",
+			"sizes": "1123x794",
+			"type": "image/png",
+			"form_factor": "wide",
+			"label": "Simple PWA"
+		},
+		{
+			"src": "/transfusionSimulator/images/screenshots/portraitScreenshotPlaceholder.png",
+			"sizes": "794x1123",
+			"type": "image/png",
+			"form_factor": "narrow",
+			"label": "Simple PWA"
+		}
+	]
+}
