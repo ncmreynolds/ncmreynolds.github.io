@@ -1,18 +1,10 @@
-<!--
-  Rui Santos
-  Complete project details at https://RandomNerdTutorials.com/esp32-web-bluetooth/
-
-  Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files.
-  The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
--->
-
 <!DOCTYPE html>
 <html>
 <head>
 	<!-- Basic Page Needs
 	–––––––––––––––––––––––––––––––––––––––––––––––––– -->
 	<meta charset="utf-8">
-    <title>ESP32 Web BLE App</title>
+    <title>Transfusion Simulator admin</title>
 
 	<!-- Mobile Specific Metas
 	–––––––––––––––––––––––––––––––––––––––––––––––––– -->
@@ -42,8 +34,26 @@
 <script src="js/app.js"></script>
 <div class="container">
 	<div class="row">
-		<div class="twelve columns">
+		<div class="twelve columns" style="margin-top: 5%">
 			<h1>Transfusion Simulator</h1>
+		</div>
+	</div>
+	<div class="row">
+		<div class="four columns">
+			<button id="connectBleButton" class="button-primary">Connect</button>
+		</div>
+		<div class="four columns">
+			<button id="disconnectBleButton">Disconnect</button>
+		</div>
+	</div>
+	<div class="row">
+		<div class="twelve columns">
+			<p>BLE state: <strong><span id="bleState" style="color:#d13a30;">Disconnected</span></strong></p>
+		</div>
+	</div>
+	<div class="row">
+		<div class="twelve columns">
+			<p>Done in collaboration with the University of Bedfordshire, see the <a href="https://www.hale.ltd/p/transfusion-simulator.html" target="_blank">product page</a> for more</p>
 		</div>
 	</div>
 </div>
