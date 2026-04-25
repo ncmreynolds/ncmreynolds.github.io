@@ -10,7 +10,7 @@
 	"display_override": ["standalone", "minimal-ui", "browser"],
 	"orientation": "portrait",
     "background_color": "#ffffff",
-    "theme_color": "#7b4b7d",
+    "theme_color": "#33c3f0",
 	"icons": [
        {
           "src": "/app1/images/icons/launchericon-48x48.png",
