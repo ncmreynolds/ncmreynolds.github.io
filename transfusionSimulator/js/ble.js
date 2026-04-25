@@ -45,8 +45,7 @@ function isWebBluetoothEnabled() {
 function connectToDevice(){
 	console.log('Initializing Bluetooth...');
 	navigator.bluetooth.requestDevice({
-		filters: [{name: deviceName}],
-		optionalServices: [bleService]
+		filters: [{ services: [bleService] }]
 	})
 	.then(device => {
 		console.log('Device Selected:', device.name);
