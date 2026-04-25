@@ -2,6 +2,12 @@
 
 const connectButton = document.getElementById('connectBleButton');
 const disconnectButton = document.getElementById('disconnectBleButton');
+//const onButton = document.getElementById('onButton');
+//const offButton = document.getElementById('offButton');
+//const retrievedValue = document.getElementById('valueContainer');
+//const latestValueSent = document.getElementById('valueSent');
+const bleStateContainer = document.getElementById('bleState');
+//const timestampContainer = document.getElementById('timestamp');
 
 //Define BLE Device Specs
 var deviceName ='ESP32';
@@ -59,6 +65,7 @@ function connectToDevice(){
 		console.log("Service discovered:", service.uuid);
 		return service.getCharacteristic(sensorCharacteristic);
 	})
+	/*
 	.then(characteristic => {
 		console.log("Characteristic discovered:", characteristic.uuid);
 		sensorCharacteristicFound = characteristic;
@@ -73,6 +80,7 @@ function connectToDevice(){
 		console.log("Decoded value: ", decodedValue);
 		retrievedValue.innerHTML = decodedValue;
 	})
+	*/
 	.catch(error => {
 		console.log('Error: ', error);
 	})
@@ -85,13 +93,13 @@ function onDisconnected(event){
 	connectToDevice();
 }
 
+/*
 function handleCharacteristicChange(event){
 	const newValueReceived = new TextDecoder().decode(event.target.value);
 	console.log("Characteristic value changed: ", newValueReceived);
 	retrievedValue.innerHTML = newValueReceived;
 	timestampContainer.innerHTML = getDateTime();
 }
-
 function writeOnCharacteristic(value){
 	if (bleServer && bleServer.connected) {
 		bleServiceFound.getCharacteristic(ledCharacteristic)
@@ -112,6 +120,7 @@ function writeOnCharacteristic(value){
 		window.alert("Bluetooth is not connected. Cannot write to characteristic. \n Connect to BLE first!")
 	}
 }
+*/
 
 function disconnectDevice() {
 	console.log("Disconnect Device.");
