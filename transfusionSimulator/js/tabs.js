@@ -1,4 +1,4 @@
-function openTab(tab, tabName) {
+function openTab(tabEvent, tabName) {
   // Declare all variables
   var i, tabcontent, tablinks;
 
@@ -16,5 +16,5 @@ function openTab(tab, tabName) {
 
   // Show the current tab, and add an "active" class to the button that opened the tab
   document.getElementById(tabName).style.display = "block";
-  tab.currentTarget.className += " active";
+  tabEvent.currentTarget.className += " active";
 }
