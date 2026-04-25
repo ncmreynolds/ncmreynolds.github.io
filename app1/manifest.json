@@ -1,14 +1,15 @@
  {
-    "name": "Simple PWA",
-    "short_name": "PWA",
-    "display": "standalone",
+    "name": "PWA ESP32 BLE test",
+    "short_name": "BLE test",
+	"description": "A minimal BLE PWA app just to test what's needed for the best PWA install experience, app is taken from Random Nerd Tutorials",
 	"id": "/app1/index.html",
     "start_url": "/app1/index.html",
+	"lang": "en",
+    "display": "standalone",
+	"display_override": ["standalone", "minimal-ui", "browser"],
+	"orientation": "landscape",
     "background_color": "#ffffff",
     "theme_color": "#7b4b7d",
-	"description": "A minimal BLE PWA app just to test what's needed for the install experience",
-	"display_override": ["fullscreen", "minimal-ui"],
-	"display": "standalone",
 	"icons": [
        {
           "src": "/app1/images/icons/launchericon-48x48.png",
