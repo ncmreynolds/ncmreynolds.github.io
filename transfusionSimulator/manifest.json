@@ -11,6 +11,20 @@
 	"orientation": "portrait",
     "background_color": "#ffffff",
     "theme_color": "#33c3f0",
+	"shortcuts": [
+		{
+			"name": "Connect",
+			"url": "index.html"
+		},
+		{
+			"name": "Bags",
+			"url": "bags.html"
+		},
+		{
+			"name": "Scenarios",
+			"url": "scenarios.html"
+		}
+	],
 	"icons": [
        {
           "src": "/transfusionSimulator/images/icons/launchericon-48x48.png",
