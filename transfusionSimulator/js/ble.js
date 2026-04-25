@@ -47,7 +47,7 @@ function connectToDevice(){
 	navigator.bluetooth.requestDevice({
 		filters: [
 			{ name: deviceName },
-			{ optionalServices: [bleService] }
+			{ optionalServices: [bleService,"3e1f6333-14d3-4018-8271-c28be9d4fdea","d4bc86c5-afd3-4882-ac67-954e7857b73b"] }
 		]
 		/*acceptAllDevices: true*/
 	})
