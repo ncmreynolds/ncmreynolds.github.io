@@ -46,10 +46,10 @@
 		</div>
 		<div class="row">
 			<div class="six columns">
-				<button id="connectBleButton" class="button-primary">Connect to BLE Device</button>
+				<button id="connectBleButton" class="button-primary">Connect</button>
 			</div>
 			<div class="six columns">
-				<button id="disconnectBleButton">Disconnect BLE Device</button>
+				<button id="disconnectBleButton">Disconnect</button>
 			</div>
 		</div>
 		<div class="row">
@@ -148,6 +148,8 @@
             console.log('Device Selected:', device.name);
             bleStateContainer.innerHTML = 'Connected to device ' + device.name;
             bleStateContainer.style.color = "#24af37";
+			connectButton.className = '';
+			disconnectButton.className = 'primary';
             device.addEventListener('gattserverdisconnected', onDisconnected);
             return device.gatt.connect();
         })
@@ -184,6 +186,8 @@
         console.log('Device Disconnected:', event.target.device.name);
         bleStateContainer.innerHTML = "Device disconnected";
         bleStateContainer.style.color = "#d13a30";
+		connectButton.className = 'primary';
+		disconnectButton.className = '';
 
         connectToDevice();
     }
