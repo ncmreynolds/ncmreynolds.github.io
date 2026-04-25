@@ -12,13 +12,13 @@ const bleStateContainer = document.getElementById('bleState');
 //Define BLE Device Specs
 var deviceName ='TransfusionSimulator';
 var bleService = '5eaf2551-5714-48e7-bcb4-249c74c56839';
-var ledCharacteristic = '19b10002-e8f2-537e-4f6c-d104768a1214';
-var sensorCharacteristic= '19b10001-e8f2-537e-4f6c-d104768a1214';
+var commandCharacteristic = '3e1f6333-14d3-4018-8271-c28be9d4fdea';
+var responseCharacteristic= 'd4bc86c5-afd3-4882-ac67-954e7857b73b';
 
 //Global Variables to Handle Bluetooth
 var bleServer;
 var bleServiceFound;
-var sensorCharacteristicFound;
+var responseCharacteristicFound;
 
 // Connect Button (search for BLE Devices only if BLE is available)
 connectButton.addEventListener('click', (event) => {
@@ -47,7 +47,6 @@ function connectToDevice(){
 	navigator.bluetooth.requestDevice({
 		filters: [{name: deviceName}],
 		optionalServices: [bleService]
-		/*acceptAllDevices: true*/
 	})
 	.then(device => {
 		console.log('Device Selected:', device.name);
@@ -64,12 +63,11 @@ function connectToDevice(){
 	.then(service => {
 		bleServiceFound = service;
 		console.log("Service discovered:", service.uuid);
-		return service.getCharacteristic(sensorCharacteristic);
+		return service.getCharacteristic(responseCharacteristic);
 	})
-	/*
 	.then(characteristic => {
 		console.log("Characteristic discovered:", characteristic.uuid);
-		sensorCharacteristicFound = characteristic;
+		responseCharacteristicFound = characteristic;
 		characteristic.addEventListener('characteristicvaluechanged', handleCharacteristicChange);
 		characteristic.startNotifications();
 		console.log("Notifications Started.");
@@ -81,7 +79,6 @@ function connectToDevice(){
 		console.log("Decoded value: ", decodedValue);
 		retrievedValue.innerHTML = decodedValue;
 	})
-	*/
 	.catch(error => {
 		console.log('Error: ', error);
 	})
@@ -94,7 +91,6 @@ function onDisconnected(event){
 	connectToDevice();
 }
 
-/*
 function handleCharacteristicChange(event){
 	const newValueReceived = new TextDecoder().decode(event.target.value);
 	console.log("Characteristic value changed: ", newValueReceived);
@@ -103,31 +99,30 @@ function handleCharacteristicChange(event){
 }
 function writeOnCharacteristic(value){
 	if (bleServer && bleServer.connected) {
-		bleServiceFound.getCharacteristic(ledCharacteristic)
+		bleServiceFound.getCharacteristic(commandCharacteristic)
 		.then(characteristic => {
-			console.log("Found the LED characteristic: ", characteristic.uuid);
+			console.log("Found the command characteristic: ", characteristic.uuid);
 			const data = new Uint8Array([value]);
 			return characteristic.writeValue(data);
 		})
 		.then(() => {
 			latestValueSent.innerHTML = value;
-			console.log("Value written to LEDcharacteristic:", value);
+			console.log("Value written to command characteristic:", value);
 		})
 		.catch(error => {
-			console.error("Error writing to the LED characteristic: ", error);
+			console.error("Error writing to the command characteristic: ", error);
 		});
 	} else {
 		console.error ("Bluetooth is not connected. Cannot write to characteristic.")
 		window.alert("Bluetooth is not connected. Cannot write to characteristic. \n Connect to BLE first!")
 	}
 }
-*/
 
 function disconnectDevice() {
 	console.log("Disconnect Device.");
 	if (bleServer && bleServer.connected) {
-		if (sensorCharacteristicFound) {
-			sensorCharacteristicFound.stopNotifications()
+		if (responseCharacteristicFound) {
+			responseCharacteristicFound.stopNotifications()
 				.then(() => {
 					console.log("Notifications Stopped");
 					return bleServer.disconnect();
