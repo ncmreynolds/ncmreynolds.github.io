@@ -20,6 +20,36 @@ var bleServer;
 var bleServiceFound;
 var responseCharacteristicFound;
 
+//Values for sending/receiving commands. All have the response with bit 8 as I've a C/embedded mindset
+const pingRequest = 0;		//Check the client is responding with a 'ping'
+const pingResponse = 128;	//'ping' response
+
+var bleConnected = false;	//Simple mark of connection status
+var sequenceNumber = 1;	//Every response includes the 'sequence number' (0-255) of the command it's responding to
+var lastSequenceNumber = 0;	//Checks the packet coming back
+
+setInterval(bleKeepAlive, 10000);
+
+function bleKeepAlive()	{
+	if(bleConnected == true)	{
+		blePing();
+	}
+}
+
+function blePing()	{
+	const blePingPacket = Uint8Array.of(pingRequest,sequenceNumber);
+	bleSendCommand(blePingPacket);
+	bleManageSequenceNumber();
+}
+
+function bleManageSequenceNumber()	{
+	lastSequenceNumber = sequenceNumber;
+	sequenceNumber++;
+	if(sequenceNumber > 255)	{
+		sequenceNumber = 0;
+	}
+}
+
 // Connect Button (search for BLE Devices only if BLE is available)
 connectButton.addEventListener('click', (event) => {
 	if (isWebBluetoothEnabled()){
@@ -97,7 +127,9 @@ function handleCharacteristicChange(event){
 	retrievedValue.innerHTML = newValueReceived;
 	timestampContainer.innerHTML = getDateTime();
 }
-function writeOnCharacteristic(value){
+
+
+function bleSendCommand(value){
 	if (bleServer && bleServer.connected) {
 		bleServiceFound.getCharacteristic(commandCharacteristic)
 		.then(characteristic => {
