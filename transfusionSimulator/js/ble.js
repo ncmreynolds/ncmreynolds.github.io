@@ -280,13 +280,13 @@ function handleCharacteristicChange(event){	//This happens on a notify
 						scenarioUpdateState = 3;
 					}
 				break;
-				case bleScenarioAvailabilityRequest;
+				case bleScenarioAvailabilityRequest:
 					if(scenarioUpdate == true)	{
 						console.log(`Scenario ${responseReceived[2]} availability received`);
 						scenarioUpdateState = 4;
 					}
 				break;
-				case bleScenarioGroupsRequest
+				case bleScenarioGroupsRequest:
 					if(scenarioUpdate == true)	{
 						console.log(`Scenario ${responseReceived[2]} groups received`);
 						scenarioUpdateState = 1;
