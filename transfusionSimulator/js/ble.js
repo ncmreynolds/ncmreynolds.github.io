@@ -122,7 +122,7 @@ function onDisconnected(event){
 	bleStateContainer.style.color = "#d13a30";
 	//console.log('Device Disconnected:', event.target.device.name);
 	console.log('Disconnected');
-	connectToDevice();
+	//connectToDevice();
 }
 
 function handleCharacteristicChange(event){	//This happens on a notify
@@ -139,8 +139,9 @@ function bleSendCommand(value){
 		bleServiceFound.getCharacteristic(commandCharacteristic)
 		.then(characteristic => {
 			console.log("Found the command characteristic: ", characteristic.uuid);
-			const data = new Uint8Array([value]);
-			return characteristic.writeValue(data);
+			//const data = new Uint8Array([value]);
+			//return characteristic.writeValue(data);
+			return characteristic.writeValue(value);
 		})
 		.then(() => {
 			//latestValueSent.innerHTML = value;
