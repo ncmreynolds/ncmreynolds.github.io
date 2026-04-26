@@ -226,6 +226,7 @@ function connectToDevice(){
 
 function onDisconnected(event){
 	bleConnected = false;
+	scenarioUpdate = false;
 	bleStateContainer.innerHTML = "Device disconnected";
 	bleStateContainer.style.color = "#d13a30";
 	//console.log('Device Disconnected:', event.target.device.name);
@@ -272,25 +273,25 @@ function handleCharacteristicChange(event){	//This happens on a notify
 						scenarioUpdateState = 1;
 					}
 				break;
-				case bleScenarioNameRequest:
+				case bleScenarioNameResponse:
 					if(scenarioUpdate == true)	{
 						console.log(`Scenario ${responseReceived[2]} name received`);
 						scenarioUpdateState = 2;
 					}
 				break;
-				case bleScenarioNarrativeRequest:
+				case bleScenarioNarrativeResponse:
 					if(scenarioUpdate == true)	{
 						console.log(`Scenario ${responseReceived[2]} narrative received`);
 						scenarioUpdateState = 3;
 					}
 				break;
-				case bleScenarioAvailabilityRequest:
+				case bleScenarioAvailabilityResponse:
 					if(scenarioUpdate == true)	{
 						console.log(`Scenario ${responseReceived[2]} availability received`);
 						scenarioUpdateState = 4;
 					}
 				break;
-				case bleScenarioGroupsRequest:
+				case bleScenarioGroupsResponse:
 					if(scenarioUpdate == true)	{
 						console.log(`Scenario ${responseReceived[2]} groups received`);
 						scenarioUpdateState = 1;
