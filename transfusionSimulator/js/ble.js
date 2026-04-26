@@ -29,14 +29,18 @@ const bleBagUpdateRequest = 11;		//Set bags
 const bleBagUpdateResponse = bleBagsRequest | 128;	//'bags' response
 const bleScenarioCountRequest = 12;		//Set bags
 const bleScenarioCountResponse = bleScenarioCountRequest | 128;	//'bags' response
-const bleScenarioNameRequest = 13;		//Set bags
+const bleScenarioIdRequest = 13;		//Set bags
+const bleScenarioIdResponse = bleScenarioIdRequest | 128;	//'bags' response
+const bleScenarioNameRequest = 14;		//Set bags
 const bleScenarioNameResponse = bleScenarioNameRequest | 128;	//'bags' response
-const bleScenarioNarrativeRequest = 14;		//Set bags
+const bleScenarioNarrativeRequest = 15;		//Set bags
 const bleScenarioNarrativeResponse = bleScenarioNarrativeRequest | 128;	//'bags' response
-const bleScenarioAvailabilityRequest = 15;		//Set bags
+const bleScenarioAvailabilityRequest = 16;		//Set bags
 const bleScenarioAvailabilityResponse = bleScenarioAvailabilityRequest | 128;	//'bags' response
-const bleScenarioGroupsRequest = 16;		//Set bags
+const bleScenarioGroupsRequest = 17;		//Set bags
 const bleScenarioGroupsResponse = bleScenarioGroupsRequest | 128;	//'bags' response
+const bleScenarioBloodTypeRequest = 18;		//Set bags
+const bleScenarioBloodTypeResponse = bleScenarioBloodTypeRequest | 128;	//'bags' response
 
 var bleConnected = false;	//Simple mark of connection status
 var bleBusy = false;
@@ -45,49 +49,53 @@ var lastSequenceNumber = 0;	//Checks the packet coming back
 var lastCommand = 255;
 var remoteBags = new Uint8Array(8);
 var numberOfScenarios = 0;
-var scenarioUpdate = false;
-var scenarioUpdateState = 0;
-var scenarioUpdateIndex = 0;
+var scenarioRefresh = false;
+var scenarioRefreshState = 0;
+var scenarioRefreshIndex = 0;
 
 setInterval(bleKeepAlive, 90000);
 
 function bleKeepAlive()	{
-	if(bleConnected == true && bleBusy == false)	{
+	if(bleConnected == true && bleBusy == false && scenarioRefresh == false)	{
 		blePing();
 	}
 }
 
 function startScenarioUpdate()	{
-	if(scenarioUpdate == false)	{
-		scenarioUpdate = true;
-		scenarioUpdateState = 0;
-		scenarioUpdateIndex = 0;
+	if(scenarioRefresh == false)	{
+		scenarioRefresh = true;
+		scenarioRefreshState = 0;
+		scenarioRefreshIndex = 0;
 		console.log("Starting scenario update process");
 	}
 }
 
 function bleRequestScenarioUpdate()	{
-	if(scenarioUpdate == true)	{
+	if(scenarioRefresh == true)	{
 		if(bleBusy == false)	{
-			if(scenarioUpdateState == 0)	{
+			if(scenarioRefreshState == 0)	{
 				console.log("Requesting scenario count update");
 				const bleScenarioUpdateRequestPacket = Uint8Array.of(bleScenarioCountRequest,sequenceNumber);
 				bleSendCommand(bleScenarioUpdateRequestPacket);
-			} else if(scenarioUpdateState == 1)	{
-				console.log(`Requesting scenario ${scenarioUpdateIndex} name update`);
-				const bleScenarioUpdateRequestPacket = Uint8Array.of(bleScenarioNameRequest,sequenceNumber,scenarioUpdateIndex);
+			} else if(scenarioRefreshState == 1)	{
+				console.log(`Requesting scenario ${scenarioRefreshIndex} name update`);
+				const bleScenarioUpdateRequestPacket = Uint8Array.of(bleScenarioNameRequest,sequenceNumber,scenarioRefreshIndex);
 				bleSendCommand(bleScenarioUpdateRequestPacket);
-			} else if(scenarioUpdateState == 2)	{
-				console.log(`Requesting scenario ${scenarioUpdateIndex} narrative update`);
-				const bleScenarioUpdateRequestPacket = Uint8Array.of(bleScenarioNarrativeRequest,sequenceNumber,scenarioUpdateIndex);
+			} else if(scenarioRefreshState == 2)	{
+				console.log(`Requesting scenario ${scenarioRefreshIndex} narrative update`);
+				const bleScenarioUpdateRequestPacket = Uint8Array.of(bleScenarioNarrativeRequest,sequenceNumber,scenarioRefreshIndex);
 				bleSendCommand(bleScenarioUpdateRequestPacket);
-			} else if(scenarioUpdateState == 3)	{
-				console.log(`Requesting scenario ${scenarioUpdateIndex} availability update`);
-				const bleScenarioUpdateRequestPacket = Uint8Array.of(bleScenarioAvailabilityRequest,sequenceNumber,scenarioUpdateIndex);
+			} else if(scenarioRefreshState == 3)	{
+				console.log(`Requesting scenario ${scenarioRefreshIndex} availability update`);
+				const bleScenarioUpdateRequestPacket = Uint8Array.of(bleScenarioAvailabilityRequest,sequenceNumber,scenarioRefreshIndex);
 				bleSendCommand(bleScenarioUpdateRequestPacket);
-			} else if(scenarioUpdateState == 4)	{
-				console.log(`Requesting scenario ${scenarioUpdateIndex} groups update`);
-				const bleScenarioUpdateRequestPacket = Uint8Array.of(bleScenarioGroupsRequest,sequenceNumber,scenarioUpdateIndex);
+			} else if(scenarioRefreshState == 4)	{
+				console.log(`Requesting scenario ${scenarioRefreshIndex} groups update`);
+				const bleScenarioUpdateRequestPacket = Uint8Array.of(bleScenarioGroupsRequest,sequenceNumber,scenarioRefreshIndex);
+				bleSendCommand(bleScenarioUpdateRequestPacket);
+			} else if(scenarioRefreshState == 5)	{
+				console.log(`Requesting scenario ${scenarioRefreshIndex} blood type update`);
+				const bleScenarioUpdateRequestPacket = Uint8Array.of(bleScenarioBloodTypeRequest,sequenceNumber,scenarioRefreshIndex);
 				bleSendCommand(bleScenarioUpdateRequestPacket);
 			}
 		} else {
@@ -226,7 +234,7 @@ function connectToDevice(){
 
 function onDisconnected(event){
 	bleConnected = false;
-	scenarioUpdate = false;
+	scenarioRefresh = false;
 	bleStateContainer.innerHTML = "Device disconnected";
 	bleStateContainer.style.color = "#d13a30";
 	//console.log('Device Disconnected:', event.target.device.name);
@@ -268,37 +276,43 @@ function handleCharacteristicChange(event){	//This happens on a notify
 				break;
 				case bleScenarioCountResponse:
 					numberOfScenarios = responseReceived[2];
-					if(scenarioUpdate == true)	{
+					if(scenarioRefresh == true)	{
 						console.log(`Number of scenarios updated to ${numberOfScenarios} refeshing other values`);
-						scenarioUpdateState = 1;
+						scenarioRefreshState = 1;
 					}
 				break;
 				case bleScenarioNameResponse:
-					if(scenarioUpdate == true)	{
+					if(scenarioRefresh == true)	{
 						console.log(`Scenario ${responseReceived[2]} name received`);
-						scenarioUpdateState = 2;
+						scenarioRefreshState = 2;
 					}
 				break;
 				case bleScenarioNarrativeResponse:
-					if(scenarioUpdate == true)	{
+					if(scenarioRefresh == true)	{
 						console.log(`Scenario ${responseReceived[2]} narrative received`);
-						scenarioUpdateState = 3;
+						scenarioRefreshState = 3;
 					}
 				break;
 				case bleScenarioAvailabilityResponse:
-					if(scenarioUpdate == true)	{
+					if(scenarioRefresh == true)	{
 						console.log(`Scenario ${responseReceived[2]} availability received`);
-						scenarioUpdateState = 4;
+						scenarioRefreshState = 4;
 					}
 				break;
 				case bleScenarioGroupsResponse:
-					if(scenarioUpdate == true)	{
+					if(scenarioRefresh == true)	{
 						console.log(`Scenario ${responseReceived[2]} groups received`);
-						scenarioUpdateState = 1;
-						scenarioUpdateIndex+=1;
-						if(scenarioUpdateIndex>=numberOfScenarios)	{	//Stop refreshing
-							scenarioUpdate = false;
-							scenarioUpdateIndex = 0;
+						scenarioRefreshState = 5;
+					}
+				break;
+				case bleScenarioBloodTypeResponse:
+					if(scenarioRefresh == true)	{
+						console.log(`Scenario ${responseReceived[2]} blood type received`);
+						scenarioRefreshState = 1;
+						scenarioRefreshIndex+=1;
+						if(scenarioRefreshIndex>=numberOfScenarios)	{	//Stop refreshing
+							scenarioRefresh = false;
+							scenarioRefreshIndex = 0;
 						}
 					}
 				break;
