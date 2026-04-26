@@ -72,20 +72,24 @@ function bleRequestScenarioUpdate()	{
 			if(scenarioUpdateState == 0)	{
 				console.log("Requesting scenario count update");
 				const bleScenarioUpdateRequestPacket = Uint8Array.of(bleScenarioCountRequest,sequenceNumber);
+				bleSendCommand(bleScenarioUpdateRequestPacket);
 			} else if(scenarioUpdateState == 1)	{
 				console.log(`Requesting scenario ${scenarioUpdateIndex} name update`);
 				const bleScenarioUpdateRequestPacket = Uint8Array.of(bleScenarioNameRequest,sequenceNumber,scenarioUpdateIndex);
+				bleSendCommand(bleScenarioUpdateRequestPacket);
 			} else if(scenarioUpdateState == 2)	{
 				console.log(`Requesting scenario ${scenarioUpdateIndex} narrative update`);
 				const bleScenarioUpdateRequestPacket = Uint8Array.of(bleScenarioNarrativeRequest,sequenceNumber,scenarioUpdateIndex);
+				bleSendCommand(bleScenarioUpdateRequestPacket);
 			} else if(scenarioUpdateState == 3)	{
 				console.log(`Requesting scenario ${scenarioUpdateIndex} availability update`);
 				const bleScenarioUpdateRequestPacket = Uint8Array.of(bleScenarioAvailabilityRequest,sequenceNumber,scenarioUpdateIndex);
+				bleSendCommand(bleScenarioUpdateRequestPacket);
 			} else if(scenarioUpdateState == 4)	{
 				console.log(`Requesting scenario ${scenarioUpdateIndex} groups update`);
 				const bleScenarioUpdateRequestPacket = Uint8Array.of(bleScenarioGroupsRequest,sequenceNumber,scenarioUpdateIndex);
+				bleSendCommand(bleScenarioUpdateRequestPacket);
 			}
-			bleSendCommand(bleScenarioUpdateRequestPacket);
 		} else {
 			console.log("Scenario update waiting, BLE busy");
 		}
