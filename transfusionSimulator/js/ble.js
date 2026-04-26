@@ -22,25 +22,42 @@ var responseCharacteristicFound;
 
 //Values for sending/receiving commands. All have the response with bit 8 as I've a C/embedded mindset
 const blePingRequest = 0;		//Check the client is responding with a 'ping'
-const blePingResponse = 128;	//'ping' response
+const blePingResponse = blePingRequest | 128;	//'ping' response
+const bleBagsRequest = 10;		//Ask for bags
+const bleBagsResponse = bleBagsRequest | 128;	//'bags' response
 
 var bleConnected = false;	//Simple mark of connection status
+var bleBusy = false;
 var sequenceNumber = 1;	//Every response includes the 'sequence number' (0-255) of the command it's responding to
 var lastSequenceNumber = 0;	//Checks the packet coming back
+var lastCommand = 255;
 
-setInterval(bleKeepAlive, 10000);
+setInterval(bleKeepAlive, 60000);
 
 function bleKeepAlive()	{
-	if(bleConnected == true)	{
+	if(bleConnected == true && bleBusy = false)	{
 		blePing();
 	}
 }
 
+function bleRequestBags()	{
+	if(bleBusy == false)	{
+		console.log("Requesting bag update");
+		const bleBagsRequestPacket = Uint8Array.of(bleBagsRequest,sequenceNumber);
+		bleSendCommand(bleBagsRequestPacket);
+	} else {
+		console.log("Bag update aborted, BLE busy");
+	}
+}
+
 function blePing()	{
-	console.log("Pinging");
-	const blePingPacket = Uint8Array.of(blePingRequest,sequenceNumber);
-	bleSendCommand(blePingPacket);
-	bleManageSequenceNumber();
+	if(bleBusy == false)	{
+		console.log("Pinging");
+		const blePingPacket = Uint8Array.of(blePingRequest,sequenceNumber);
+		bleSendCommand(blePingPacket);
+	} else {
+		console.log("Ping aborted, BLE busy");
+	}
 }
 
 function bleManageSequenceNumber()	{
@@ -49,6 +66,10 @@ function bleManageSequenceNumber()	{
 	if(sequenceNumber > 255)	{
 		sequenceNumber = 0;
 	}
+}
+
+function bleTimeoutCommand()	{
+	bleBusy = false;
 }
 
 // Connect Button (search for BLE Devices only if BLE is available)
@@ -84,6 +105,7 @@ function connectToDevice(){
 		bleStateContainer.innerHTML = 'Connected to device ' + device.name;
 		bleStateContainer.style.color = "#24af37";
 		bleConnected = true;
+		setTimeout(bleRequestBags, 1000);	//Request the current bags
 		device.addEventListener('gattserverdisconnected', onDisconnected);
 		return device.gatt.connect();
 	})
@@ -128,7 +150,23 @@ function onDisconnected(event){
 function handleCharacteristicChange(event){	//This happens on a notify
 	//const newValueReceived = new TextDecoder().decode(event.target.value);
 	const responseReceived = new Uint8Array(event.target.value);
-	console.log("Response received", responseReceived);
+	//console.log("Response received", responseReceived);
+	if(responseReceived[1] == lastSequenceNumber)	{
+		if((responseReceived[0] & 127) == lastCommand)	{	//Check if it was expected based off the last command
+			switch(responseReceived[0]) {
+			case blePingResponse:
+				console.log("Ping response");
+			break;
+			default:
+				console.log("Unknown response");
+			}
+			bleBusy = false;	//Mark command as received OK
+		} else {
+			console.log("Unexpected response");
+		}
+	} else {
+		console.log("Sequence number mismatch on response", responseReceived);
+	}
 	//retrievedValue.innerHTML = newValueReceived;
 	//timestampContainer.innerHTML = getDateTime();
 }
@@ -138,7 +176,7 @@ function bleSendCommand(value){
 	if (bleServer && bleServer.connected) {
 		bleServiceFound.getCharacteristic(commandCharacteristic)
 		.then(characteristic => {
-			console.log("Found the command characteristic: ", characteristic.uuid);
+			//console.log("Found the command characteristic: ", characteristic.uuid);
 			//const data = new Uint8Array([value]);
 			//return characteristic.writeValue(data);
 			return characteristic.writeValue(value);
@@ -146,6 +184,10 @@ function bleSendCommand(value){
 		.then(() => {
 			//latestValueSent.innerHTML = value;
 			console.log("Value written to command characteristic:", value);
+			lastCommand = value[0];
+			bleBusy = true;
+			bleManageSequenceNumber();
+			setTimeout(bleTimeoutCommand, 5000); //Timeout command after 5s
 		})
 		.catch(error => {
 			console.error("Error writing to the command characteristic: ", error);
