@@ -27,6 +27,8 @@ const bleBagsRequest = 10;		//Ask for bags
 const bleBagsResponse = bleBagsRequest | 128;	//'bags' response
 const bleBagUpdateRequest = 11;		//Set bags
 const bleBagUpdateResponse = bleBagsRequest | 128;	//'bags' response
+const bleScenarioCountRequest = 12;		//Set bags
+const bleScenarioCountResponse = bleBagsRequest | 128;	//'bags' response
 
 var bleConnected = false;	//Simple mark of connection status
 var bleBusy = false;
@@ -34,6 +36,7 @@ var sequenceNumber = 1;	//Every response includes the 'sequence number' (0-255) 
 var lastSequenceNumber = 0;	//Checks the packet coming back
 var lastCommand = 255;
 var remoteBags = new Uint8Array(8);
+var numberOfScenarios = 0;
 
 setInterval(bleKeepAlive, 90000);
 
@@ -42,6 +45,19 @@ function bleKeepAlive()	{
 		blePing();
 	}
 }
+
+function bleRequestScenarioUpdate()	{
+	if(bleBusy == false)	{
+		console.log("Requesting bag update");
+		const bleScenarioUpdateRequestPacket = Uint8Array.of(bleScenarioCountRequest,sequenceNumber);
+		bleSendCommand(bleScenarioUpdateRequestPacket);
+	} else {
+		console.log("Scenario update aborted, BLE busy");
+	}
+}
+
+
+document.getElementById('scenarioRefreshButton').addEventListener('click', bleRequestScenarioUpdate);
 
 function bleSaveBags()	{
 	if(bleBusy == false)	{
@@ -207,7 +223,11 @@ function handleCharacteristicChange(event){	//This happens on a notify
 				break;
 				case bleBagUpdateResponse:
 					console.log("Bag update response");
-				break;				
+				break;
+				case bleScenarioCountResponse:
+					numberOfScenarios = responseReceived[2];
+					console.log(`Number of scenarios updated to ${numberOfScenarios}`);
+				break;
 				default:
 					console.log("Unknown response");
 				}
