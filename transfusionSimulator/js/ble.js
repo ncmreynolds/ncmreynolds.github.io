@@ -32,7 +32,7 @@ var sequenceNumber = 1;	//Every response includes the 'sequence number' (0-255) 
 var lastSequenceNumber = 0;	//Checks the packet coming back
 var lastCommand = 255;
 
-setInterval(bleKeepAlive, 60000);
+setInterval(bleKeepAlive, 10000);
 
 function bleKeepAlive()	{
 	if(bleConnected == true && bleBusy == false)	{
@@ -151,32 +151,36 @@ function onDisconnected(event){
 
 function handleCharacteristicChange(event){	//This happens on a notify
 	//const newValueReceived = new TextDecoder().decode(event.target.value);
-	var responseReceived = new Uint8Array(event.target.value.byteLength);
-	for (var i = 0; i < event.target.value.byteLength; i++) {
-		responseReceived[i] = event.target.value.getUint8(i);
-	}
-	//const responseReceived = new Uint8Array(TextDecoder().decode(event.target.value));
-	//console.log("Response received", responseReceived);
-	if(responseReceived[1] == lastSequenceNumber)	{
-		if((responseReceived[0] & 127) == lastCommand)	{	//Check if it was expected based off the last command
-			switch(responseReceived[0]) {
-			case blePingResponse:
-				console.log("Ping response");
-			break;
-			default:
-				console.log("Unknown response");
+	if(event.target.value.byteLength >= 2)	{
+		var responseReceived = new Uint8Array(event.target.value.byteLength);
+		for (var i = 0; i < event.target.value.byteLength; i++) {
+			responseReceived[i] = event.target.value.getUint8(i);
+		}
+		//const responseReceived = new Uint8Array(TextDecoder().decode(event.target.value));
+		//console.log("Response received", responseReceived);
+		if(responseReceived[1] == lastSequenceNumber)	{
+			if((responseReceived[0] & 127) == lastCommand)	{	//Check if it was expected based off the last command
+				switch(responseReceived[0]) {
+				case blePingResponse:
+					console.log("Ping response");
+				break;
+				default:
+					console.log("Unknown response");
+				}
+				bleBusy = false;	//Mark command as received OK
+			} else {
+				const logMessage = `Unexpected response ${responseReceived[0]}`;
+				console.log(logMessage);
 			}
-			bleBusy = false;	//Mark command as received OK
 		} else {
-			const logMessage = `Unexpected response ${responseReceived[0]}`;
+			const logMessage = `Sequence number mismatch on response, expected ${lastSequenceNumber}, received ${responseReceived[1]}`;
 			console.log(logMessage);
 		}
+		//retrievedValue.innerHTML = newValueReceived;
+		//timestampContainer.innerHTML = getDateTime();
 	} else {
-		const logMessage = `Sequence number mismatch on response, expected ${lastSequenceNumber}, received ${responseReceived[1]}`;
-		console.log(logMessage);
+		console.log("Short packet received, ${event.target.value.byteLength}");
 	}
-	//retrievedValue.innerHTML = newValueReceived;
-	//timestampContainer.innerHTML = getDateTime();
 }
 
 
