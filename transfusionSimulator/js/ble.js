@@ -37,6 +37,7 @@ function bleKeepAlive()	{
 }
 
 function blePing()	{
+	console.log("Pinging");
 	const blePingPacket = Uint8Array.of(pingRequest,sequenceNumber);
 	bleSendCommand(blePingPacket);
 	bleManageSequenceNumber();
@@ -82,6 +83,7 @@ function connectToDevice(){
 		console.log('Device Selected:', device.name);
 		bleStateContainer.innerHTML = 'Connected to device ' + device.name;
 		bleStateContainer.style.color = "#24af37";
+		bleConnected = true;
 		device.addEventListener('gattserverdisconnected', onDisconnected);
 		return device.gatt.connect();
 	})
@@ -107,7 +109,7 @@ function connectToDevice(){
 		console.log("Read value: ", value);
 		const decodedValue = new TextDecoder().decode(value);
 		console.log("Decoded value: ", decodedValue);
-		retrievedValue.innerHTML = decodedValue;
+		//retrievedValue.innerHTML = decodedValue;
 	})
 	.catch(error => {
 		console.log('Error: ', error);
@@ -118,6 +120,7 @@ function onDisconnected(event){
 	console.log('Device Disconnected:', event.target.device.name);
 	bleStateContainer.innerHTML = "Device disconnected";
 	bleStateContainer.style.color = "#d13a30";
+	bleConnected = false;
 	connectToDevice();
 }
 
