@@ -165,7 +165,7 @@ function handleCharacteristicChange(event){	//This happens on a notify
 			console.log("Unexpected response");
 		}
 	} else {
-		console.log("Sequence number mismatch on response", responseReceived);
+		console.log("Sequence number mismatch on response, expected {lastSequenceNumber}, received {responseReceived[1]}");
 	}
 	//retrievedValue.innerHTML = newValueReceived;
 	//timestampContainer.innerHTML = getDateTime();
