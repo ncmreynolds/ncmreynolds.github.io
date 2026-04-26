@@ -50,7 +50,7 @@ function bleRequestBags()	{
 	}
 }
 
-document.getElementById('bagsUpdateButton').addEventListener('click', bleRequestBags);
+document.getElementById('testBleButton').addEventListener('click', bleRequestBags);
 
 function blePing()	{
 	if(bleBusy == false)	{
