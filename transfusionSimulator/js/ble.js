@@ -21,8 +21,8 @@ var bleServiceFound;
 var responseCharacteristicFound;
 
 //Values for sending/receiving commands. All have the response with bit 8 as I've a C/embedded mindset
-const pingRequest = 0;		//Check the client is responding with a 'ping'
-const pingResponse = 128;	//'ping' response
+const blePingRequest = 0;		//Check the client is responding with a 'ping'
+const blePingResponse = 128;	//'ping' response
 
 var bleConnected = false;	//Simple mark of connection status
 var sequenceNumber = 1;	//Every response includes the 'sequence number' (0-255) of the command it's responding to
@@ -38,14 +38,14 @@ function bleKeepAlive()	{
 
 function blePing()	{
 	console.log("Pinging");
-	const blePingPacket = Uint8Array.of(pingRequest,sequenceNumber);
+	const blePingPacket = Uint8Array.of(blePingRequest,sequenceNumber);
 	bleSendCommand(blePingPacket);
 	bleManageSequenceNumber();
 }
 
 function bleManageSequenceNumber()	{
-	lastSequenceNumber = sequenceNumber;
-	sequenceNumber++;
+	lastSequenceNumber = sequenceNumber;	//Record last one
+	sequenceNumber+=1;	//Increment but limit to 8 bits
 	if(sequenceNumber > 255)	{
 		sequenceNumber = 0;
 	}
