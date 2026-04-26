@@ -164,6 +164,12 @@ function handleCharacteristicChange(event){	//This happens on a notify
 				case blePingResponse:
 					console.log("Ping response");
 				break;
+				case bleBagsResponse:
+					console.log("Bags response, data for ${responseReceived[2]} bags");
+					for (var i = 0; i < event.target.value.byteLength; i++) {
+						console.log("Bag ${i} type ${responseReceived[i+3]}");
+					}
+				break;
 				default:
 					console.log("Unknown response");
 				}
@@ -232,8 +238,10 @@ function disconnectDevice() {
 			console.log("No characteristic found to disconnect.");
 		}
 	} else {
-		// Throw an error if Bluetooth is not connected
-		console.error("Bluetooth is not connected.");
-		window.alert("Bluetooth is not connected.")
+		if(bleConnected == true)	{
+			// Throw an error if Bluetooth is unexpectedly not connected
+			console.error("Bluetooth is not connected.");
+			window.alert("Bluetooth is not connected.")
+		}
 	}
 }
