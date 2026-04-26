@@ -50,6 +50,8 @@ function bleRequestBags()	{
 	}
 }
 
+document.getElementById('bagsUpdateButton').addEventListener('click', () => bleRequestBags());
+
 function blePing()	{
 	if(bleBusy == false)	{
 		console.log("Pinging");
@@ -105,7 +107,7 @@ function connectToDevice(){
 		bleStateContainer.innerHTML = 'Connected to device ' + device.name;
 		bleStateContainer.style.color = "#24af37";
 		bleConnected = true;
-		setTimeout(bleRequestBags, 1000);	//Request the current bags
+		//setTimeout(bleRequestBags, 1000);	//Request the current bags
 		device.addEventListener('gattserverdisconnected', onDisconnected);
 		return device.gatt.connect();
 	})
@@ -185,8 +187,8 @@ function bleSendCommand(value){
 			//latestValueSent.innerHTML = value;
 			console.log("Value written to command characteristic:", value);
 			lastCommand = value[0];
-			bleBusy = true;
 			bleManageSequenceNumber();
+			bleBusy = true;
 			setTimeout(bleTimeoutCommand, 5000); //Timeout command after 5s
 		})
 		.catch(error => {
