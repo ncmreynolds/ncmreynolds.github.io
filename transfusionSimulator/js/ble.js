@@ -165,9 +165,9 @@ function handleCharacteristicChange(event){	//This happens on a notify
 					console.log("Ping response");
 				break;
 				case bleBagsResponse:
-					console.log("Bags response, data for ${responseReceived[2]} bags");
+					console.log(`Bags response, data for ${responseReceived[2]} bags`);
 					for (var i = 0; i < event.target.value.byteLength; i++) {
-						console.log("Bag ${i} type ${responseReceived[i+3]}");
+						console.log(`Bag ${i} type ${responseReceived[i+3]}`);
 					}
 				break;
 				default:
