@@ -283,34 +283,37 @@ function handleCharacteristicChange(event){	//This happens on a notify
 				break;
 				case bleScenarioNameResponse:
 					if(scenarioRefresh == true)	{
-						console.log(`Scenario ${responseReceived[2]} name received`);
+						console.log(`Scenario ${responseReceived[2]} name length ${responseReceived[3]} received`);
 						scenarioRefreshState = 2;
 					}
 				break;
 				case bleScenarioNarrativeResponse:
 					if(scenarioRefresh == true)	{
-						console.log(`Scenario ${responseReceived[2]} narrative received`);
+						console.log(`Scenario ${responseReceived[2]} length ${responseReceived[3]} narrative received`);
 						scenarioRefreshState = 3;
 					}
 				break;
 				case bleScenarioAvailabilityResponse:
 					if(scenarioRefresh == true)	{
-						console.log(`Scenario ${responseReceived[2]} availability received`);
+						console.log(`Scenario ${responseReceived[2]} availability ${responseReceived[3]} received`);
 						scenarioRefreshState = 4;
 					}
 				break;
 				case bleScenarioGroupsResponse:
 					if(scenarioRefresh == true)	{
-						console.log(`Scenario ${responseReceived[2]} groups received`);
+						console.log(`Scenario ${responseReceived[2]} available groups received`);
+						for (var i = 0; i < responseReceived[3] && i < 8; i++) {
+							console.log(`Group ${i} available ${responseReceived[4+i]}`);
+						}
 						scenarioRefreshState = 5;
 					}
 				break;
 				case bleScenarioBloodTypeResponse:
 					if(scenarioRefresh == true)	{
-						console.log(`Scenario ${responseReceived[2]} blood type received`);
+						console.log(`Scenario ${responseReceived[2]} blood type ${responseReceived[3]} received`);
 						scenarioRefreshState = 1;
 						scenarioRefreshIndex+=1;
-						if(scenarioRefreshIndex>=numberOfScenarios)	{	//Stop refreshing
+						if(scenarioRefreshIndex>=1){//numberOfScenarios)	{	//Stop refreshing
 							scenarioRefresh = false;
 							scenarioRefreshIndex = 0;
 						}
