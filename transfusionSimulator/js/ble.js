@@ -50,7 +50,7 @@ function bleRequestBags()	{
 	}
 }
 
-document.getElementById('bagsUpdateButton').addEventListener('click', () => bleRequestBags());
+document.getElementById('bagsUpdateButton').addEventListener('click', bleRequestBags);
 
 function blePing()	{
 	if(bleBusy == false)	{
@@ -195,7 +195,7 @@ function bleSendCommand(value){
 		})
 		.then(() => {
 			//latestValueSent.innerHTML = value;
-			console.log("Value written to command characteristic:", value);
+			//console.log("Value written to command characteristic:", value);
 			lastCommand = value[0];
 			bleManageSequenceNumber();
 			bleBusy = true;
