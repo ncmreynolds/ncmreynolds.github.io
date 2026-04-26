@@ -164,10 +164,12 @@ function handleCharacteristicChange(event){	//This happens on a notify
 			}
 			bleBusy = false;	//Mark command as received OK
 		} else {
-			console.log("Unexpected response");
+			const logMessage = `Unexpected response ${responseReceived[0]}`;
+			console.log(logMessage);
 		}
 	} else {
-		console.log("Sequence number mismatch on response, expected {lastSequenceNumber}, received {responseReceived[1]}");
+		const logMessage = `Sequence number mismatch on response, expected ${lastSequenceNumber}, received ${responseReceived[1]}`;
+		console.log(logMessage);
 	}
 	//retrievedValue.innerHTML = newValueReceived;
 	//timestampContainer.innerHTML = getDateTime();
