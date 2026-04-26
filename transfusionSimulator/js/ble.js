@@ -141,7 +141,7 @@ function bleSendCommand(value){
 			return characteristic.writeValue(data);
 		})
 		.then(() => {
-			latestValueSent.innerHTML = value;
+			//latestValueSent.innerHTML = value;
 			console.log("Value written to command characteristic:", value);
 		})
 		.catch(error => {
