@@ -32,7 +32,7 @@ var sequenceNumber = 1;	//Every response includes the 'sequence number' (0-255) 
 var lastSequenceNumber = 0;	//Checks the packet coming back
 var lastCommand = 255;
 
-setInterval(bleKeepAlive, 10000);
+setInterval(bleKeepAlive, 90000);
 
 function bleKeepAlive()	{
 	if(bleConnected == true && bleBusy == false)	{
@@ -169,7 +169,7 @@ function handleCharacteristicChange(event){	//This happens on a notify
 					for (var i = 0; i < responseReceived[2]; i++) {
 						console.log(`Bag ${i} type ${responseReceived[i+3]}`);
 						if(responseReceived[i+3] < 9)	{
-							document.getElementById(`bag${i}`).value = `{responseReceived[i+3]}`;
+							document.getElementById(`bag${i}`).value = `"{responseReceived[i+3]}"`;
 							document.getElementById(`bag${i}`).disabled = false;
 						} else {
 							document.getElementById(`bag${i}`).value = "8";
