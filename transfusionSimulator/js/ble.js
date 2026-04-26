@@ -28,7 +28,15 @@ const bleBagsResponse = bleBagsRequest | 128;	//'bags' response
 const bleBagUpdateRequest = 11;		//Set bags
 const bleBagUpdateResponse = bleBagsRequest | 128;	//'bags' response
 const bleScenarioCountRequest = 12;		//Set bags
-const bleScenarioCountResponse = bleBagsRequest | 128;	//'bags' response
+const bleScenarioCountResponse = bleScenarioCountRequest | 128;	//'bags' response
+const bleScenarioNameRequest = 13;		//Set bags
+const bleScenarioNameResponse = bleScenarioNameRequest | 128;	//'bags' response
+const bleScenarioNarrativeRequest = 14;		//Set bags
+const bleScenarioNarrativeResponse = bleScenarioNameRequest | 128;	//'bags' response
+const bleScenarioAvailabilityRequest = 15;		//Set bags
+const bleScenarioAvailabilityResponse = bleScenarioAvailabilityRequest | 128;	//'bags' response
+const bleScenarioGroupsRequest = 16;		//Set bags
+const bleScenarioGroupsResponse = bleScenarioGroupsRequest | 128;	//'bags' response
 
 var bleConnected = false;	//Simple mark of connection status
 var bleBusy = false;
@@ -37,6 +45,9 @@ var lastSequenceNumber = 0;	//Checks the packet coming back
 var lastCommand = 255;
 var remoteBags = new Uint8Array(8);
 var numberOfScenarios = 0;
+var scenarioUpdate = false;
+var scenarioUpdateState = 0;
+var scenarioUpdateIndex = 0;
 
 setInterval(bleKeepAlive, 90000);
 
@@ -46,18 +57,44 @@ function bleKeepAlive()	{
 	}
 }
 
+function startScenarioUpdate()	{
+	if(scenarioUpdate == false)	{
+		scenarioUpdate = true;
+		scenarioUpdateState = 0;
+		scenarioUpdateIndex = 0;
+		console.log("Starting scenario update process");
+	}
+}
+
 function bleRequestScenarioUpdate()	{
-	if(bleBusy == false)	{
-		console.log("Requesting bag update");
-		const bleScenarioUpdateRequestPacket = Uint8Array.of(bleScenarioCountRequest,sequenceNumber);
-		bleSendCommand(bleScenarioUpdateRequestPacket);
-	} else {
-		console.log("Scenario update aborted, BLE busy");
+	if(scenarioUpdate == true)	{
+		if(bleBusy == false)	{
+			if(scenarioUpdateState == 0)	{
+				console.log("Requesting scenario count update");
+				const bleScenarioUpdateRequestPacket = Uint8Array.of(bleScenarioCountRequest,sequenceNumber);
+			} else if(scenarioUpdateState == 1)	{
+				console.log(`Requesting scenario ${scenarioUpdateIndex} name update`);
+				const bleScenarioUpdateRequestPacket = Uint8Array.of(bleScenarioNameRequest,sequenceNumber,scenarioUpdateIndex);
+			} else if(scenarioUpdateState == 2)	{
+				console.log(`Requesting scenario ${scenarioUpdateIndex} narrative update`);
+				const bleScenarioUpdateRequestPacket = Uint8Array.of(bleScenarioNarrativeRequest,sequenceNumber,scenarioUpdateIndex);
+			} else if(scenarioUpdateState == 3)	{
+				console.log(`Requesting scenario ${scenarioUpdateIndex} availability update`);
+				const bleScenarioUpdateRequestPacket = Uint8Array.of(bleScenarioAvailabilityRequest,sequenceNumber,scenarioUpdateIndex);
+			} else if(scenarioUpdateState == 4)	{
+				console.log(`Requesting scenario ${scenarioUpdateIndex} groups update`);
+				const bleScenarioUpdateRequestPacket = Uint8Array.of(bleScenarioGroupsRequest,sequenceNumber,scenarioUpdateIndex);
+			}
+			bleSendCommand(bleScenarioUpdateRequestPacket);
+		} else {
+			console.log("Scenario update waiting, BLE busy");
+		}
 	}
 }
 
 
-document.getElementById('scenarioRefreshButton').addEventListener('click', bleRequestScenarioUpdate);
+document.getElementById('scenarioRefreshButton').addEventListener('click', startScenarioUpdate);
+setInterval(bleRequestScenarioUpdate, 10000);
 
 function bleSaveBags()	{
 	if(bleBusy == false)	{
@@ -226,7 +263,39 @@ function handleCharacteristicChange(event){	//This happens on a notify
 				break;
 				case bleScenarioCountResponse:
 					numberOfScenarios = responseReceived[2];
-					console.log(`Number of scenarios updated to ${numberOfScenarios}`);
+					if(scenarioUpdate == true)	{
+						console.log(`Number of scenarios updated to ${numberOfScenarios} refeshing other values`);
+						scenarioUpdateState = 1;
+					}
+				break;
+				case bleScenarioNameRequest:
+					if(scenarioUpdate == true)	{
+						console.log(`Scenario ${responseReceived[2]} name received`);
+						scenarioUpdateState = 2;
+					}
+				break;
+				case bleScenarioNarrativeRequest:
+					if(scenarioUpdate == true)	{
+						console.log(`Scenario ${responseReceived[2]} narrative received`);
+						scenarioUpdateState = 3;
+					}
+				break;
+				case bleScenarioAvailabilityRequest;
+					if(scenarioUpdate == true)	{
+						console.log(`Scenario ${responseReceived[2]} availability received`);
+						scenarioUpdateState = 4;
+					}
+				break;
+				case bleScenarioGroupsRequest
+					if(scenarioUpdate == true)	{
+						console.log(`Scenario ${responseReceived[2]} groups received`);
+						scenarioUpdateState = 1;
+						scenarioUpdateIndex+=1;
+						if(scenarioUpdateIndex>=numberOfScenarios)	{	//Stop refreshing
+							scenarioUpdate = false;
+							scenarioUpdateIndex = 0;
+						}
+					}
 				break;
 				default:
 					console.log("Unknown response");
