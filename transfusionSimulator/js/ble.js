@@ -124,11 +124,12 @@ function onDisconnected(event){
 	connectToDevice();
 }
 
-function handleCharacteristicChange(event){
-	const newValueReceived = new TextDecoder().decode(event.target.value);
-	console.log("Characteristic value changed: ", newValueReceived);
-	retrievedValue.innerHTML = newValueReceived;
-	timestampContainer.innerHTML = getDateTime();
+function handleCharacteristicChange(event){	//This happens on a notify
+	//const newValueReceived = new TextDecoder().decode(event.target.value);
+	const responseReceived = new Uint8Array(event.target.value);
+	console.log("Response received", responseReceived);
+	//retrievedValue.innerHTML = newValueReceived;
+	//timestampContainer.innerHTML = getDateTime();
 }
 
 
