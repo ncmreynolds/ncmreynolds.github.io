@@ -95,7 +95,10 @@ function bleManageSequenceNumber()	{
 }
 
 function bleTimeoutCommand()	{
-	bleBusy = false;
+	if(bleBusy == true)	{
+		bleBusy = false;
+		console.log("Command timed out");
+	}
 }
 
 // Connect Button (search for BLE Devices only if BLE is available)
@@ -202,6 +205,9 @@ function handleCharacteristicChange(event){	//This happens on a notify
 						console.log(`Bag ${i} type ${responseReceived[i+3]}`);
 					}
 				break;
+				case bleBagUpdateResponse:
+					console.log("Bag update response");
+				break;				
 				default:
 					console.log("Unknown response");
 				}
