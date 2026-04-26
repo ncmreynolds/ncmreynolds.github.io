@@ -25,12 +25,15 @@ const blePingRequest = 0;		//Check the client is responding with a 'ping'
 const blePingResponse = blePingRequest | 128;	//'ping' response
 const bleBagsRequest = 10;		//Ask for bags
 const bleBagsResponse = bleBagsRequest | 128;	//'bags' response
+const bleBagUpdateRequest = 11;		//Set bags
+const bleBagUpdateResponse = bleBagsRequest | 128;	//'bags' response
 
 var bleConnected = false;	//Simple mark of connection status
 var bleBusy = false;
 var sequenceNumber = 1;	//Every response includes the 'sequence number' (0-255) of the command it's responding to
 var lastSequenceNumber = 0;	//Checks the packet coming back
 var lastCommand = 255;
+var remoteBags = new Uint8Array(8);
 
 setInterval(bleKeepAlive, 90000);
 
@@ -166,15 +169,16 @@ function handleCharacteristicChange(event){	//This happens on a notify
 				break;
 				case bleBagsResponse:
 					console.log(`Bags response, data for ${responseReceived[2]} bags`);
-					for (var i = 0; i < responseReceived[2]; i++) {
-						console.log(`Bag ${i} type ${responseReceived[i+3]}`);
+					for (var i = 0; i < responseReceived[2] && i < 8; i++) {
+						remoteBags[i] = responseReceived[i+3];
 						if(responseReceived[i+3] < 9)	{
-							document.getElementById(`bag${i}`).value = `"{responseReceived[i+3]}"`;
+							document.getElementById(`bag${i}`).value = `${responseReceived[i+3]}`;
 							document.getElementById(`bag${i}`).disabled = false;
 						} else {
 							document.getElementById(`bag${i}`).value = "8";
 							document.getElementById(`bag${i}`).disabled = true;
 						}
+						console.log(`Bag ${i} type ${responseReceived[i+3]}`);
 					}
 				break;
 				default:
