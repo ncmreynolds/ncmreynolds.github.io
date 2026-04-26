@@ -166,8 +166,15 @@ function handleCharacteristicChange(event){	//This happens on a notify
 				break;
 				case bleBagsResponse:
 					console.log(`Bags response, data for ${responseReceived[2]} bags`);
-					for (var i = 0; i < event.target.value.byteLength; i++) {
+					for (var i = 0; i < responseReceived[2]; i++) {
 						console.log(`Bag ${i} type ${responseReceived[i+3]}`);
+						if(responseReceived[i+3] < 9)	{
+							document.getElementById(`bag${i}`).value = `{responseReceived[i+3]}`;
+							document.getElementById(`bag${i}`).disabled = false;
+						} else {
+							document.getElementById(`bag${i}`).value = "8";
+							document.getElementById(`bag${i}`).disabled = true;
+						}
 					}
 				break;
 				default:
