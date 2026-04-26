@@ -43,6 +43,27 @@ function bleKeepAlive()	{
 	}
 }
 
+function bleSaveBags()	{
+	if(bleBusy == false)	{
+		console.log("Saving bags");
+		const bleSavePacket = Uint8Array.of(bleBagUpdateRequest,sequenceNumber,8,
+			document.getElementById("bag0").value,
+			document.getElementById("bag1").value,
+			document.getElementById("bag2").value,
+			document.getElementById("bag3").value,
+			document.getElementById("bag4").value,
+			document.getElementById("bag5").value,
+			document.getElementById("bag6").value,
+			document.getElementById("bag7").value
+			);
+		bleSendCommand(bleSavePacket);
+	} else {
+		console.log("Bag save aborted, BLE busy");
+	}
+}
+
+document.getElementById('bagsSaveButton').addEventListener('click', bleSaveBags);
+
 function bleRequestBags()	{
 	if(bleBusy == false)	{
 		console.log("Requesting bag update");
@@ -53,7 +74,7 @@ function bleRequestBags()	{
 	}
 }
 
-document.getElementById('testBleButton').addEventListener('click', bleRequestBags);
+document.getElementById('bagsRefreshButton').addEventListener('click', bleRequestBags);
 
 function blePing()	{
 	if(bleBusy == false)	{
