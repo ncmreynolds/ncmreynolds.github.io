@@ -98,7 +98,7 @@ function bleRequestScenarioUpdate()	{
 
 
 document.getElementById('scenarioRefreshButton').addEventListener('click', startScenarioUpdate);
-setInterval(bleRequestScenarioUpdate, 10000);
+setInterval(bleRequestScenarioUpdate, 250);
 
 function bleSaveBags()	{
 	if(bleBusy == false)	{
