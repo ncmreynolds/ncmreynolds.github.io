@@ -35,7 +35,7 @@ var lastCommand = 255;
 setInterval(bleKeepAlive, 60000);
 
 function bleKeepAlive()	{
-	if(bleConnected == true && bleBusy = false)	{
+	if(bleConnected == true && bleBusy == false)	{
 		blePing();
 	}
 }
