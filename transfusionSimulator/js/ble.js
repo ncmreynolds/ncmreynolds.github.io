@@ -151,7 +151,11 @@ function onDisconnected(event){
 
 function handleCharacteristicChange(event){	//This happens on a notify
 	//const newValueReceived = new TextDecoder().decode(event.target.value);
-	const responseReceived = new Uint8Array(event.target.value);
+	var responseReceived = new Uint8Array(event.target.value.byteLength);
+	for (var i = 0; i < event.target.value.byteLength; i++) {
+		responseReceived[i] = event.target.value.getUint8(i);
+	}
+	//const responseReceived = new Uint8Array(TextDecoder().decode(event.target.value));
 	//console.log("Response received", responseReceived);
 	if(responseReceived[1] == lastSequenceNumber)	{
 		if((responseReceived[0] & 127) == lastCommand)	{	//Check if it was expected based off the last command
