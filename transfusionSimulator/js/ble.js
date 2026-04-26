@@ -117,10 +117,11 @@ function connectToDevice(){
 }
 
 function onDisconnected(event){
-	console.log('Device Disconnected:', event.target.device.name);
+	bleConnected = false;
 	bleStateContainer.innerHTML = "Device disconnected";
 	bleStateContainer.style.color = "#d13a30";
-	bleConnected = false;
+	//console.log('Device Disconnected:', event.target.device.name);
+	console.log('Disconnected');
 	connectToDevice();
 }
 
