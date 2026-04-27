@@ -88,7 +88,7 @@ function bleRequestSaveConfig()	{
 	}
 }
 
-document.getElementById('saveButton').addEventListener('click', bleRequestSaveConfig);
+//document.getElementById('saveButton').addEventListener('click', bleRequestSaveConfig);
 
 /* Restart requests */
 
