@@ -429,7 +429,7 @@ function handleCharacteristicChange(event){	//This happens on a notify
 							configRefreshInProgress = false;
 							scenarioRefreshIndex = 0;
 							showScenarioTable();
-							showScenarioForm();
+							//showScenarioForm();
 							document.getElementById("configRefreshButton").disabled = false;
 							document.getElementById("configRefreshButton").className = "button-primary u-full-width";
 							document.getElementById("configSaveButton").disabled = false;
@@ -470,7 +470,18 @@ function showScenarioForm()	{
 	document.getElementById("scenarioForm3").style.display = "block";	//Show scenario form
 	document.getElementById("scenarioForm4").style.display = "block";	//Show scenario form
 	document.getElementById("scenarioForm5").style.display = "block";	//Show scenario form
+	document.getElementById("scenarioForm6").style.display = "block";	//Show scenario form
 }
+
+function hideScenarioForm()	{
+	document.getElementById("scenarioForm1").style.display = "block";	//Show scenario form
+	document.getElementById("scenarioForm2").style.display = "block";	//Show scenario form
+	document.getElementById("scenarioForm3").style.display = "block";	//Show scenario form
+	document.getElementById("scenarioForm4").style.display = "block";	//Show scenario form
+	document.getElementById("scenarioForm5").style.display = "block";	//Show scenario form
+	document.getElementById("scenarioForm6").style.display = "block";	//Show scenario form
+}
+
 
 function updateScenarioTable()	{
 	var table = document.getElementById("scenarioTableItself");
@@ -501,6 +512,7 @@ function updateScenarioTable()	{
 function tableOnClick(row)	{
 	if(row != lastClickedScenario)	{
 		console.log(`Scenario ${row} clicked`);
+		showScenarioForm();
 		if(lastClickedScenario != 255)	{
 			document.getElementById(`scenario${lastClickedScenario}`).backgroundColor="white";
 		}
@@ -516,6 +528,14 @@ function tableOnClick(row)	{
 		document.getElementById("recipientBloodType").value = scenarioBloodType[row];
 	}
 }
+
+function updateScenario()	{
+	console.log(`Updating scenario ${lastClickedScenario}`);
+	hideScenarioForm();
+}
+
+document.getElementById('scenarioUpdateButton').addEventListener('click', hideScenarioForm);
+
 
 function bleSendCommand(value){
 	if (bleServer && bleServer.connected) {
