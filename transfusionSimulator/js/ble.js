@@ -270,6 +270,7 @@ function connectToDevice(){
 		characteristic.addEventListener('characteristicvaluechanged', handleCharacteristicChange);
 		characteristic.startNotifications();
 		console.log("Started waiting for data");
+		document.getElementById("disconnectBleButton").className = "u-full-width";
 		document.getElementById("disconnectBleButton").disabled = false;
 		document.getElementById("disconnectBleButton").className = "button-primary u-full-width";
 		document.getElementById("configRefreshButton").disabled = false;
@@ -482,6 +483,13 @@ function disconnectDevice() {
 					console.log("Device Disconnected");
 					bleStateContainer.innerHTML = "Device Disconnected";
 					bleStateContainer.style.color = "#d13a30";
+					document.getElementById("disconnectBleButton").className = "button-primary u-full-width";
+					document.getElementById("disconnectBleButton").disabled = true;
+					document.getElementById("disconnectBleButton").className = "u-full-width";
+					document.getElementById("configRefreshButton").disabled = true;
+					document.getElementById("configRefreshButton").className = "u-full-width";
+					document.getElementById("configSaveButton").disabled = true;
+					document.getElementById("configSaveButton").className = "u-full-width";
 
 				})
 				.catch(error => {
