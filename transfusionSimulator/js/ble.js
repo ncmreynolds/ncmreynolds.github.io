@@ -69,6 +69,7 @@ const scenarioNarrative = [];
 const scenarioAvailable = [];
 const scenarioBloodType = [];
 const scenarioAvailableBloodTypes = [];
+var lastClickedScenario = 255;
 
 /* Full sync */
 
@@ -492,19 +493,27 @@ function updateScenarioTable()	{
 			cell2.innerHTML = "&#8595;";
 		}
 		cell0.addEventListener("click", function(){tableOnClick(`${index}`)});
-		cell0.id = `scenario${i}`;
+		row.id = `scenario${i}`;
 	}
 }
 
 function tableOnClick(row)	{
-	console.log(`Scenario ${row} clicked`);
-	document.getElementById("scenarioName").value = scenarioName[row];
-	document.getElementById("scenarioNarrative").value = scenarioNarrative[row];
-	document.getElementById("available").checked = scenarioAvailable[row];
-	for (var i = 0; i < 8; i++) {
-		document.getElementById(`type${i}`).checked = scenarioAvailableBloodTypes[row][i];
+	if(row != lastClickedScenario)	{
+		console.log(`Scenario ${row} clicked`);
+		if(lastClickedScenario != 255)	{
+			document.getElementById(`scenario${lastClickedScenario}`).backgroundColor="#ffffff";
+		}
+		document.getElementById(`scenario${row}`).backgroundColor="#33c3f0";
+		lastClickedScenario = row;
+		//Load in the data
+		document.getElementById("scenarioName").value = scenarioName[row];
+		document.getElementById("scenarioNarrative").value = scenarioNarrative[row];
+		document.getElementById("available").checked = scenarioAvailable[row];
+		for (var i = 0; i < 8; i++) {
+			document.getElementById(`type${i}`).checked = scenarioAvailableBloodTypes[row][i];
+		}
+		document.getElementById("recipientBloodType").value = scenarioBloodType[row];
 	}
-	document.getElementById("recipientBloodType").value = scenarioBloodType[row];
 }
 
 function bleSendCommand(value){
