@@ -474,12 +474,12 @@ function showScenarioForm()	{
 }
 
 function hideScenarioForm()	{
-	document.getElementById("scenarioForm1").style.display = "block";	//Show scenario form
-	document.getElementById("scenarioForm2").style.display = "block";	//Show scenario form
-	document.getElementById("scenarioForm3").style.display = "block";	//Show scenario form
-	document.getElementById("scenarioForm4").style.display = "block";	//Show scenario form
-	document.getElementById("scenarioForm5").style.display = "block";	//Show scenario form
-	document.getElementById("scenarioForm6").style.display = "block";	//Show scenario form
+	document.getElementById("scenarioForm1").style.display = "none";	//Show scenario form
+	document.getElementById("scenarioForm2").style.display = "none";	//Show scenario form
+	document.getElementById("scenarioForm3").style.display = "none";	//Show scenario form
+	document.getElementById("scenarioForm4").style.display = "none";	//Show scenario form
+	document.getElementById("scenarioForm5").style.display = "none";	//Show scenario form
+	document.getElementById("scenarioForm6").style.display = "none";	//Show scenario form
 }
 
 
