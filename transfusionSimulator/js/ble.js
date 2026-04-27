@@ -409,7 +409,8 @@ function handleCharacteristicChange(event){	//This happens on a notify
 							configRefreshBlock = configRefreshBlock + 1;	//Move on to the next block
 							if(bleBlockSize * configRefreshBlock >= scenarioNameLength[responseReceived[2]])	{	//We've had the last block
 								console.log(`Scenario ${responseReceived[2]} name received "${scenarioName[responseReceived[2]]}"`);
-								configRefreshState = 4;
+								configRefreshState = 4;	//Move on to next state
+								configRefreshBlock = 0;	//Reset to first block
 							} else {
 								console.log(`Scenario ${responseReceived[2]} name block ${responseReceived[3]} received`);
 							}
