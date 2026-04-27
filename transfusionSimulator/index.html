@@ -45,27 +45,67 @@
 				<button class="tablinks" onclick="openTab(event, 'ConnectTab')" id="defaultOpen">Connect</button>
 				<button class="tablinks" onclick="openTab(event, 'BagsTab')">Bags</button>
 				<button class="tablinks" onclick="openTab(event, 'ScenarioTab')">Scenarios</button>
-				<button class="tablinks" onclick="openTab(event, 'GeneralTab')">General</button>
+				<button class="tablinks" onclick="openTab(event, 'OtherTab')">Other</button>
 			</div>
 		</div>
 	</div>
 	<div id="ConnectTab" class="tabcontent">
 		<div class="row">
+			<div class="twelve columns" style="margin-top:5%;margin-bottom:5%">
+				<p><strong><span id="bleState" style="color:#d13a30;">Disconnected</span></strong></p>
+			</div>
+		</div>
+		<div class="row">
 			<div class="six columns">
 				<button id="connectBleButton" class="button-primary">Connect</button>
 			</div>
 			<div class="six columns">
-				<button id="disconnectBleButton">Disconnect</button>
+				<p>Connect to the Transfusion simulator</p>
 			</div>
 		</div>
 		<div class="row">
-			<div class="twelve columns">
-				<p>BLE state: <strong><span id="bleState" style="color:#d13a30;">Disconnected</span></strong></p>
+			<div class="six columns">
+				<button id="disconnectBleButton">Disconnect</button>
+			</div>
+			<div class="six columns">
+				<p>Disconnect from the Transfusion simulator</p>
+			</div>
+		</div>
+		<div class="row">
+			<div class="six columns">
+				<button class="button-primary" id="bagsSaveButton">Save</button>
+			</div>
+			<div class="six columns">
+				<p>Save bag info</p>
+			</div>
+		</div>
+		<div class="row">
+			<div class="six columns">
+				<button class="button-primary" id="bagsRefreshButton">Refresh</button>
+			</div>
+			<div class="six columns">
+				<p>Refresh bag info</p>
+			</div>
+		</div>
+		<div class="row">
+			<div class="six columns">
+				<button class="button-primary" id="scenarioSaveButton">Save</button>
+			</div>
+			<div class="six columns">
+				<p>Save scenario info</p>
+			</div>
+		</div>
+		<div class="row">
+			<div class="six columns" style="margin-top: 5%">
+				<button class="button-primary" id="scenarioRefreshButton">Refresh</button>
+			</div>
+			<div class="six columns">
+				<p>Refresh scenario info</p>
 			</div>
 		</div>
 	</div>
 	<div id="BagsTab" class="tabcontent">
-		<div class="row" id="bagTypes1">
+		<div class="row" id="bagTypes1" style="display:none;">
 			<div class="three columns" style="margin-top: 5%">
 				<label for="bag0">Bag 1</label>
 				<select class="u-full-width" id="bag0">
@@ -123,7 +163,7 @@
 				</select>
 			</div>
 		</div>
-		<div class="row" id="bagTypes2">
+		<div class="row" id="bagTypes2" style="display:none;">
 			<div class="three columns" style="margin-top: 5%">
 				<label for="bag4">Bag 5</label>
 				<select class="u-full-width" id="bag4">
@@ -183,17 +223,9 @@
 		</div>
 		<div class="row" id="bagTypesPlaceholder">
 			<div class="row">
-				<div class="twelve columns" style="margin-top: 10%;margin-bottom: 10%">
+				<div class="twelve columns" style="margin-top: 20%;margin-bottom: 20%">
 					<p>Waiting for bag data</p>
 				</div>
-			</div>
-		</div>
-		<div class="row">
-			<div class="six columns" style="margin-top: 5%">
-				<button class="button-primary" id="bagsSaveButton">Save</button>
-			</div>
-			<div class="six columns" style="margin-top: 5%">
-				<button class="button-primary" id="bagsRefreshButton">Refresh</button>
 			</div>
 		</div>
 	</div>
@@ -226,7 +258,7 @@
 			</div>
 		</div>
 		<div class="row" id="scenarioTablePlaceholder">
-			<div class="twelve columns" style="margin-top: 10%;margin-bottom: 10%">
+			<div class="twelve columns" style="margin-top: 20%;margin-bottom: 20%">
 				<p>Waiting for scenario data</p>
 			</div>
 		</div>
@@ -314,16 +346,8 @@
 				<p>Blood type of the patient</p>
 			</div>
 		</div>
-		<div class="row">
-			<div class="six columns" style="margin-top: 5%">
-				<button class="button-primary" id="scenarioSaveButton">Save</button>
-			</div>
-			<div class="six columns" style="margin-top: 5%">
-				<button class="button-primary" id="scenarioRefreshButton">Refresh</button>
-			</div>
-		</div>
 	</div>
-	<div id="GeneralTab" class="tabcontent">
+	<div id="OtherTab" class="tabcontent">
 		<div class="row">
 			<div class="six columns">
 				<button id="saveButton" class="button-primary">Save changes</button>
