@@ -46,11 +46,14 @@ const bleScenarioGroupsResponse = bleScenarioGroupsRequest | 128;	//'bags' respo
 const bleScenarioBloodTypeRequest = 18;		//Set bags
 const bleScenarioBloodTypeResponse = bleScenarioBloodTypeRequest | 128;	//'bags' response
 
+const bleDummyRequest = 127;		//Dummy value that does nothing and should never be sent
+const bleDummyResponse = bleDummyRequest | 128;	//'dummy' response
+
 var bleConnected = false;	//Simple mark of connection status
 var bleBusy = false;
 var sequenceNumber = 1;	//Every response includes the 'sequence number' (0-255) of the command it's responding to
 var lastSequenceNumber = 0;	//Checks the packet coming back
-var lastCommand = 255;
+var lastCommand = bleDummyRequest;
 var remoteBags = new Uint8Array(8);
 var numberOfScenarios = 0;
 var scenarioRefresh = false;
@@ -251,13 +254,13 @@ function connectToDevice(){
 		characteristic.addEventListener('characteristicvaluechanged', handleCharacteristicChange);
 		characteristic.startNotifications();
 		console.log("Notifications Started.");
-		return characteristic.readValue();
+	/*	return characteristic.readValue();
 	})
 	.then(value => {
 		console.log("Read value: ", value);
 		const decodedValue = new TextDecoder().decode(value);
 		console.log("Decoded value: ", decodedValue);
-		//retrievedValue.innerHTML = decodedValue;
+		//retrievedValue.innerHTML = decodedValue;*/
 	})
 	.catch(error => {
 		console.log('Error: ', error);
@@ -408,6 +411,7 @@ function bleSendCommand(value){
 function disconnectDevice() {
 	console.log("Disconnect Device.");
 	if (bleServer && bleServer.connected) {
+		lastCommand = bleDummyRequest;
 		if (responseCharacteristicFound) {
 			responseCharacteristicFound.stopNotifications()
 				.then(() => {
@@ -443,6 +447,7 @@ function onDisconnected(event){
 	//console.log('Device Disconnected:', event.target.device.name);
 	console.log('Disconnected');
 	//connectToDevice();
+	lastCommand = bleDummyRequest;
 }
 
 // Disconnect Button
