@@ -383,7 +383,7 @@ function handleCharacteristicChange(event){	//This happens on a notify
 				break;
 				case bleScenarioCountResponse:
 					numberOfScenarios = responseReceived[2];
-					if(numberOfScenarios > 10){numberOfScenarios=10};
+					if(numberOfScenarios > 5{numberOfScenarios=5};
 					if(configRefreshInProgress == true)	{
 						console.log(`Number of scenarios updated to ${numberOfScenarios} refeshing other values`);
 						configRefreshState = 2;
@@ -398,14 +398,24 @@ function handleCharacteristicChange(event){	//This happens on a notify
 				break;
 				case bleScenarioNameResponse:
 					if(configRefreshInProgress == true)	{
-						if(responseReceived[3] == 0)	{	//It's block 0
-							scenarioName[responseReceived[2]] = "";
+						if(responseReceived[3] == configRefreshBlock)	
+						{
+							if(configRefreshBlock == 0)	{	//It's block 0
+								scenarioName[responseReceived[2]] = "";
+							}
+							for (var i = bleBlockSize * configRefreshBlock; (i < scenarioNameLength[responseReceived[2]]) && (i - (bleBlockSize * configRefreshBlock) < bleBlockSize); i++) {
+								scenarioName[responseReceived[2]] += String.fromCharCode(responseReceived[i+4-(bleBlockSize * configRefreshBlock)])
+							}
+							configRefreshBlock = configRefreshBlock + 1;	//Move on to the next block
+							if(bleBlockSize * configRefreshBlock >= scenarioNameLength[responseReceived[2]])	{	//We've had the last block
+								console.log(`Scenario ${responseReceived[2]} name received "${scenarioName[responseReceived[2]]}"`);
+								configRefreshState = 4;
+							} else {
+								console.log(`Scenario ${responseReceived[2]} name block ${responseReceived[3]} received`);
+							}
+						} else {
+							console.log(`Scenario ${responseReceived[2]} name WRONG BLOCK ${responseReceived[3]} received`);
 						}
-						for (var i = 0; i < scenarioNameLength[responseReceived[2]]; i++) {
-							scenarioName[responseReceived[2]] += String.fromCharCode(responseReceived[i+4])
-						}
-						console.log(`Scenario ${responseReceived[2]} name block ${responseReceived[3]} received "${scenarioName[responseReceived[2]]}"`);
-						configRefreshState = 4;
 					}
 				break;
 				case bleScenarioNarrativeLengthResponse:
