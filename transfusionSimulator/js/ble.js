@@ -428,15 +428,25 @@ function handleCharacteristicChange(event){	//This happens on a notify
 				break;
 				case bleScenarioNarrativeResponse:
 					if(configRefreshInProgress == true)	{
-						if(responseReceived[3] == 0)	{	//It's block 0
-							scenarioNarrative[responseReceived[2]] = "";
+						if(responseReceived[3] == configRefreshBlock)	
+						{
+							if(configRefreshBlock == 0)	{	//It's block 0
+								scenarioNarrative[responseReceived[2]] = "";
+							}
+							for (var i = bleBlockSize * configRefreshBlock; (i < scenarioNarrativeLength[responseReceived[2]]) && (i - (bleBlockSize * configRefreshBlock) < bleBlockSize); i++) {
+								scenarioNarrative[responseReceived[2]] += String.fromCharCode(responseReceived[i+4-(bleBlockSize * configRefreshBlock)])
+							}
+							configRefreshBlock = configRefreshBlock + 1;	//Move on to the next block
+							if(bleBlockSize * configRefreshBlock >= scenarioNarrativeLength[responseReceived[2]])	{	//We've had the last block
+								console.log(`Scenario ${responseReceived[2]} narrative received "${scenarioNarrative[responseReceived[2]]}"`);
+								configRefreshState = 6;	//Move on to next state
+								configRefreshBlock = 0;	//Reset to first block
+							} else {
+								console.log(`Scenario ${responseReceived[2]} narrative block ${responseReceived[3]} received`);
+							}
+						} else {
+							console.log(`Scenario ${responseReceived[2]} narrative WRONG BLOCK ${responseReceived[3]} received`);
 						}
-						for (var i = 0; i < scenarioNameLength[responseReceived[2]]; i++) {
-							scenarioNarrative[responseReceived[2]] += String.fromCharCode(responseReceived[i+4])
-							//console.log(`${i} - ${responseReceived[i+4]} - ${String.fromCharCode(responseReceived[i+4])}`);
-						}
-						console.log(`Scenario ${responseReceived[2]} narrative block ${responseReceived[3]} received "${scenarioNarrative[responseReceived[2]]}"`);
-						configRefreshState = 6;
 					}
 				break;
 				case bleScenarioAvailableResponse:
