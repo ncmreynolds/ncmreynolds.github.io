@@ -57,9 +57,15 @@ var lastCommand = bleDummyRequest;
 var remoteBags = new Uint8Array(8);
 var remoteBagDataReceived = false;
 var numberOfScenarios = 0;
-var scenarioRefresh = false;
-var scenarioRefreshState = 0;
+var configRefreshInProgress = false;
+var configRefreshState = 0;
 var scenarioRefreshIndex = 0;
+
+/* Full sync */
+
+function startFullSync()	{
+	
+}
 
 /* Save requests */
 
@@ -91,39 +97,43 @@ document.getElementById('restartButton').addEventListener('click', bleRequestRes
 
 /* Scenario admin */
 
-function startScenarioUpdate()	{
-	if(scenarioRefresh == false)	{
-		scenarioRefresh = true;
-		scenarioRefreshState = 0;
+function startConfigRefresh()	{
+	if(configRefreshInProgress == false)	{
+		configRefreshInProgress = true;
+		configRefreshState = 0;
 		scenarioRefreshIndex = 0;
-		console.log("Starting scenario update process");
+		console.log("Starting config update process");
 	}
 }
 
 function bleRequestScenarioUpdate()	{
-	if(scenarioRefresh == true)	{
+	if(configRefreshInProgress == true)	{
 		if(bleBusy == false)	{
-			if(scenarioRefreshState == 0)	{
+			if(configRefreshState == 0)	{
+				console.log("Requesting bag update");
+				const bleBagsRequestPacket = Uint8Array.of(bleBagsRequest,sequenceNumber);
+				bleSendCommand(bleBagsRequestPacket);
+			} else if(configRefreshState == 1)	{
 				console.log("Requesting scenario count update");
 				const bleScenarioUpdateRequestPacket = Uint8Array.of(bleScenarioCountRequest,sequenceNumber);
 				bleSendCommand(bleScenarioUpdateRequestPacket);
-			} else if(scenarioRefreshState == 1)	{
+			} else if(configRefreshState == 2)	{
 				console.log(`Requesting scenario ${scenarioRefreshIndex} name update`);
 				const bleScenarioUpdateRequestPacket = Uint8Array.of(bleScenarioNameRequest,sequenceNumber,scenarioRefreshIndex);
 				bleSendCommand(bleScenarioUpdateRequestPacket);
-			} else if(scenarioRefreshState == 2)	{
+			} else if(configRefreshState == 3)	{
 				console.log(`Requesting scenario ${scenarioRefreshIndex} narrative update`);
 				const bleScenarioUpdateRequestPacket = Uint8Array.of(bleScenarioNarrativeRequest,sequenceNumber,scenarioRefreshIndex);
 				bleSendCommand(bleScenarioUpdateRequestPacket);
-			} else if(scenarioRefreshState == 3)	{
+			} else if(configRefreshState == 4)	{
 				console.log(`Requesting scenario ${scenarioRefreshIndex} availability update`);
 				const bleScenarioUpdateRequestPacket = Uint8Array.of(bleScenarioAvailabilityRequest,sequenceNumber,scenarioRefreshIndex);
 				bleSendCommand(bleScenarioUpdateRequestPacket);
-			} else if(scenarioRefreshState == 4)	{
+			} else if(configRefreshState == 5)	{
 				console.log(`Requesting scenario ${scenarioRefreshIndex} groups update`);
 				const bleScenarioUpdateRequestPacket = Uint8Array.of(bleScenarioGroupsRequest,sequenceNumber,scenarioRefreshIndex);
 				bleSendCommand(bleScenarioUpdateRequestPacket);
-			} else if(scenarioRefreshState == 5)	{
+			} else if(configRefreshState == 6)	{
 				console.log(`Requesting scenario ${scenarioRefreshIndex} blood type update`);
 				const bleScenarioUpdateRequestPacket = Uint8Array.of(bleScenarioBloodTypeRequest,sequenceNumber,scenarioRefreshIndex);
 				bleSendCommand(bleScenarioUpdateRequestPacket);
@@ -134,7 +144,7 @@ function bleRequestScenarioUpdate()	{
 	}
 }
 
-document.getElementById('scenarioRefreshButton').addEventListener('click', startScenarioUpdate);
+document.getElementById('configRefreshButton').addEventListener('click', startConfigRefresh);
 setInterval(bleRequestScenarioUpdate, 250);
 
 /* Bag admin */
@@ -158,8 +168,9 @@ function bleSaveBags()	{
 	}
 }
 
-document.getElementById('bagsSaveButton').addEventListener('click', bleSaveBags);
+document.getElementById('configSaveButton').addEventListener('click', bleSaveBags);
 
+/*
 function bleRequestBags()	{
 	if(bleBusy == false)	{
 		console.log("Requesting bag update");
@@ -171,6 +182,7 @@ function bleRequestBags()	{
 }
 
 document.getElementById('bagsRefreshButton').addEventListener('click', bleRequestBags);
+*/
 
 /*	Ping and keepalive */
 
@@ -187,7 +199,7 @@ function blePing()	{
 setInterval(bleKeepAlive, 90000);
 
 function bleKeepAlive()	{
-	if(bleConnected == true && bleBusy == false && scenarioRefresh == false)	{
+	if(bleConnected == true && bleBusy == false && configRefreshInProgress == false)	{
 		blePing();
 	}
 }
@@ -235,7 +247,6 @@ function connectToDevice(){
 		bleStateContainer.innerHTML = 'Connected to device ' + device.name;
 		bleStateContainer.style.color = "#24af37";
 		bleConnected = true;
-		//setTimeout(bleRequestBags, 1000);	//Request the current bags
 		device.addEventListener('gattserverdisconnected', onDisconnected);
 		return device.gatt.connect();
 	})
@@ -250,11 +261,12 @@ function connectToDevice(){
 		return service.getCharacteristic(responseCharacteristic);
 	})
 	.then(characteristic => {
-		console.log("Characteristic discovered:", characteristic.uuid);
+		console.log("Response characteristic discovered:", characteristic.uuid);
 		responseCharacteristicFound = characteristic;
 		characteristic.addEventListener('characteristicvaluechanged', handleCharacteristicChange);
 		characteristic.startNotifications();
-		console.log("Notifications Started.");
+		console.log("Started waiting for data");
+		setTimeout(startConfigRefresh, 5000);	//Request the current config after connect
 	/*	return characteristic.readValue();
 	})
 	.then(value => {
@@ -315,51 +327,54 @@ function handleCharacteristicChange(event){	//This happens on a notify
 						document.getElementById("bagTypes2").style.display = "block";	//Show bag options
 						document.getElementById("bagTypesPlaceholder").style.display = "none";	//Hide bag placeholder
 					}
+					if(configRefreshInProgress == true)	{
+						configRefreshState = 1;
+					}
 				break;
 				case bleBagUpdateResponse:
 					console.log("Bag update response");
 				break;
 				case bleScenarioCountResponse:
 					numberOfScenarios = responseReceived[2];
-					if(scenarioRefresh == true)	{
+					if(configRefreshInProgress == true)	{
 						console.log(`Number of scenarios updated to ${numberOfScenarios} refeshing other values`);
-						scenarioRefreshState = 1;
+						configRefreshState = 2;
 					}
 				break;
 				case bleScenarioNameResponse:
-					if(scenarioRefresh == true)	{
+					if(configRefreshInProgress == true)	{
 						console.log(`Scenario ${responseReceived[2]} name length ${responseReceived[3]} received`);
-						scenarioRefreshState = 2;
+						configRefreshState = 3;
 					}
 				break;
 				case bleScenarioNarrativeResponse:
-					if(scenarioRefresh == true)	{
+					if(configRefreshInProgress == true)	{
 						console.log(`Scenario ${responseReceived[2]} length ${responseReceived[3]} narrative received`);
-						scenarioRefreshState = 3;
+						configRefreshState = 4;
 					}
 				break;
 				case bleScenarioAvailabilityResponse:
-					if(scenarioRefresh == true)	{
+					if(configRefreshInProgress == true)	{
 						console.log(`Scenario ${responseReceived[2]} availability ${responseReceived[3]} received`);
-						scenarioRefreshState = 4;
+						configRefreshState = 5;
 					}
 				break;
 				case bleScenarioGroupsResponse:
-					if(scenarioRefresh == true)	{
+					if(configRefreshInProgress == true)	{
 						console.log(`Scenario ${responseReceived[2]} available groups received`);
 						for (var i = 0; i < responseReceived[3] && i < 8; i++) {
 							console.log(`Group ${i} available ${responseReceived[4+i]}`);
 						}
-						scenarioRefreshState = 5;
+						configRefreshState = 6;
 					}
 				break;
 				case bleScenarioBloodTypeResponse:
-					if(scenarioRefresh == true)	{
+					if(configRefreshInProgress == true)	{
 						console.log(`Scenario ${responseReceived[2]} blood type ${responseReceived[3]} received`);
-						scenarioRefreshState = 1;
+						configRefreshState = 2;
 						scenarioRefreshIndex+=1;
 						if(scenarioRefreshIndex>=1){//numberOfScenarios)	{	//Stop refreshing
-							scenarioRefresh = false;
+							configRefreshInProgress = false;
 							scenarioRefreshIndex = 0;
 							document.getElementById("scenarioTable").style.display = "block";	//Show scenario table
 							document.getElementById("scenarioTablePlaceholder").style.display = "none";	//Hide scenario table placeholder
@@ -452,7 +467,7 @@ function disconnectDevice() {
 
 function onDisconnected(event){
 	bleConnected = false;
-	scenarioRefresh = false;
+	configRefreshInProgress = false;
 	bleStateContainer.innerHTML = "Device disconnected";
 	bleStateContainer.style.color = "#d13a30";
 	//console.log('Device Disconnected:', event.target.device.name);
