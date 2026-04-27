@@ -51,6 +51,8 @@ const bleDummyResponse = bleDummyRequest | 128;	//'dummy' response
 
 var bleConnected = false;	//Simple mark of connection status
 var bleBusy = false;
+var bleTimeouts = 0;
+const bleErrorThreshold = 20;
 var sequenceNumber = 1;	//Every response includes the 'sequence number' (0-255) of the command it's responding to
 var lastSequenceNumber = 0;	//Checks the packet coming back
 var lastCommand = bleDummyRequest;
@@ -229,6 +231,11 @@ function bleTimeoutCommand()	{
 	if(bleBusy == true)	{
 		bleBusy = false;
 		console.log(`Command ${lastCommand} timed out`);
+		bleTimeouts+=1;
+		if(bleTimeouts > bleErrorThreshold)	{
+			console.log("Excess BLE errors, disconnecting");
+			disconnectDevice();
+		}
 	}
 }
 
@@ -433,6 +440,7 @@ function handleCharacteristicChange(event){	//This happens on a notify
 					console.log("Unknown response");
 				}
 				bleBusy = false;	//Mark command as received OK
+				bleTimeouts = 0;
 			} else {
 				const logMessage = `Unexpected response ${responseReceived[0]}`;
 				console.log(logMessage);
