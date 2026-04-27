@@ -263,7 +263,7 @@
 			</div>
 		</div>
 		<div class="row">
-			<div class="nine columns">
+			<div class="nine columns" id="scenarioForm1" style="display:none;">
 				<label for="scenarioName">Name</label>
 				<input class="u-full-width" type="text" placeholder="Name" id="scenarioName">
 			</div>
@@ -271,7 +271,7 @@
 				<p>This shows up in the scenario list</p>
 			</div>
 		</div>
-		<div class="row">
+		<div class="row" id="scenarioForm2" style="display:none;">
 			<div class="nine columns">
 				<label class="available_label">
 					<input type="checkbox" id="available">
@@ -279,7 +279,7 @@
 				</label>
 			</div>
 		</div>
-		<div class="row">
+		<div class="row" id="scenarioForm3" style="display:none;">
 			<div class="nine columns">
 				<label for="scenarioNarrative">Narrative</label>
 				<textarea class="u-full-width" placeholder="Scenario narrative, which is the main thing shown to the player." id="scenarioNarrative"></textarea>
@@ -288,46 +288,73 @@
 				<p>This shows up in the scenario list</p>
 			</div>
 		</div>
-		<div class="row">
+		<div class="row" id="scenarioForm4" style="display:none;">
 			<div class="nine columns">
-				<label class="available_label">
-					<input type="checkbox" id="group0">
-					<span class="label-body">O-</span>
-				</label>
-				<label class="available_label">
-					<input type="checkbox" id="group1">
-					<span class="label-body">O+</span>
-				</label>
-				<label class="available_label">
-					<input type="checkbox" id="group2">
-					<span class="label-body">A-</span>
-				</label>
-				<label class="available_label">
-					<input type="checkbox" id="group3">
-					<span class="label-body">A+</span>
-				</label>
-				<label class="available_label">
-					<input type="checkbox" id="group4">
-					<span class="label-body">B-</span>
-				</label>
-				<label class="available_label">
-					<input type="checkbox" id="group5">
-					<span class="label-body">B+</span>
-				</label>
-				<label class="available_label">
-					<input type="checkbox" id="group6">
-					<span class="label-body">AB-</span>
-				</label>
-				<label class="available_label">
-					<input type="checkbox" id="group7">
-					<span class="label-body">AB+</span>
-				</label>
+				<table>
+					<tr>
+						<th colspan="4">
+							Available blood types
+						</th>
+					</tr>
+					<tr>
+						<td>
+							<label class="available_label">
+								<input type="checkbox" id="group0">
+								<span class="label-body">O-</span>
+							</label>
+						</td>
+						<td>
+							<label class="available_label">
+								<input type="checkbox" id="group1">
+								<span class="label-body">O+</span>
+							</label>
+						<td>
+						</td>
+							<label class="available_label">
+								<input type="checkbox" id="group2">
+								<span class="label-body">A-</span>
+							</label>
+						<td>
+						</td>
+							<label class="available_label">
+								<input type="checkbox" id="group3">
+								<span class="label-body">A+</span>
+							</label>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<label class="available_label">
+								<input type="checkbox" id="group4">
+								<span class="label-body">B-</span>
+							</label>
+						</td>
+						<td>
+							<label class="available_label">
+								<input type="checkbox" id="group5">
+								<span class="label-body">B+</span>
+							</label>
+						</td>
+						<td>
+							<label class="available_label">
+								<input type="checkbox" id="group6">
+								<span class="label-body">AB-</span>
+							</label>
+						</td>
+						<td>
+							<label class="available_label">
+								<input type="checkbox" id="group7">
+								<span class="label-body">AB+</span>
+							</label>
+						</td>
+					</tr>
+				</table>
 			</div>
 			<div class="three columns">
 				<p>Blood groups enabled in the scenario</p>
 			</div>
 		</div>
-		<div class="row">
+		<div class="row" id="scenarioForm5" style="display:none;">
 			<div class="nine columns">
 				<label for="recipientBloodType">Patient</label>
 				<select class="u-full-width" id="recipientBloodType">
