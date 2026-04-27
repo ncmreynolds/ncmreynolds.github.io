@@ -444,7 +444,7 @@ function updateScenarioTable()	{
 	for (var i = 0; i < numberOfScenarios; i++) {
 		var row = table.insertRow(i+1);
 		//row.addEventListener('click',tableOnClick());
-		row.addEventListener("click", function() {this.style.backgroundColor = "red";});
+		row.addEventListener("click", function() {tableOnClick(i)});
 		row.id = `scenario${i}`;
 		var cell0 = row.insertCell(0);
 		var cell1 = row.insertCell(1);
@@ -457,8 +457,8 @@ function updateScenarioTable()	{
 	}
 }
 
-function tableOnClick()	{
-	console.log(`Row ${this.id} clicked`);
+function tableOnClick(row)	{
+	console.log(`Row ${row} clicked`);
 }
 
 function bleSendCommand(value){
