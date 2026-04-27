@@ -490,7 +490,9 @@ function disconnectDevice() {
 					document.getElementById("configRefreshButton").className = "u-full-width";
 					document.getElementById("configSaveButton").disabled = true;
 					document.getElementById("configSaveButton").className = "u-full-width";
-
+					bleConnected = false;
+					configRefreshInProgress = false;
+					lastCommand = bleDummyRequest;
 				})
 				.catch(error => {
 					console.log("An error occurred:", error);
@@ -512,6 +514,13 @@ function onDisconnected(event){
 	configRefreshInProgress = false;
 	bleStateContainer.innerHTML = "Device disconnected";
 	bleStateContainer.style.color = "#d13a30";
+	document.getElementById("disconnectBleButton").className = "button-primary u-full-width";
+	document.getElementById("disconnectBleButton").disabled = true;
+	document.getElementById("disconnectBleButton").className = "u-full-width";
+	document.getElementById("configRefreshButton").disabled = true;
+	document.getElementById("configRefreshButton").className = "u-full-width";
+	document.getElementById("configSaveButton").disabled = true;
+	document.getElementById("configSaveButton").className = "u-full-width";
 	//console.log('Device Disconnected:', event.target.device.name);
 	console.log('Disconnected');
 	//connectToDevice();
