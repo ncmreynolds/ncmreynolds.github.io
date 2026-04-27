@@ -55,6 +55,7 @@ var sequenceNumber = 1;	//Every response includes the 'sequence number' (0-255) 
 var lastSequenceNumber = 0;	//Checks the packet coming back
 var lastCommand = bleDummyRequest;
 var remoteBags = new Uint8Array(8);
+var remoteBagDataReceived = false;
 var numberOfScenarios = 0;
 var scenarioRefresh = false;
 var scenarioRefreshState = 0;
@@ -310,6 +311,8 @@ function handleCharacteristicChange(event){	//This happens on a notify
 							document.getElementById(`bag${i}`).disabled = true;
 						}
 						console.log(`Bag ${i} type ${responseReceived[i+3]}`);
+						document.getElementById("bagTypes").style.display = "block";	//Show bag options
+						document.getElementById("bagTypesPlaceholder").style.display = "none";	//Hide bag placeholder
 					}
 				break;
 				case bleBagUpdateResponse:
@@ -357,6 +360,8 @@ function handleCharacteristicChange(event){	//This happens on a notify
 						if(scenarioRefreshIndex>=1){//numberOfScenarios)	{	//Stop refreshing
 							scenarioRefresh = false;
 							scenarioRefreshIndex = 0;
+							document.getElementById("scenarioTable").style.display = "block";	//Show scenario table
+							document.getElementById("scenarioTablePlaceholder").style.display = "none";	//Hide scenario table placeholder
 						}
 					}
 				break;
