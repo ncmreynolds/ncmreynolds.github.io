@@ -67,7 +67,6 @@ const scenarioNarrative = [];
 const scenarioAvailable = [];
 const scenarioBloodType = [];
 const scenarioAvailableBloodTypes = [];
-const scenarioName = [];
 
 /* Full sync */
 
