@@ -102,7 +102,7 @@ function bleRequestRestart()	{
 	}
 }
 
-document.getElementById('restartButton').addEventListener('click', bleRequestRestart);
+//document.getElementById('restartButton').addEventListener('click', bleRequestRestart);
 
 /* Scenario admin */
 
