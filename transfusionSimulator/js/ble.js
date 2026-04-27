@@ -398,6 +398,7 @@ function handleCharacteristicChange(event){	//This happens on a notify
 				case bleScenarioAvailableBloodTypesResponse:
 					if(configRefreshInProgress == true)	{
 						console.log(`Scenario ${responseReceived[2]} available groups received`);
+						scenarioAvailableBloodTypes[responseReceived[2]] = [false, false, false, false, false, false, false, false];
 						for (var i = 0; i < responseReceived[3] && i < 8; i++) {
 							if(responseReceived[4+i] == 1)	{
 								scenarioAvailableBloodTypes[responseReceived[2]][i] = true;
