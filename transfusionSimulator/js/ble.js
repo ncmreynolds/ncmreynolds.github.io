@@ -204,7 +204,7 @@ function bleManageSequenceNumber()	{
 function bleTimeoutCommand()	{
 	if(bleBusy == true)	{
 		bleBusy = false;
-		console.log("Command timed out");
+		console.log(`Command ${lastCommand} timed out`);
 	}
 }
 
@@ -395,7 +395,7 @@ function bleSendCommand(value){
 			lastCommand = value[0];
 			bleManageSequenceNumber();
 			bleBusy = true;
-			setTimeout(bleTimeoutCommand, 5000); //Timeout command after 5s
+			setTimeout(bleTimeoutCommand, 1000); //Timeout command after 1s
 		})
 		.catch(error => {
 			console.error("Error writing to the command characteristic: ", error);
