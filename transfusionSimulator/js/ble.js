@@ -383,6 +383,7 @@ function handleCharacteristicChange(event){	//This happens on a notify
 							document.getElementById("scenarioForm3").style.display = "block";	//Show scenario form
 							document.getElementById("scenarioForm4").style.display = "block";	//Show scenario form
 							document.getElementById("scenarioForm5").style.display = "block";	//Show scenario form
+							updateScenarioTable();
 						}
 					}
 				break;
@@ -405,6 +406,24 @@ function handleCharacteristicChange(event){	//This happens on a notify
 	}
 }
 
+function updateScenarioTable()	{
+	var table = document.getElementById("scenarioTableItself");
+	var rowCount = table.rows.length;	//This includes the header which is row 0
+	for (var i = 0; i < rowCount-1; i++) {
+		table.deleteRow(1);	//Delete row 1 which skips the header
+	}
+	for (var i = 0; i < numberOfScenarios; i++) {
+		var row = table.insertRow(i+1);
+		var cell0 = row.insertCell(0);
+		var cell1 = row.insertCell(1);
+		var cell2 = row.insertCell(2);
+		var cell3 = row.insertCell(4);
+		cell0.innerHTML = "Name";
+		cell1.innerHTML = "Group";
+		cell2.innerHTML = "&#8593;";
+		cell3.innerHTML = "&#8595;";
+	}
+}
 
 function bleSendCommand(value){
 	if (bleServer && bleServer.connected) {
