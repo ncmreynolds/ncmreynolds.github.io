@@ -23,6 +23,10 @@ var responseCharacteristicFound;
 //Values for sending/receiving commands. All have the response with bit 8 as I've a C/embedded mindset
 const blePingRequest = 0;		//Check the client is responding with a 'ping'
 const blePingResponse = blePingRequest | 128;	//'ping' response
+const bleSaveRequest = 1;		//Save config
+const bleSaveResponse = bleSaveRequest | 128;	//'save' response
+const bleRestartRequest = 2;		//Restart
+const bleRestartResponse = bleRestartRequest | 128;	//'restart' response
 const bleBagsRequest = 10;		//Ask for bags
 const bleBagsResponse = bleBagsRequest | 128;	//'bags' response
 const bleBagUpdateRequest = 11;		//Set bags
@@ -53,13 +57,35 @@ var scenarioRefresh = false;
 var scenarioRefreshState = 0;
 var scenarioRefreshIndex = 0;
 
-setInterval(bleKeepAlive, 90000);
+/* Save requests */
 
-function bleKeepAlive()	{
-	if(bleConnected == true && bleBusy == false && scenarioRefresh == false)	{
-		blePing();
+function bleRequestSaveConfig()	{
+	if(bleBusy == false)	{
+		console.log("Requesting save config");
+		const blePingPacket = Uint8Array.of(bleSaveRequest,sequenceNumber);
+		bleSendCommand(blePingPacket);
+	} else {
+		console.log("Save config request aborted, BLE busy");
 	}
 }
+
+document.getElementById('saveButton').addEventListener('click', bleRequestSaveConfig);
+
+/* Restart requests */
+
+function bleRequestRestart()	{
+	if(bleBusy == false)	{
+		console.log("Requesting restart");
+		const blePingPacket = Uint8Array.of(bleRestartRequest,sequenceNumber);
+		bleSendCommand(blePingPacket);
+	} else {
+		console.log("Restart request aborted, BLE busy");
+	}
+}
+
+document.getElementById('restartButton').addEventListener('click', bleRequestRestart);
+
+/* Scenario admin */
 
 function startScenarioUpdate()	{
 	if(scenarioRefresh == false)	{
@@ -104,9 +130,10 @@ function bleRequestScenarioUpdate()	{
 	}
 }
 
-
 document.getElementById('scenarioRefreshButton').addEventListener('click', startScenarioUpdate);
 setInterval(bleRequestScenarioUpdate, 250);
+
+/* Bag admin */
 
 function bleSaveBags()	{
 	if(bleBusy == false)	{
@@ -141,6 +168,8 @@ function bleRequestBags()	{
 
 document.getElementById('bagsRefreshButton').addEventListener('click', bleRequestBags);
 
+/*	Ping and keepalive */
+
 function blePing()	{
 	if(bleBusy == false)	{
 		console.log("Pinging");
@@ -150,6 +179,16 @@ function blePing()	{
 		console.log("Ping aborted, BLE busy");
 	}
 }
+
+setInterval(bleKeepAlive, 90000);
+
+function bleKeepAlive()	{
+	if(bleConnected == true && bleBusy == false && scenarioRefresh == false)	{
+		blePing();
+	}
+}
+
+/* Protocol stuff */
 
 function bleManageSequenceNumber()	{
 	lastSequenceNumber = sequenceNumber;	//Record last one
@@ -166,15 +205,6 @@ function bleTimeoutCommand()	{
 	}
 }
 
-// Connect Button (search for BLE Devices only if BLE is available)
-connectButton.addEventListener('click', (event) => {
-	if (isWebBluetoothEnabled()){
-		connectToDevice();
-	}
-});
-
-// Disconnect Button
-disconnectButton.addEventListener('click', disconnectDevice);
 
 // Check if BLE is available in your Browser
 function isWebBluetoothEnabled() {
@@ -186,6 +216,8 @@ function isWebBluetoothEnabled() {
 	console.log('Web Bluetooth API supported in this browser.');
 	return true
 }
+
+/* Connection */
 
 // Connect to BLE Device and Enable Notifications
 function connectToDevice(){
@@ -232,15 +264,14 @@ function connectToDevice(){
 	})
 }
 
-function onDisconnected(event){
-	bleConnected = false;
-	scenarioRefresh = false;
-	bleStateContainer.innerHTML = "Device disconnected";
-	bleStateContainer.style.color = "#d13a30";
-	//console.log('Device Disconnected:', event.target.device.name);
-	console.log('Disconnected');
-	//connectToDevice();
-}
+// Connect Button (search for BLE Devices only if BLE is available)
+connectButton.addEventListener('click', (event) => {
+	if (isWebBluetoothEnabled()){
+		connectToDevice();
+	}
+});
+
+/* Characteristic change/notify */
 
 function handleCharacteristicChange(event){	//This happens on a notify
 	//const newValueReceived = new TextDecoder().decode(event.target.value);
@@ -256,6 +287,13 @@ function handleCharacteristicChange(event){	//This happens on a notify
 				switch(responseReceived[0]) {
 				case blePingResponse:
 					console.log("Ping response");
+				break;
+				case bleSaveResponse:
+					console.log("Save response");
+				break;
+				case bleRestartResponse:
+					console.log("Restart response, disconnecting");
+					disconnectDevice();
 				break;
 				case bleBagsResponse:
 					console.log(`Bags response, data for ${responseReceived[2]} bags`);
@@ -365,6 +403,8 @@ function bleSendCommand(value){
 	}
 }
 
+/* Disconnection */
+
 function disconnectDevice() {
 	console.log("Disconnect Device.");
 	if (bleServer && bleServer.connected) {
@@ -394,3 +434,17 @@ function disconnectDevice() {
 		}
 	}
 }
+
+function onDisconnected(event){
+	bleConnected = false;
+	scenarioRefresh = false;
+	bleStateContainer.innerHTML = "Device disconnected";
+	bleStateContainer.style.color = "#d13a30";
+	//console.log('Device Disconnected:', event.target.device.name);
+	console.log('Disconnected');
+	//connectToDevice();
+}
+
+// Disconnect Button
+disconnectButton.addEventListener('click', disconnectDevice);
+
