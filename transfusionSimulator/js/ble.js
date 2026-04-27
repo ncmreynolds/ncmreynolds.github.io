@@ -377,7 +377,7 @@ function handleCharacteristicChange(event){	//This happens on a notify
 						for (var i = 0; i < responseReceived[3]; i++) {
 							scenarioName[responseReceived[2]] += String.fromCharCode(responseReceived[i+4])
 						}
-						console.log(`Scenario ${responseReceived[2]} name length ${responseReceived[3]} received "scenarioName[responseReceived[2]]"`);
+						console.log(`Scenario ${responseReceived[2]} name length ${responseReceived[3]} received "${scenarioName[responseReceived[2]]}"`);
 						configRefreshState = 3;
 					}
 				break;
@@ -387,7 +387,7 @@ function handleCharacteristicChange(event){	//This happens on a notify
 						for (var i = 0; i < responseReceived[3]; i++) {
 							scenarioNarrative[responseReceived[2]] += String.fromCharCode(responseReceived[i+4])
 						}
-						console.log(`Scenario ${responseReceived[2]} length ${responseReceived[3]} narrative received`);
+						console.log(`Scenario ${responseReceived[2]} length ${responseReceived[3]} narrative received "${scenarioNarrative[responseReceived[2]]}"`);
 						configRefreshState = 4;
 					}
 				break;
