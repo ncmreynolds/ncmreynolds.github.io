@@ -534,7 +534,7 @@ function updateScenario()	{
 	hideScenarioForm();
 }
 
-document.getElementById('scenarioUpdateButton').addEventListener('click', hideScenarioForm);
+document.getElementById('scenarioUpdateButton').addEventListener('click', updateScenario);
 
 
 function bleSendCommand(value){
