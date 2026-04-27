@@ -99,6 +99,10 @@ document.getElementById('restartButton').addEventListener('click', bleRequestRes
 
 function startConfigRefresh()	{
 	if(configRefreshInProgress == false)	{
+		document.getElementById("configRefreshButton").disabled = true;
+		document.getElementById("configRefreshButton").className = "u-full-width";
+		document.getElementById("configSaveButton").disabled = true;
+		document.getElementById("configSaveButton").className = "u-full-width";
 		configRefreshInProgress = true;
 		configRefreshState = 0;
 		scenarioRefreshIndex = 0;
@@ -266,6 +270,12 @@ function connectToDevice(){
 		characteristic.addEventListener('characteristicvaluechanged', handleCharacteristicChange);
 		characteristic.startNotifications();
 		console.log("Started waiting for data");
+		document.getElementById("disconnectBleButton").disabled = false;
+		document.getElementById("disconnectBleButton").className = "button-primary u-full-width";
+		document.getElementById("configRefreshButton").disabled = false;
+		document.getElementById("configRefreshButton").className = "button-primary u-full-width";
+		document.getElementById("configSaveButton").disabled = false;
+		document.getElementById("configSaveButton").className = "button-primary u-full-width";
 		setTimeout(startConfigRefresh, 5000);	//Request the current config after connect
 	/*	return characteristic.readValue();
 	})
@@ -315,12 +325,13 @@ function handleCharacteristicChange(event){	//This happens on a notify
 					console.log(`Bags response, data for ${responseReceived[2]} bags`);
 					for (var i = 0; i < responseReceived[2] && i < 8; i++) {
 						remoteBags[i] = responseReceived[i+3];
+						var bag = document.getElementById(`bag${i}`);
 						if(responseReceived[i+3] < 9)	{
-							document.getElementById(`bag${i}`).value = `${responseReceived[i+3]}`;
-							document.getElementById(`bag${i}`).disabled = false;
+							bag.value = `${responseReceived[i+3]}`;
+							bag.disabled = false;
 						} else {
-							document.getElementById(`bag${i}`).value = "8";
-							document.getElementById(`bag${i}`).disabled = true;
+							bag.value = "8";
+							bag.disabled = true;
 						}
 						console.log(`Bag ${i} type ${responseReceived[i+3]}`);
 						document.getElementById("bagTypes1").style.display = "block";	//Show bag options
@@ -376,6 +387,10 @@ function handleCharacteristicChange(event){	//This happens on a notify
 						if(scenarioRefreshIndex>=1){//numberOfScenarios)	{	//Stop refreshing
 							configRefreshInProgress = false;
 							scenarioRefreshIndex = 0;
+							document.getElementById("configRefreshButton").disabled = false;
+							document.getElementById("configRefreshButton").className = "button-primary u-full-width";
+							document.getElementById("configSaveButton").disabled = false;
+							document.getElementById("configSaveButton").className = "button-primary u-full-width";
 							document.getElementById("scenarioTable").style.display = "block";	//Show scenario table
 							document.getElementById("scenarioTablePlaceholder").style.display = "none";	//Hide scenario table placeholder
 							document.getElementById("scenarioForm1").style.display = "block";	//Show scenario form
@@ -417,7 +432,7 @@ function updateScenarioTable()	{
 		var cell0 = row.insertCell(0);
 		var cell1 = row.insertCell(1);
 		var cell2 = row.insertCell(2);
-		var cell3 = row.insertCell(4);
+		var cell3 = row.insertCell(3);
 		cell0.innerHTML = "Name";
 		cell1.innerHTML = "Group";
 		cell2.innerHTML = "&#8593;";
