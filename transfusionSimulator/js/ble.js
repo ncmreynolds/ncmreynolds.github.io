@@ -501,9 +501,9 @@ function tableOnClick(row)	{
 	if(row != lastClickedScenario)	{
 		console.log(`Scenario ${row} clicked`);
 		if(lastClickedScenario != 255)	{
-			document.getElementById(`scenario${lastClickedScenario}`).backgroundColor="#ffffff";
+			document.getElementById(`scenario${lastClickedScenario}`).backgroundColor="white";
 		}
-		document.getElementById(`scenario${row}`).backgroundColor="#33c3f0";
+		document.getElementById(`scenario${row}`).backgroundColor="red";
 		lastClickedScenario = row;
 		//Load in the data
 		document.getElementById("scenarioName").value = scenarioName[row];
