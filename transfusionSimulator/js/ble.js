@@ -270,13 +270,7 @@ function connectToDevice(){
 		characteristic.addEventListener('characteristicvaluechanged', handleCharacteristicChange);
 		characteristic.startNotifications();
 		console.log("Started waiting for data");
-		document.getElementById("disconnectBleButton").className = "u-full-width";
-		document.getElementById("disconnectBleButton").disabled = false;
-		document.getElementById("disconnectBleButton").className = "button-primary u-full-width";
-		document.getElementById("configRefreshButton").disabled = false;
-		document.getElementById("configRefreshButton").className = "button-primary u-full-width";
-		document.getElementById("configSaveButton").disabled = false;
-		document.getElementById("configSaveButton").className = "button-primary u-full-width";
+		uiChangeOnConnect();
 		setTimeout(startConfigRefresh, 5000);	//Request the current config after connect
 	/*	return characteristic.readValue();
 	})
@@ -297,6 +291,16 @@ connectButton.addEventListener('click', (event) => {
 		connectToDevice();
 	}
 });
+
+function uiChangeOnConnect()	{
+	document.getElementById("disconnectBleButton").className = "u-full-width";
+	document.getElementById("disconnectBleButton").disabled = false;
+	document.getElementById("disconnectBleButton").className = "button-primary u-full-width";
+	document.getElementById("configRefreshButton").disabled = false;
+	document.getElementById("configRefreshButton").className = "button-primary u-full-width";
+	document.getElementById("configSaveButton").disabled = false;
+	document.getElementById("configSaveButton").className = "button-primary u-full-width";
+}
 
 /* Characteristic change/notify */
 
@@ -388,17 +392,12 @@ function handleCharacteristicChange(event){	//This happens on a notify
 						if(scenarioRefreshIndex>=1){//numberOfScenarios)	{	//Stop refreshing
 							configRefreshInProgress = false;
 							scenarioRefreshIndex = 0;
+							showScenarioTable();
+							showScenarioForm();
 							document.getElementById("configRefreshButton").disabled = false;
 							document.getElementById("configRefreshButton").className = "button-primary u-full-width";
 							document.getElementById("configSaveButton").disabled = false;
 							document.getElementById("configSaveButton").className = "button-primary u-full-width";
-							document.getElementById("scenarioTable").style.display = "block";	//Show scenario table
-							document.getElementById("scenarioTablePlaceholder").style.display = "none";	//Hide scenario table placeholder
-							document.getElementById("scenarioForm1").style.display = "block";	//Show scenario form
-							document.getElementById("scenarioForm2").style.display = "block";	//Show scenario form
-							document.getElementById("scenarioForm3").style.display = "block";	//Show scenario form
-							document.getElementById("scenarioForm4").style.display = "block";	//Show scenario form
-							document.getElementById("scenarioForm5").style.display = "block";	//Show scenario form
 							updateScenarioTable();
 						}
 					}
@@ -422,6 +421,19 @@ function handleCharacteristicChange(event){	//This happens on a notify
 	}
 }
 
+function showScenarioTable()	{
+	document.getElementById("scenarioTable").style.display = "block";	//Show scenario table
+	document.getElementById("scenarioTablePlaceholder").style.display = "none";	//Hide scenario table placeholder
+}
+
+function showScenarioForm()	{
+	document.getElementById("scenarioForm1").style.display = "block";	//Show scenario form
+	document.getElementById("scenarioForm2").style.display = "block";	//Show scenario form
+	document.getElementById("scenarioForm3").style.display = "block";	//Show scenario form
+	document.getElementById("scenarioForm4").style.display = "block";	//Show scenario form
+	document.getElementById("scenarioForm5").style.display = "block";	//Show scenario form
+}
+
 function updateScenarioTable()	{
 	var table = document.getElementById("scenarioTableItself");
 	var rowCount = table.rows.length;	//This includes the header which is row 0
@@ -430,15 +442,20 @@ function updateScenarioTable()	{
 	}
 	for (var i = 0; i < numberOfScenarios; i++) {
 		var row = table.insertRow(i+1);
+		row.addEventListener('click',function(){tableOnClick(i);});
 		var cell0 = row.insertCell(0);
 		var cell1 = row.insertCell(1);
 		var cell2 = row.insertCell(2);
 		var cell3 = row.insertCell(3);
-		cell0.innerHTML = "Name";
+		cell0.innerHTML = `Name ${i}`;
 		cell1.innerHTML = "Group";
 		cell2.innerHTML = "&#8593;";
 		cell3.innerHTML = "&#8595;";
 	}
+}
+
+function tableOnClick(row)	{
+	console.log(`Row ${row-1} clicked`);
 }
 
 function bleSendCommand(value){
@@ -469,6 +486,18 @@ function bleSendCommand(value){
 
 /* Disconnection */
 
+function uiChangeOnDisconnect ()	{
+	bleStateContainer.innerHTML = "Device Disconnected";
+	bleStateContainer.style.color = "#d13a30";
+	document.getElementById("disconnectBleButton").className = "button-primary u-full-width";
+	document.getElementById("disconnectBleButton").disabled = true;
+	document.getElementById("disconnectBleButton").className = "u-full-width";
+	document.getElementById("configRefreshButton").disabled = true;
+	document.getElementById("configRefreshButton").className = "u-full-width";
+	document.getElementById("configSaveButton").disabled = true;
+	document.getElementById("configSaveButton").className = "u-full-width";
+}
+
 function disconnectDevice() {
 	console.log("Disconnect Device.");
 	if (bleServer && bleServer.connected) {
@@ -481,15 +510,6 @@ function disconnectDevice() {
 				})
 				.then(() => {
 					console.log("Device Disconnected");
-					bleStateContainer.innerHTML = "Device Disconnected";
-					bleStateContainer.style.color = "#d13a30";
-					document.getElementById("disconnectBleButton").className = "button-primary u-full-width";
-					document.getElementById("disconnectBleButton").disabled = true;
-					document.getElementById("disconnectBleButton").className = "u-full-width";
-					document.getElementById("configRefreshButton").disabled = true;
-					document.getElementById("configRefreshButton").className = "u-full-width";
-					document.getElementById("configSaveButton").disabled = true;
-					document.getElementById("configSaveButton").className = "u-full-width";
 					bleConnected = false;
 					configRefreshInProgress = false;
 					lastCommand = bleDummyRequest;
@@ -512,18 +532,9 @@ function disconnectDevice() {
 function onDisconnected(event){
 	bleConnected = false;
 	configRefreshInProgress = false;
-	bleStateContainer.innerHTML = "Device disconnected";
-	bleStateContainer.style.color = "#d13a30";
-	document.getElementById("disconnectBleButton").className = "button-primary u-full-width";
-	document.getElementById("disconnectBleButton").disabled = true;
-	document.getElementById("disconnectBleButton").className = "u-full-width";
-	document.getElementById("configRefreshButton").disabled = true;
-	document.getElementById("configRefreshButton").className = "u-full-width";
-	document.getElementById("configSaveButton").disabled = true;
-	document.getElementById("configSaveButton").className = "u-full-width";
+	uiChangeOnDisconnect ();
 	//console.log('Device Disconnected:', event.target.device.name);
 	console.log('Disconnected');
-	//connectToDevice();
 	lastCommand = bleDummyRequest;
 }
 
