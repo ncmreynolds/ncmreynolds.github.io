@@ -493,7 +493,8 @@ function updateScenarioTable()	{
 			cell2.innerHTML = "&#8595;";
 		}
 		cell0.addEventListener("click", function(){tableOnClick(`${index}`)});
-		row.id = `scenario${i}`;
+		row.id = `scenario${index}`;
+		row.backgroundColor="red";
 	}
 }
 
