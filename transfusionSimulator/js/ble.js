@@ -271,7 +271,7 @@ function connectToDevice(){
 		characteristic.startNotifications();
 		console.log("Started waiting for data");
 		uiChangeOnConnect();
-		setTimeout(startConfigRefresh, 5000);	//Request the current config after connect
+		setTimeout(startConfigRefresh, 1000);	//Request the current config after connect
 	/*	return characteristic.readValue();
 	})
 	.then(value => {
@@ -444,7 +444,7 @@ function updateScenarioTable()	{
 	for (var i = 0; i < numberOfScenarios; i++) {
 		var row = table.insertRow(i+1);
 		//row.addEventListener('click',tableOnClick());
-		row.addEventListener("click", function() {tableOnClick(i)});
+		row.addEventListener("click", function(){tableOnClick(`${i}`)});
 		row.id = `scenario${i}`;
 		var cell0 = row.insertCell(0);
 		var cell1 = row.insertCell(1);
