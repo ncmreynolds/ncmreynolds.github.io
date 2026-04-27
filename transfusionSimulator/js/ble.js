@@ -311,7 +311,8 @@ function handleCharacteristicChange(event){	//This happens on a notify
 							document.getElementById(`bag${i}`).disabled = true;
 						}
 						console.log(`Bag ${i} type ${responseReceived[i+3]}`);
-						document.getElementById("bagTypes").style.display = "block";	//Show bag options
+						document.getElementById("bagTypes1").style.display = "block";	//Show bag options
+						document.getElementById("bagTypes2").style.display = "block";	//Show bag options
 						document.getElementById("bagTypesPlaceholder").style.display = "none";	//Hide bag placeholder
 					}
 				break;
