@@ -363,6 +363,11 @@ function handleCharacteristicChange(event){	//This happens on a notify
 							scenarioRefreshIndex = 0;
 							document.getElementById("scenarioTable").style.display = "block";	//Show scenario table
 							document.getElementById("scenarioTablePlaceholder").style.display = "none";	//Hide scenario table placeholder
+							document.getElementById("scenarioForm1").style.display = "block";	//Show scenario form
+							document.getElementById("scenarioForm2").style.display = "block";	//Show scenario form
+							document.getElementById("scenarioForm3").style.display = "block";	//Show scenario form
+							document.getElementById("scenarioForm4").style.display = "block";	//Show scenario form
+							document.getElementById("scenarioForm5").style.display = "block";	//Show scenario form
 						}
 					}
 				break;
