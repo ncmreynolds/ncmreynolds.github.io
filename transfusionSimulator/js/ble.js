@@ -501,7 +501,7 @@ function tableOnClick(row)	{
 	document.getElementById("scenarioNarrative").value = scenarioNarrative[row];
 	document.getElementById("available").checked = scenarioAvailable[row];
 	for (var i = 0; i < 8; i++) {
-		document.getElementById(`bag${i}`).checked = scenarioAvailableBloodTypes[row][i];
+		document.getElementById(`type${i}`).checked = scenarioAvailableBloodTypes[row][i];
 	}
 	document.getElementById("recipientBloodType").value = scenarioBloodType[row];
 }
