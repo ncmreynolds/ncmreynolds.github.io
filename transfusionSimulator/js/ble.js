@@ -423,6 +423,7 @@ function handleCharacteristicChange(event){	//This happens on a notify
 
 function showScenarioTable()	{
 	document.getElementById("scenarioTable").style.display = "block";	//Show scenario table
+	document.getElementById('scenarioTableItself').style.height='100px';
 	document.getElementById("scenarioTablePlaceholder").style.display = "none";	//Hide scenario table placeholder
 }
 
