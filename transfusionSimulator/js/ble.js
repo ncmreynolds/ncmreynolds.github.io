@@ -366,6 +366,7 @@ function handleCharacteristicChange(event){	//This happens on a notify
 				break;
 				case bleScenarioCountResponse:
 					numberOfScenarios = responseReceived[2];
+					if(numberOfScenarios > 10){numberOfScenarios=10);
 					if(configRefreshInProgress == true)	{
 						console.log(`Number of scenarios updated to ${numberOfScenarios} refeshing other values`);
 						configRefreshState = 2;
@@ -423,7 +424,7 @@ function handleCharacteristicChange(event){	//This happens on a notify
 						console.log(`Scenario ${responseReceived[2]} blood type ${responseReceived[3]} received`);
 						configRefreshState = 2;
 						scenarioRefreshIndex+=1;
-						if(scenarioRefreshIndex>=1){//numberOfScenarios)	{	//Stop refreshing
+						if(scenarioRefreshIndex>=numberOfScenarios)	{	//Stop refreshing
 							configRefreshInProgress = false;
 							scenarioRefreshIndex = 0;
 							showScenarioTable();
