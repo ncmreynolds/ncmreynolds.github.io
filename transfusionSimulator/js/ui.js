@@ -1,14 +1,14 @@
 function uiBleTransactionInProgress()	{
 	configRefreshButtonObj.disabled = true;
 	configRefreshButtonObj.className = "u-full-width";
-	document.getElementById("configSaveButton").disabled = true;
-	document.getElementById("configSaveButton").className = "u-full-width";
+	configSaveButtonObj.disabled = true;
+	configSaveButtonObj.className = "u-full-width";
 }
 function uiBleTransactionComplete()	{
 	configRefreshButtonObj.disabled = false;
 	configRefreshButtonObj.className = "button-primary u-full-width";
-	document.getElementById("configSaveButton").disabled = false;
-	document.getElementById("configSaveButton").className = "button-primary u-full-width";
+	configSaveButtonObj.disabled = false;
+	configSaveButtonObj.className = "button-primary u-full-width";
 }
 /*
 
@@ -269,8 +269,8 @@ function uiChangeOnDisconnect ()	{
 	document.getElementById("disconnectBleButton").className = "u-full-width";
 	configRefreshButtonObj.disabled = true;
 	configRefreshButtonObj.className = "u-full-width";
-	document.getElementById("configSaveButton").disabled = true;
-	document.getElementById("configSaveButton").className = "u-full-width";
+	configSaveButtonObj.disabled = true;
+	configSaveButtonObj.className = "u-full-width";
 }
 
 // Disconnect Button
@@ -288,8 +288,8 @@ function uiChangeOnConnect()	{
 	document.getElementById("disconnectBleButton").className = "button-primary u-full-width";
 	configRefreshButtonObj.disabled = false;
 	configRefreshButtonObj.className = "button-primary u-full-width";
-	document.getElementById("configSaveButton").disabled = false;
-	document.getElementById("configSaveButton").className = "button-primary u-full-width";
+	configSaveButtonObj.disabled = false;
+	configSaveButtonObj.className = "button-primary u-full-width";
 }
 
 
