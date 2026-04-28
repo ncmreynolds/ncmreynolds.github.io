@@ -61,14 +61,9 @@ const bleBlockSize = 50;
 var sequenceNumber = 1;	//Every response includes the 'sequence number' (0-255) of the command it's responding to
 var lastSequenceNumber = 0;	//Checks the packet coming back
 var lastCommand = bleDummyRequest;
-var remoteBags = new Uint8Array(8);
-var remoteBagDataReceived = false;
 
-//Full config refresh
-var configRefreshInProgress = false;
-var configRefreshState = 0;
-var configRefreshIndex = 0;
-var configRefreshBlock = 0;
+//Bag data
+var remoteBags = new Uint8Array(8);
 
 //Scenario data
 var numberOfScenarios = 0;
@@ -80,9 +75,18 @@ const scenarioAvailable = [];
 const scenarioBloodType = [];
 const scenarioAvailableBloodTypes = [];
 
+//Full config refresh
+var configRefreshInProgress = false;
+var configRefreshState = 0;
+var configRefreshIndex = 0;
+var configRefreshBlock = 0;
+
+//Bag send
+var bagSendInProgress = false;
+
 //Scenario send
 var lastClickedScenario = 255;
-var scenarioSendInProgress = 0;
+var scenarioSendInProgress = false;
 var scenarioSendState = 0;
 var scenarioSendIndex = 0;
 var scenarioSendBlock = 0;
@@ -335,9 +339,7 @@ function handleCharacteristicChange(event){	//This happens on a notify
 							bag.disabled = true;
 						}
 						console.log(`Bag ${i} type ${responseReceived[i+3]}`);
-						document.getElementById("bagTypes1").style.display = "block";	//Show bag options
-						document.getElementById("bagTypes2").style.display = "block";	//Show bag options
-						document.getElementById("bagTypesPlaceholder").style.display = "none";	//Hide bag placeholder
+						showBagTypesTable();
 					}
 					if(configRefreshInProgress == true)	{
 						configRefreshState = 1;

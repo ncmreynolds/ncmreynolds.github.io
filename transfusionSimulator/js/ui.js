@@ -12,6 +12,23 @@ function uiBleTransactionComplete()	{
 }
 /*
 
+	Bags table
+
+*/
+function showBagTypesTable()	{
+	document.getElementById("bagTypes1").style.display = "block";	//Show bag options
+	document.getElementById("bagTypes2").style.display = "block";	//Show bag options
+	document.getElementById("bagTypes3").style.display = "block";	//Show bag options
+	document.getElementById("bagTypesPlaceholder").style.display = "none";	//Hide bag placeholder
+}
+function hideBagTypesTable()	{
+	document.getElementById("bagTypes1").style.display = "none";	//Show bag options
+	document.getElementById("bagTypes2").style.display = "none";	//Show bag options
+	document.getElementById("bagTypes3").style.display = "none";	//Show bag options
+	document.getElementById("bagTypesPlaceholder").style.display = "block";	//Hide bag placeholder
+}
+/*
+
 	Scenario table
 
 */
@@ -69,7 +86,8 @@ function tableOnClick(row)	{
 }
 
 function updateRefreshStatus()	{
-	document.getElementById("scenarioProgress").innerHTML=`Updating - ${(configRefreshIndex*7)+(configRefreshState-2)}/${(7 * numberOfScenarios)}`;
+	document.getElementById("scenarioProgress1").innerHTML=`Updating - ${(configRefreshIndex*7)+(configRefreshState-2)}/${(7 * numberOfScenarios)}`;
+	document.getElementById("scenarioProgress2").innerHTML=`Updating - ${(configRefreshIndex*7)+(configRefreshState-2)}/${(7 * numberOfScenarios)}`;
 }
 
 /*
@@ -196,6 +214,9 @@ function startConfigRefresh()	{
 		configRefreshState = 0;
 		configRefreshIndex = 0;
 		uiBleTransactionInProgress();
+		hideBagTypesTable();
+		hideScenarioTable();
+		hideScenarioForm();
 		disableScenarioForm();
 		console.log("Starting config update process");
 	}
@@ -205,6 +226,7 @@ function configRefreshComplete()	{
 	configRefreshInProgress = false;
 	configRefreshState = 0;
 	configRefreshIndex = 0;
+	hideBagTypesTable();
 	updateScenarioTable();
 	showScenarioTable();
 	uiBleTransactionComplete();
