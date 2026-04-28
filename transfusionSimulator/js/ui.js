@@ -282,7 +282,7 @@ function startConfigRefresh()	{
 		configRefreshIndex = 0;
 		uiBleTransactionInProgress();
 		hideBagTypesTable();
-		disableBagtypesTable();
+		disableBagTypesForm();
 		hideScenarioTable();
 		hideScenarioForm();
 		disableScenarioForm();
@@ -295,7 +295,7 @@ function configRefreshComplete()	{
 	configRefreshState = 0;
 	configRefreshIndex = 0;
 	showBagTypesTable();
-	enableBagtypesTable();
+	enableBagTypesForm();
 	updateScenarioTable();
 	showScenarioTable();
 	enableScenarioForm();
