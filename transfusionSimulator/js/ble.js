@@ -97,8 +97,6 @@ function bleRequestSaveConfig()	{
 	}
 }
 
-//document.getElementById('saveButton').addEventListener('click', bleRequestSaveConfig);
-
 /* Restart requests */
 
 function bleRequestRestart()	{
@@ -111,19 +109,20 @@ function bleRequestRestart()	{
 	}
 }
 
-//document.getElementById('restartButton').addEventListener('click', bleRequestRestart);
-
 /* Scenario admin */
+
+function startSendingScenario()	{
+	console.log(`Updating scenario ${lastClickedScenario}`);
+	uiBleTransactionInProgress();
+	hideScenarioForm();
+}
 
 function startConfigRefresh()	{
 	if(configRefreshInProgress == false)	{
-		document.getElementById("configRefreshButton").disabled = true;
-		document.getElementById("configRefreshButton").className = "u-full-width";
-		document.getElementById("configSaveButton").disabled = true;
-		document.getElementById("configSaveButton").className = "u-full-width";
 		configRefreshInProgress = true;
 		configRefreshState = 0;
 		configRefreshIndex = 0;
+		uiBleTransactionInProgress();
 		console.log("Starting config update process");
 	}
 }
@@ -185,7 +184,6 @@ function updateRefreshStatus()	{
 	document.getElementById("scenarioProgress").innerHTML=`Updating - ${(configRefreshIndex*7)+(configRefreshState-2)}/${(7 * numberOfScenarios)}`;
 }
 
-document.getElementById('configRefreshButton').addEventListener('click', startConfigRefresh);
 setInterval(bleRequestScenarioUpdate, 250);
 
 /* Bag admin */
@@ -208,22 +206,6 @@ function bleSaveBags()	{
 		console.log("Bag save aborted, BLE busy");
 	}
 }
-
-document.getElementById('configSaveButton').addEventListener('click', bleSaveBags);
-
-/*
-function bleRequestBags()	{
-	if(bleBusy == false)	{
-		console.log("Requesting bag update");
-		const bleBagsRequestPacket = Uint8Array.of(bleBagsRequest,sequenceNumber);
-		bleSendCommand(bleBagsRequestPacket);
-	} else {
-		console.log("Bag update aborted, BLE busy");
-	}
-}
-
-document.getElementById('bagsRefreshButton').addEventListener('click', bleRequestBags);
-*/
 
 /*	Ping and keepalive */
 
@@ -327,12 +309,7 @@ function connectToDevice(){
 	})
 }
 
-// Connect Button (search for BLE Devices only if BLE is available)
-connectButton.addEventListener('click', (event) => {
-	if (isWebBluetoothEnabled()){
-		connectToDevice();
-	}
-});
+
 
 function uiChangeOnConnect()	{
 	document.getElementById("disconnectBleButton").className = "u-full-width";
@@ -495,13 +472,9 @@ function handleCharacteristicChange(event){	//This happens on a notify
 						if(configRefreshIndex>=numberOfScenarios)	{	//Stop refreshing
 							configRefreshInProgress = false;
 							configRefreshIndex = 0;
-							showScenarioTable();
-							//showScenarioForm();
-							document.getElementById("configRefreshButton").disabled = false;
-							document.getElementById("configRefreshButton").className = "button-primary u-full-width";
-							document.getElementById("configSaveButton").disabled = false;
-							document.getElementById("configSaveButton").className = "button-primary u-full-width";
 							updateScenarioTable();
+							showScenarioTable();
+							uiBleTransactionComplete();
 						}
 					}
 				break;
@@ -523,30 +496,6 @@ function handleCharacteristicChange(event){	//This happens on a notify
 	} else {
 		console.log("Short packet received, ${event.target.value.byteLength}");
 	}
-}
-
-function showScenarioTable()	{
-	document.getElementById("scenarioTable").style.display = "block";	//Show scenario table
-	document.getElementById('scenarioTableItself').style.height='100px';
-	document.getElementById("scenarioTablePlaceholder").style.display = "none";	//Hide scenario table placeholder
-}
-
-function showScenarioForm()	{
-	document.getElementById("scenarioForm1").style.display = "block";	//Show scenario form
-	document.getElementById("scenarioForm2").style.display = "block";	//Show scenario form
-	document.getElementById("scenarioForm3").style.display = "block";	//Show scenario form
-	document.getElementById("scenarioForm4").style.display = "block";	//Show scenario form
-	document.getElementById("scenarioForm5").style.display = "block";	//Show scenario form
-	document.getElementById("scenarioForm6").style.display = "block";	//Show scenario form
-}
-
-function hideScenarioForm()	{
-	document.getElementById("scenarioForm1").style.display = "none";	//Show scenario form
-	document.getElementById("scenarioForm2").style.display = "none";	//Show scenario form
-	document.getElementById("scenarioForm3").style.display = "none";	//Show scenario form
-	document.getElementById("scenarioForm4").style.display = "none";	//Show scenario form
-	document.getElementById("scenarioForm5").style.display = "none";	//Show scenario form
-	document.getElementById("scenarioForm6").style.display = "none";	//Show scenario form
 }
 
 
@@ -596,13 +545,6 @@ function tableOnClick(row)	{
 	}
 }
 
-function updateScenario()	{
-	console.log(`Updating scenario ${lastClickedScenario}`);
-	hideScenarioForm();
-}
-
-document.getElementById('scenarioUpdateButton').addEventListener('click', updateScenario);
-
 
 function bleSendCommand(value){
 	if (bleServer && bleServer.connected) {
@@ -631,18 +573,6 @@ function bleSendCommand(value){
 }
 
 /* Disconnection */
-
-function uiChangeOnDisconnect ()	{
-	bleStateContainer.innerHTML = "Device Disconnected";
-	bleStateContainer.style.color = "#d13a30";
-	document.getElementById("disconnectBleButton").className = "button-primary u-full-width";
-	document.getElementById("disconnectBleButton").disabled = true;
-	document.getElementById("disconnectBleButton").className = "u-full-width";
-	document.getElementById("configRefreshButton").disabled = true;
-	document.getElementById("configRefreshButton").className = "u-full-width";
-	document.getElementById("configSaveButton").disabled = true;
-	document.getElementById("configSaveButton").className = "u-full-width";
-}
 
 function disconnectDevice() {
 	console.log("Disconnect Device.");
@@ -684,6 +614,5 @@ function onDisconnected(event){
 	lastCommand = bleDummyRequest;
 }
 
-// Disconnect Button
-disconnectButton.addEventListener('click', disconnectDevice);
+
 
