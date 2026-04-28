@@ -233,7 +233,7 @@ function bleSendBags()	{
 			bag3Obj.value,
 			bag4Obj.value,
 			bag5Obj.value,
-			bag6Obj.value
+			bag6Obj.value,
 			bag7Obj.value
 			);
 		bleSendCommand(bleSendBagsPacket);
