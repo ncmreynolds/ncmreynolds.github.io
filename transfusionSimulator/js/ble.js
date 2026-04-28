@@ -98,7 +98,7 @@ function bleManageSendingScenario()	{
 				if(scenarioSendBlock == 0)	{
 					scenarioName[scenarioSendIndex] = document.getElementById("scenarioName").value;
 				}
-				const bleBagsscenarioSendPacket = new Uint8Array();
+				const bleBagsscenarioSendPacket = new Uint8Array(bleBlockSize+4);
 				bleBagsscenarioSendPacket[0] = bleScenarioNameUpdateRequest;
 				bleBagsscenarioSendPacket[1] = sequenceNumber;
 				bleBagsscenarioSendPacket[2] = scenarioSendIndex;
@@ -491,6 +491,7 @@ function handleCharacteristicChange(event){	//This happens on a notify
 				break;
 				case bleScenarioNameUpdateResponse:
 					if(scenarioSendInProgress == true)	{
+						/*
 						scenarioSendBlock+=1;	//Move on to next block
 						if(bleBlockSize * scenarioSendBlock >= scenarioNameLength[responseReceived[2]])	{
 							scenarioSendBlock = 0;
@@ -499,6 +500,8 @@ function handleCharacteristicChange(event){	//This happens on a notify
 						} else {
 							console.log(`Scenario ${responseReceived[2]} update name block ${responseReceived[3]} data OK`);
 						}
+						*/
+						scenarioSendState = 2;
 					}
 				break;
 				case bleScenarioNarrativeLengthUpdateResponse:
