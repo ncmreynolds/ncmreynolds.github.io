@@ -339,7 +339,7 @@ function configRefreshComplete()	{
 }
 
 // Configuration save button
-document.getElementById('configSaveButton').addEventListener('click', 
+configSaveButtonObj.addEventListener('click', 
 	function(){
 		if(confirm("Simulator will save configuration and reboot!"))	{
 			bleRequestSaveConfig();
