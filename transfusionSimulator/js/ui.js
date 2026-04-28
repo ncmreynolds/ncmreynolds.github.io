@@ -37,8 +37,8 @@ function disableBagTypesForm()	{
 	bag5Obj.disabled = true;
 	bag6Obj.disabled = true;
 	bag7Obj.disabled = true;
-	document.getElementById("sendBagsButton").disabled = true;
-	document.getElementById("sendBagsButton").className = "u-full-width";
+	sendBagsButtonObj.disabled = true;
+	sendBagsButtonObj.className = "u-full-width";
 }
 function enableBagTypesForm()	{
 	bag0Obj.disabled = false;
@@ -46,11 +46,11 @@ function enableBagTypesForm()	{
 	bag2Obj.disabled = false;
 	bag3Obj.disabled = false;
 	bag4Obj.disabled = false;
-	document.getElementById("bag5").disabled = false;
+	bag5Obj.disabled = false;
 	bag6Obj.disabled = false;
-	document.getElementById("bag7").disabled = false;
-	document.getElementById("sendBagsButton").disabled = false;
-	document.getElementById("sendBagsButton").className = "button-primary u-full-width";
+	bag7Obj.disabled = false;
+	sendBagsButtonObj.disabled = false;
+	sendBagsButtonObj.className = "button-primary u-full-width";
 }
 
 function updateBagTypesForm()	{
@@ -101,14 +101,14 @@ function bagsSendFailed()	{
 */
 
 function showScenarioTable()	{
-	document.getElementById("scenarioTable").style.display = "block";	//Show scenario table
-	document.getElementById('scenarioTableItself').style.height='100px';
-	document.getElementById("scenarioTablePlaceholder").style.display = "none";	//Hide scenario table placeholder
+	scenarioTableRow.style.display = "block";	//Show scenario table
+	scenarioTableObj.style.height='100px';
+	scenarioTablePlaceholderObj.style.display = "none";	//Hide scenario table placeholder
 }
 
 function hideScenarioTable()	{
-	document.getElementById("scenarioTable").style.display = "none";	//Show scenario table
-	document.getElementById("scenarioTablePlaceholder").style.display = "block";	//Hide scenario table placeholder
+	scenarioTableRow.style.display = "none";	//Show scenario table
+	scenarioTablePlaceholderObj.style.display = "block";	//Hide scenario table placeholder
 	scenarioProgress2.innerHTML = "Waiting for scenario data";
 }
 

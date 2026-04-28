@@ -88,3 +88,7 @@ const bag4Obj = document.getElementById("bag4");
 const bag5Obj = document.getElementById("bag5");
 const bag6Obj = document.getElementById("bag6");
 const bag7Obj = document.getElementById("bag7");
+const sendBagsButtonObj = document.getElementById("sendBagsButton");
+const scenarioTableRow = document.getElementById("scenarioTable");
+const scenarioTableObj = document.getElementById('scenarioTableItself');
+const scenarioTablePlaceholderObj = document.getElementById("scenarioTablePlaceholder");
