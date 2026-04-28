@@ -66,3 +66,7 @@ const bleDummyRequest = 127;		//Dummy value that does nothing and should never b
 const bleDummyResponse = bleDummyRequest | 128;	//'dummy' response
 
 const bleStateMachineInterval = 250;
+
+//UI constants
+
+const configRefreshButtonObj = document.getElementById("configRefreshButton");

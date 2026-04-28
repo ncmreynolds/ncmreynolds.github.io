@@ -1,12 +1,12 @@
 function uiBleTransactionInProgress()	{
-	document.getElementById("configRefreshButton").disabled = true;
-	document.getElementById("configRefreshButton").className = "u-full-width";
+	configRefreshButtonObj.disabled = true;
+	configRefreshButtonObj.className = "u-full-width";
 	document.getElementById("configSaveButton").disabled = true;
 	document.getElementById("configSaveButton").className = "u-full-width";
 }
 function uiBleTransactionComplete()	{
-	document.getElementById("configRefreshButton").disabled = false;
-	document.getElementById("configRefreshButton").className = "button-primary u-full-width";
+	configRefreshButtonObj.disabled = false;
+	configRefreshButtonObj.className = "button-primary u-full-width";
 	document.getElementById("configSaveButton").disabled = false;
 	document.getElementById("configSaveButton").className = "button-primary u-full-width";
 }
@@ -161,7 +161,7 @@ function tableOnClick(row)	{
 }
 
 function updateRefreshStatus()	{
-	const percentage = Math.round(100*(configRefreshIndex*7)+(configRefreshState-2)}/(7 * numberOfScenarios));
+	const percentage = Math.round(100*((configRefreshIndex*7)+(configRefreshState-2))/(7 * numberOfScenarios));
 	document.getElementById("scenarioProgress1").innerHTML=`Updating - ${percentage}%`;
 	document.getElementById("scenarioProgress2").innerHTML=`Updating - ${percentage}%`;
 }
@@ -267,8 +267,8 @@ function uiChangeOnDisconnect ()	{
 	document.getElementById("disconnectBleButton").className = "button-primary u-full-width";
 	document.getElementById("disconnectBleButton").disabled = true;
 	document.getElementById("disconnectBleButton").className = "u-full-width";
-	document.getElementById("configRefreshButton").disabled = true;
-	document.getElementById("configRefreshButton").className = "u-full-width";
+	configRefreshButtonObj.disabled = true;
+	configRefreshButtonObj.className = "u-full-width";
 	document.getElementById("configSaveButton").disabled = true;
 	document.getElementById("configSaveButton").className = "u-full-width";
 }
@@ -286,8 +286,8 @@ function uiChangeOnConnect()	{
 	document.getElementById("disconnectBleButton").className = "u-full-width";
 	document.getElementById("disconnectBleButton").disabled = false;
 	document.getElementById("disconnectBleButton").className = "button-primary u-full-width";
-	document.getElementById("configRefreshButton").disabled = false;
-	document.getElementById("configRefreshButton").className = "button-primary u-full-width";
+	configRefreshButtonObj.disabled = false;
+	configRefreshButtonObj.className = "button-primary u-full-width";
 	document.getElementById("configSaveButton").disabled = false;
 	document.getElementById("configSaveButton").className = "button-primary u-full-width";
 }
