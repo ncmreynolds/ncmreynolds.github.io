@@ -98,7 +98,7 @@ function bleManageSendingScenario()	{
 				if(scenarioSendBlock == 0)	{
 					scenarioName[scenarioSendIndex] = document.getElementById("scenarioName").value;
 				}
-				const bleBagsscenarioSendPacket = new Uint8Array(bleBlockSize+4);
+				const bleBagsscenarioSendPacket = new Uint8Array();//Uint8Array(bleBlockSize+4);
 				bleBagsscenarioSendPacket[0] = bleScenarioNameUpdateRequest;
 				bleBagsscenarioSendPacket[1] = sequenceNumber;
 				bleBagsscenarioSendPacket[2] = scenarioSendIndex;
