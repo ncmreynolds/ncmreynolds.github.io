@@ -181,10 +181,10 @@ setInterval(bleRequestScenarioUpdate, 250);
 
 /* Bag admin */
 
-function bleSaveBags()	{
+function bleSendBags()	{
 	if(bleBusy == false)	{
-		console.log("Saving bags");
-		const bleSavePacket = Uint8Array.of(bleBagUpdateRequest,sequenceNumber,8,
+		console.log("Sending bags");
+		const bleSendBagsPacket = Uint8Array.of(bleBagUpdateRequest,sequenceNumber,8,
 			document.getElementById("bag0").value,
 			document.getElementById("bag1").value,
 			document.getElementById("bag2").value,
@@ -194,9 +194,9 @@ function bleSaveBags()	{
 			document.getElementById("bag6").value,
 			document.getElementById("bag7").value
 			);
-		bleSendCommand(bleSavePacket);
+		bleSendCommand(bleSendBagsPacket);
 	} else {
-		console.log("Bag save aborted, BLE busy");
+		console.log("Bag send aborted, BLE busy");
 	}
 }
 
@@ -238,6 +238,9 @@ function bleTimeoutCommand()	{
 		if(bleTimeouts > bleErrorThreshold)	{
 			console.log("Excess BLE errors, disconnecting");
 			disconnectDevice();
+		}
+		if(bagSendInProgress = true)	{
+			bagsSendFailed();
 		}
 	}
 }
@@ -347,6 +350,9 @@ function handleCharacteristicChange(event){	//This happens on a notify
 				break;
 				case bleBagUpdateResponse:
 					console.log("Bag update response");
+					if(bagSendInProgress == true)	{
+						bagsSendComplete();
+					}
 				break;
 				case bleScenarioCountResponse:
 					numberOfScenarios = responseReceived[2];
@@ -527,7 +533,7 @@ function disconnectDevice() {
 		if(bleConnected == true)	{
 			// Throw an error if Bluetooth is unexpectedly not connected
 			console.error("Bluetooth is not connected.");
-			window.alert("Bluetooth is not connected.")
+			window.alert("Bluetooth is not connected.");
 		}
 	}
 }
