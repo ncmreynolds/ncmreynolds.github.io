@@ -52,6 +52,7 @@ var scenarioSendInProgress = false;
 var scenarioSendState = 0;
 var scenarioSendIndex = 0;
 var scenarioSendBlock = 0;
+var scenarioSendHandle;	//Handle for interval function
 
 /* Full sync */
 
@@ -83,7 +84,49 @@ function bleRequestRestart()	{
 	}
 }
 
-/* Scenario admin */
+/* Scenario sending */
+
+function bleManageSendingScenario()	{
+	if(scenarioSendInProgress == true)	{
+		if(bleBusy == false)	{
+			if(scenarioSendState == 0)	{
+				console.log("Sending name length update");
+				const bleBagsscenarioSendPacket = Uint8Array.of(bleScenarioNameLengthUpdateRequest,sequenceNumber);
+				bleSendCommand(bleBagsscenarioSendPacket);
+			} else if(scenarioSendState == 1)	{
+				console.log("Sending name data update");
+				const bleBagsscenarioSendPacket = Uint8Array.of(bleScenarioNameUpdateRequest,sequenceNumber);
+				bleSendCommand(bleBagsscenarioSendPacket);
+			} else if(scenarioSendState == 2)	{
+				console.log("Sending narrative length update");
+				const bleBagsscenarioSendPacket = Uint8Array.of(bleScenarioNarrativeLengthUpdateRequest,sequenceNumber);
+				bleSendCommand(bleBagsscenarioSendPacket);
+			} else if(scenarioSendState == 3)	{
+				console.log("Sending narrative data update");
+				const bleBagsscenarioSendPacket = Uint8Array.of(bleScenarioNarrativeUpdateRequest,sequenceNumber);
+				bleSendCommand(bleBagsscenarioSendPacket);
+			} else if(scenarioSendState == 4)	{
+				console.log("Sending availability update");
+				const bleBagsscenarioSendPacket = Uint8Array.of(bleScenarioAvailableUpdateRequest,sequenceNumber);
+				bleSendCommand(bleBagsscenarioSendPacket);
+			} else if(scenarioSendState == 5)	{
+				console.log("Sending available blood types update");
+				const bleBagsscenarioSendPacket = Uint8Array.of(bleScenarioAvailableBloodTypesUpdateRequest,sequenceNumber);
+				bleSendCommand(bleBagsscenarioSendPacket);
+			} else if(scenarioSendState == 6)	{
+				console.log("Sending patient blood group update");
+				const bleBagsscenarioSendPacket = Uint8Array.of(bleScenarioBloodTypeUpdateRequest,sequenceNumber);
+				bleSendCommand(bleBagsscenarioSendPacket);
+			} else {
+				console.log(`Scenario send unknown state`);
+			}
+		} else {
+			console.log("Scenario update waiting, BLE busy");
+		}
+	}
+}
+
+/* Configuration refresn */
 
 
 function bleManageConfigRefresh()	{
@@ -132,6 +175,8 @@ function bleManageConfigRefresh()	{
 				const bleScenarioUpdateRequestPacket = Uint8Array.of(bleScenarioBloodTypeRequest,sequenceNumber,configRefreshIndex);
 				bleSendCommand(bleScenarioUpdateRequestPacket);
 				updateRefreshStatus();
+			} else {
+				console.log(`Requesting scenario ${configRefreshIndex} unknown state`);
 			}
 		} else {
 			console.log("Scenario update waiting, BLE busy");
@@ -409,6 +454,48 @@ function handleCharacteristicChange(event){	//This happens on a notify
 						if(configRefreshIndex>=numberOfScenarios)	{	//Stop refreshing
 							configRefreshComplete();
 						}
+					}
+				break;
+				case bleScenarioNameLengthUpdateResponse:
+					if(scenarioSendInProgress == true)	{
+						console.log(`Scenario update name length OK`);
+						scenarioSendState = 1;
+					}
+				break;
+				case bleScenarioNameUpdateResponse:
+					if(scenarioSendInProgress == true)	{
+						console.log(`Scenario update name data OK`);
+						scenarioSendState = 2;
+					}
+				break;
+				case bleScenarioNarrativeLengthUpdateResponse:
+					if(scenarioSendInProgress == true)	{
+						console.log(`Scenario update narrative length OK`);
+						scenarioSendState = 3;
+					}
+				break;
+				case bleScenarioNarrativeUpdateResponse:
+					if(scenarioSendInProgress == true)	{
+						console.log(`Scenario update narrative data OK`);
+						scenarioSendState = 4;
+					}
+				break;
+				case bleScenarioAvailableUpdateResponse:
+					if(scenarioSendInProgress == true)	{
+						console.log(`Scenario update availability OK`);
+						scenarioSendState = 5;
+					}
+				break;
+				case bleScenarioAvailableBloodTypesUpdateResponse:
+					if(scenarioSendInProgress == true)	{
+						console.log(`Scenario update availabile blood types OK`);
+						scenarioSendState = 6;
+					}
+				break;
+				case bleScenarioBloodTypeUpdateResponse:
+					if(scenarioSendInProgress == true)	{
+						console.log(`Scenario update patient blood type OK`);
+						scenarioSendComplete();
 					}
 				break;
 				default:

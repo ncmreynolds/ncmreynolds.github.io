@@ -64,3 +64,5 @@ const bleScenarioBloodTypeUpdateResponse = bleScenarioBloodTypeUpdateRequest | 1
 
 const bleDummyRequest = 127;		//Dummy value that does nothing and should never be sent
 const bleDummyResponse = bleDummyRequest | 128;	//'dummy' response
+
+const bleStateMachineInterval = 250;

@@ -231,7 +231,9 @@ function startSendingScenario()	{
 		scenarioSendIndex = lastClickedScenario;
 		uiBleTransactionInProgress();
 		disableScenarioForm();
-		console.log(`Sending scenario ${lastClickedScenario}`);
+		disableBagTypesForm();
+		console.log(`Sending scenario ${scenarioSendIndex}`);
+		scenarioSendHandle = setInterval(bleManageSendingScenario, bleStateMachineInterval);
 	}
 }
 
@@ -240,7 +242,9 @@ function scenarioSendComplete()	{
 	scenarioSendIndex = lastClickedScenario;
 	uiBleTransactionComplete();
 	enableScenarioForm();
-	console.log(`Sent scenario ${lastClickedScenario}`);
+	enableBagTypesForm();
+	clearInterval(scenarioSendHandle);
+	console.log(`Sent scenario ${scenarioSendIndex}`);
 }
 
 /*
@@ -303,7 +307,7 @@ function startConfigRefresh()	{
 		hideScenarioForm();
 		disableScenarioForm();
 		console.log("Starting config update process");
-		configRefreshHandle = setInterval(bleManageConfigRefresh, 250);
+		configRefreshHandle = setInterval(bleManageConfigRefresh, bleStateMachineInterval);
 	}
 }
 
@@ -319,6 +323,7 @@ function configRefreshComplete()	{
 	enableScenarioForm();
 	uiBleTransactionComplete();
 	clearInterval(configRefreshHandle);
+	console.log("Config update process finished");
 }
 
 
