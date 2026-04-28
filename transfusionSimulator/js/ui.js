@@ -97,7 +97,7 @@ function hideScenarioForm()	{
 }
 function enableScenarioForm()	{
 	document.getElementById("scenarioName").disabled = false;
-	document.getElementById("available_label").disabled = false;
+	document.getElementById("available").disabled = false;
 	document.getElementById("scenarioNarrative").disabled = false;
 	document.getElementById("type0").disabled = false;
 	document.getElementById("type1").disabled = false;
@@ -113,7 +113,7 @@ function enableScenarioForm()	{
 }
 function disableScenarioForm()	{
 	document.getElementById("scenarioName").disabled = true;
-	document.getElementById("available_label").disabled = true;
+	document.getElementById("available").disabled = true;
 	document.getElementById("scenarioNarrative").disabled = true;
 	document.getElementById("type0").disabled = true;
 	document.getElementById("type1").disabled = true;
