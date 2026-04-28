@@ -16,38 +16,38 @@ function uiBleTransactionComplete()	{
 
 */
 function showBagTypesForm()	{
-	document.getElementById("bagTypes1").style.display = "block";	//Show bag options
-	document.getElementById("bagTypes2").style.display = "block";	//Show bag options
-	document.getElementById("bagTypes3").style.display = "block";	//Show bag options
-	document.getElementById("bagTypesPlaceholder").style.display = "none";	//Hide bag placeholder
+	bagTypes1Obj.style.display = "block";	//Show bag options
+	bagTypes2Obj.style.display = "block";	//Show bag options
+	bagTypes3Obj.style.display = "block";	//Show bag options
+	bagTypesPlaceholder.style.display = "none";	//Hide bag placeholder
 }
 function hideBagTypesForm()	{
-	document.getElementById("bagTypes1").style.display = "none";	//Show bag options
-	document.getElementById("bagTypes2").style.display = "none";	//Show bag options
-	document.getElementById("bagTypes3").style.display = "none";	//Show bag options
-	document.getElementById("scenarioProgress1").innerHTML = "Waiting for bag data";
-	document.getElementById("bagTypesPlaceholder").style.display = "block";	//Hide bag placeholder
+	bagTypes1Obj.style.display = "none";	//Show bag options
+	bagTypes2Obj.style.display = "none";	//Show bag options
+	bagTypes3Obj.style.display = "none";	//Show bag options
+	scenarioProgress1.innerHTML = "Waiting for bag data";
+	bagTypesPlaceholder.style.display = "block";	//Hide bag placeholder
 }
 function disableBagTypesForm()	{
-	document.getElementById("bag0").disabled = true;
-	document.getElementById("bag1").disabled = true;
-	document.getElementById("bag2").disabled = true;
-	document.getElementById("bag3").disabled = true;
-	document.getElementById("bag4").disabled = true;
-	document.getElementById("bag5").disabled = true;
-	document.getElementById("bag6").disabled = true;
-	document.getElementById("bag7").disabled = true;
+	bag0Obj.disabled = true;
+	bag1Obj.disabled = true;
+	bag2Obj.disabled = true;
+	bag3Obj.disabled = true;
+	bag4Obj.disabled = true;
+	bag5Obj.disabled = true;
+	bag6Obj.disabled = true;
+	bag7Obj.disabled = true;
 	document.getElementById("sendBagsButton").disabled = true;
 	document.getElementById("sendBagsButton").className = "u-full-width";
 }
 function enableBagTypesForm()	{
-	document.getElementById("bag0").disabled = false;
-	document.getElementById("bag1").disabled = false;
-	document.getElementById("bag2").disabled = false;
-	document.getElementById("bag3").disabled = false;
-	document.getElementById("bag4").disabled = false;
+	bag0Obj.disabled = false;
+	bag1Obj.disabled = false;
+	bag2Obj.disabled = false;
+	bag3Obj.disabled = false;
+	bag4Obj.disabled = false;
 	document.getElementById("bag5").disabled = false;
-	document.getElementById("bag6").disabled = false;
+	bag6Obj.disabled = false;
 	document.getElementById("bag7").disabled = false;
 	document.getElementById("sendBagsButton").disabled = false;
 	document.getElementById("sendBagsButton").className = "button-primary u-full-width";
@@ -69,8 +69,6 @@ function updateBagTypesForm()	{
 
 // Bag send button
 document.getElementById('sendBagsButton').addEventListener('click', startSendingBags);
-// Bag send button
-//document.getElementById('configSaveButton').addEventListener('click', bleSaveBags);
 
 function startSendingBags()	{
 	if(bagSendInProgress == false)	{
@@ -111,7 +109,7 @@ function showScenarioTable()	{
 function hideScenarioTable()	{
 	document.getElementById("scenarioTable").style.display = "none";	//Show scenario table
 	document.getElementById("scenarioTablePlaceholder").style.display = "block";	//Hide scenario table placeholder
-	document.getElementById("scenarioProgress2").innerHTML = "Waiting for scenario data";
+	scenarioProgress2.innerHTML = "Waiting for scenario data";
 }
 
 function updateScenarioTable()	{
@@ -162,8 +160,8 @@ function tableOnClick(row)	{
 
 function updateRefreshStatus()	{
 	const percentage = Math.round(100*((configRefreshIndex*7)+(configRefreshState-2))/(7 * numberOfScenarios));
-	document.getElementById("scenarioProgress1").innerHTML=`Updating - ${percentage}%`;
-	document.getElementById("scenarioProgress2").innerHTML=`Updating - ${percentage}%`;
+	scenarioProgress1.innerHTML=`Updating - ${percentage}%`;
+	scenarioProgress2.innerHTML=`Updating - ${percentage}%`;
 }
 
 /*
@@ -249,6 +247,7 @@ function scenarioSendComplete()	{
 		enableScenarioForm();
 		enableBagTypesForm();
 		updateScenarioTable();
+		hideScenarioForm();
 		clearInterval(scenarioSendHandle);
 		console.log(`Sent scenario ${scenarioSendIndex}`);
 	} else {
@@ -338,6 +337,14 @@ function configRefreshComplete()	{
 	console.log("Config update process finished");
 }
 
+// Configuration save button
+document.getElementById('configSaveButton').addEventListener('click', 
+	function(){
+		if(confirm("Simulator will save configuration and reboot!"))	{
+			bleRequestSaveConfig();
+		}
+	}
+);
 
 //document.getElementById('saveButton').addEventListener('click', bleRequestSaveConfig);
 

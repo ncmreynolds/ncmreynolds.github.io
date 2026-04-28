@@ -227,14 +227,14 @@ function bleSendBags()	{
 	if(bleBusy == false)	{
 		console.log("Sending bags");
 		const bleSendBagsPacket = Uint8Array.of(bleBagUpdateRequest,sequenceNumber,8,
-			document.getElementById("bag0").value,
-			document.getElementById("bag1").value,
-			document.getElementById("bag2").value,
-			document.getElementById("bag3").value,
-			document.getElementById("bag4").value,
-			document.getElementById("bag5").value,
-			document.getElementById("bag6").value,
-			document.getElementById("bag7").value
+			bag0Obj.value,
+			bag1Obj.value,
+			bag2Obj.value,
+			bag3Obj.value,
+			bag4Obj.value,
+			bag5Obj.value,
+			bag6Obj.value
+			bag7Obj.value
 			);
 		bleSendCommand(bleSendBagsPacket);
 	} else {

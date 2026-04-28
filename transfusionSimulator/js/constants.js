@@ -75,3 +75,16 @@ const bleStateMachineInterval = 250;
 
 const configRefreshButtonObj = document.getElementById("configRefreshButton");
 const configSaveButtonObj = document.getElementById("configSaveButton");
+const bagTypes1Obj = document.getElementById("bagTypes1");
+const bagTypes2Obj = document.getElementById("bagTypes2");
+const bagTypes3Obj = document.getElementById("bagTypes3");
+const bagTypesPlaceholder = document.getElementById("bagTypesPlaceholder");
+const scenarioProgress1 = document.getElementById("scenarioProgress1");
+const bag0Obj = document.getElementById("bag0");
+const bag1Obj = document.getElementById("bag1");
+const bag2Obj = document.getElementById("bag2");
+const bag3Obj = document.getElementById("bag3");
+const bag4Obj = document.getElementById("bag4");
+const bag5Obj = document.getElementById("bag5");
+const bag6Obj = document.getElementById("bag6");
+const bag7Obj = document.getElementById("bag7");
