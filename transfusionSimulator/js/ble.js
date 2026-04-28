@@ -182,7 +182,7 @@ function bleRequestScenarioUpdate()	{
 }
 
 function updateRefreshStatus()	{
-	document.getElementById("scenarioProgress").innerHTML=`Updating - ${(configRefreshIndex*7)+(configRefreshState-2)}/${(7 * numberOfScenarios}`;
+	document.getElementById("scenarioProgress").innerHTML=`Updating - ${(configRefreshIndex*7)+(configRefreshState-2)}/${(7 * numberOfScenarios)}`;
 }
 
 document.getElementById('configRefreshButton').addEventListener('click', startConfigRefresh);
