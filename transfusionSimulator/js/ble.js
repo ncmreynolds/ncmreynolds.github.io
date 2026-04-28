@@ -143,35 +143,46 @@ function bleRequestScenarioUpdate()	{
 				console.log(`Requesting scenario ${configRefreshIndex} name length update`);
 				const bleScenarioUpdateRequestPacket = Uint8Array.of(bleScenarioNameLengthRequest,sequenceNumber,configRefreshIndex);
 				bleSendCommand(bleScenarioUpdateRequestPacket);
+				updateRefreshStatus();
 			} else if(configRefreshState == 3)	{
 				console.log(`Requesting scenario ${configRefreshIndex} name update`);
 				const bleScenarioUpdateRequestPacket = Uint8Array.of(bleScenarioNameRequest,sequenceNumber,configRefreshIndex,configRefreshBlock);
 				bleSendCommand(bleScenarioUpdateRequestPacket);
+				updateRefreshStatus();
 			} else if(configRefreshState == 4)	{
 				console.log(`Requesting scenario ${configRefreshIndex} narrative length update`);
 				const bleScenarioUpdateRequestPacket = Uint8Array.of(bleScenarioNarrativeLengthRequest,sequenceNumber,configRefreshIndex);
 				bleSendCommand(bleScenarioUpdateRequestPacket);
+				updateRefreshStatus();
 			} else if(configRefreshState == 5)	{
 				console.log(`Requesting scenario ${configRefreshIndex} narrative update`);
 				const bleScenarioUpdateRequestPacket = Uint8Array.of(bleScenarioNarrativeRequest,sequenceNumber,configRefreshIndex,configRefreshBlock);
 				bleSendCommand(bleScenarioUpdateRequestPacket);
+				updateRefreshStatus();
 			} else if(configRefreshState == 6)	{
 				console.log(`Requesting scenario ${configRefreshIndex} availability update`);
 				const bleScenarioUpdateRequestPacket = Uint8Array.of(bleScenarioAvailableRequest,sequenceNumber,configRefreshIndex);
 				bleSendCommand(bleScenarioUpdateRequestPacket);
+				updateRefreshStatus();
 			} else if(configRefreshState == 7)	{
 				console.log(`Requesting scenario ${configRefreshIndex} groups update`);
 				const bleScenarioUpdateRequestPacket = Uint8Array.of(bleScenarioAvailableBloodTypesRequest,sequenceNumber,configRefreshIndex);
 				bleSendCommand(bleScenarioUpdateRequestPacket);
+				updateRefreshStatus();
 			} else if(configRefreshState == 8)	{
 				console.log(`Requesting scenario ${configRefreshIndex} blood type update`);
 				const bleScenarioUpdateRequestPacket = Uint8Array.of(bleScenarioBloodTypeRequest,sequenceNumber,configRefreshIndex);
 				bleSendCommand(bleScenarioUpdateRequestPacket);
+				updateRefreshStatus();
 			}
 		} else {
 			console.log("Scenario update waiting, BLE busy");
 		}
 	}
+}
+
+function updateRefreshStatus()	{
+	document.getElementById("scenarioProgress").innerHTML=`Updating - ${(configRefreshIndex*7)+(configRefreshState-2)}/${(7 * numberOfScenarios}`;
 }
 
 document.getElementById('configRefreshButton').addEventListener('click', startConfigRefresh);
