@@ -388,7 +388,7 @@ function handleCharacteristicChange(event){	//This happens on a notify
 				break;
 				case bleScenarioCountResponse:
 					numberOfScenarios = responseReceived[2];
-					if(numberOfScenarios > 5){numberOfScenarios=5};
+					//if(numberOfScenarios > 5){numberOfScenarios=5};
 					if(configRefreshInProgress == true)	{
 						console.log(`Number of scenarios updated to ${numberOfScenarios} refeshing other values`);
 						configRefreshState = 2;
