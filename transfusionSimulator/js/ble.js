@@ -98,7 +98,7 @@ function bleManageSendingScenario()	{
 				if(scenarioSendBlock == 0)	{
 					scenarioName[scenarioSendIndex] = document.getElementById("scenarioName").value;
 				}
-				const bleBagsscenarioSendPacket = new Uint8Array();//Uint8Array(bleBlockSize+4);
+				const bleBagsscenarioSendPacket = new Uint8Array(bleBlockSize+4);
 				bleBagsscenarioSendPacket[0] = bleScenarioNameUpdateRequest;
 				bleBagsscenarioSendPacket[1] = sequenceNumber;
 				bleBagsscenarioSendPacket[2] = scenarioSendIndex;
@@ -118,7 +118,15 @@ function bleManageSendingScenario()	{
 				if(scenarioSendBlock == 0)	{
 					scenarioNarrative[scenarioSendIndex] = document.getElementById("scenarioNarrative").value;
 				}
-				const bleBagsscenarioSendPacket = Uint8Array.of(bleScenarioNarrativeUpdateRequest,sequenceNumber,scenarioSendIndex,scenarioSendBlock);
+				const bleBagsscenarioSendPacket = new Uint8Array(bleBlockSize+4);
+				bleBagsscenarioSendPacket[0] = bleScenarioNarrativeUpdateRequest;
+				bleBagsscenarioSendPacket[1] = sequenceNumber;
+				bleBagsscenarioSendPacket[2] = scenarioSendIndex;
+				bleBagsscenarioSendPacket[3] = scenarioSendBlock;
+				const blockStart = bleBlockSize * scenarioSendBlock;
+				for (var i = blockStart; i < scenarioNarrativeLength[scenarioSendIndex] && i-blockStart < bleBlockSize; i++) {
+						bleBagsscenarioSendPacket[4+i-blockStart] = scenarioNarrative[scenarioSendIndex].charCodeAt(i);
+				}
 				bleSendCommand(bleBagsscenarioSendPacket);
 			} else if(scenarioSendState == 4)	{
 				console.log("Sending availability update");
@@ -491,8 +499,7 @@ function handleCharacteristicChange(event){	//This happens on a notify
 				break;
 				case bleScenarioNameUpdateResponse:
 					if(scenarioSendInProgress == true)	{
-						/*
-						scenarioSendBlock+=1;	//Move on to next block
+						scenarioSendBlock += 1;	//Move on to next block
 						if(bleBlockSize * scenarioSendBlock >= scenarioNameLength[responseReceived[2]])	{
 							scenarioSendBlock = 0;
 							scenarioSendState = 2;
@@ -500,8 +507,6 @@ function handleCharacteristicChange(event){	//This happens on a notify
 						} else {
 							console.log(`Scenario ${responseReceived[2]} update name block ${responseReceived[3]} data OK`);
 						}
-						*/
-						scenarioSendState = 2;
 					}
 				break;
 				case bleScenarioNarrativeLengthUpdateResponse:
