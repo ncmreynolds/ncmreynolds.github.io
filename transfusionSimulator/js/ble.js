@@ -105,7 +105,7 @@ function bleManageSendingScenario()	{
 				bleBagsscenarioSendPacket[3] = scenarioSendBlock;
 				const blockStart = bleBlockSize * scenarioSendBlock;
 				for (var i = blockStart; i < scenarioNameLength[scenarioSendIndex] && i-blockStart < bleBlockSize; i++) {
-						bleBagsscenarioSendPacket[4+i-blockStart] = scenarioName[scenarioSendIndex][i];
+						bleBagsscenarioSendPacket[4+i-blockStart] = scenarioName[scenarioSendIndex].charCodeAt(i);
 				}
 				bleSendCommand(bleBagsscenarioSendPacket);
 			} else if(scenarioSendState == 2)	{
