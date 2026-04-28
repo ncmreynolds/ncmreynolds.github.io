@@ -239,7 +239,7 @@ function bleTimeoutCommand()	{
 			console.log("Excess BLE errors, disconnecting");
 			disconnectDevice();
 		}
-		if(bagSendInProgress = true)	{
+		if(bagSendInProgress == true)	{
 			bagsSendFailed();
 		}
 	}
