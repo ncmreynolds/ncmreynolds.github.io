@@ -25,6 +25,7 @@ function hideBagTypesTable()	{
 	document.getElementById("bagTypes1").style.display = "none";	//Show bag options
 	document.getElementById("bagTypes2").style.display = "none";	//Show bag options
 	document.getElementById("bagTypes3").style.display = "none";	//Show bag options
+	document.getElementById("scenarioProgress1").innerHTML = "Waiting for bag data";
 	document.getElementById("bagTypesPlaceholder").style.display = "block";	//Hide bag placeholder
 }
 function disableBagTypesForm()	{
@@ -89,6 +90,12 @@ function showScenarioTable()	{
 	document.getElementById("scenarioTable").style.display = "block";	//Show scenario table
 	document.getElementById('scenarioTableItself').style.height='100px';
 	document.getElementById("scenarioTablePlaceholder").style.display = "none";	//Hide scenario table placeholder
+}
+
+function hideScenarioTable()	{
+	document.getElementById("scenarioTable").style.display = "none";	//Show scenario table
+	document.getElementById("scenarioTablePlaceholder").style.display = "block";	//Hide scenario table placeholder
+	document.getElementById("scenarioProgress2").innerHTML = "Waiting for scenario data";
 }
 
 function updateScenarioTable()	{
