@@ -27,6 +27,58 @@ function hideBagTypesTable()	{
 	document.getElementById("bagTypes3").style.display = "none";	//Show bag options
 	document.getElementById("bagTypesPlaceholder").style.display = "block";	//Hide bag placeholder
 }
+function disableBagTypesForm()	{
+	document.getElementById("bag0").disabled = true;
+	document.getElementById("bag1").disabled = true;
+	document.getElementById("bag2").disabled = true;
+	document.getElementById("bag3").disabled = true;
+	document.getElementById("bag4").disabled = true;
+	document.getElementById("bag5").disabled = true;
+	document.getElementById("bag6").disabled = true;
+	document.getElementById("bag7").disabled = true;
+	document.getElementById("sendBagsButton").disabled = true;
+	document.getElementById("sendBagsButton").className = "u-full-width";
+}
+function enableBagTypesForm()	{
+	document.getElementById("bag0").disabled = false;
+	document.getElementById("bag1").disabled = false;
+	document.getElementById("bag2").disabled = false;
+	document.getElementById("bag3").disabled = false;
+	document.getElementById("bag4").disabled = false;
+	document.getElementById("bag5").disabled = false;
+	document.getElementById("bag6").disabled = false;
+	document.getElementById("bag7").disabled = false;
+	document.getElementById("sendBagsButton").disabled = false;
+	document.getElementById("sendBagsButton").className = "button-primary u-full-width";
+}
+
+// Bag send button
+document.getElementById('sendBagsButton').addEventListener('click', startSendingBags);
+
+function startSendingBags()	{
+	if(bagSendInProgress == false)	{
+		bagSendInProgress = true;
+		uiBleTransactionInProgress();
+		disableBagTypesForm();
+		bleSendBags();
+	}
+}
+
+function bagsSendComplete()	{
+	bagSendInProgress = false;
+	uiBleTransactionComplete();
+	enableBagTypesForm();
+	console.log(`Sent bags`);
+}
+
+function bagsSendFailed()	{
+	bagSendInProgress = false;
+	uiBleTransactionComplete();
+	enableBagTypesForm();
+	console.log(`Send bags failed`);
+	window.alert("Bag send failed!");
+}
+
 /*
 
 	Scenario table
@@ -143,7 +195,7 @@ function disableScenarioForm()	{
 	document.getElementById("type7").disabled = true;
 	document.getElementById("recipientBloodType").disabled = true;
 	document.getElementById("scenarioSendButton").disabled = true;
-	document.getElementById("scenarioSendButton").className = "button-primary u-full-width";
+	document.getElementById("scenarioSendButton").className = "u-full-width";
 }
 
 // Scenario send button
@@ -156,8 +208,16 @@ function startSendingScenario()	{
 		scenarioSendIndex = lastClickedScenario;
 		uiBleTransactionInProgress();
 		disableScenarioForm();
-		console.log(`Updating scenario ${lastClickedScenario}`);
+		console.log(`Sending scenario ${lastClickedScenario}`);
 	}
+}
+
+function scenarioSendComplete()	{
+	scenarioSendState = 0;
+	scenarioSendIndex = lastClickedScenario;
+	uiBleTransactionComplete();
+	enableScenarioForm();
+	console.log(`Sent scenario ${lastClickedScenario}`);
 }
 
 /*
@@ -215,6 +275,7 @@ function startConfigRefresh()	{
 		configRefreshIndex = 0;
 		uiBleTransactionInProgress();
 		hideBagTypesTable();
+		disableBagtypesTable();
 		hideScenarioTable();
 		hideScenarioForm();
 		disableScenarioForm();
@@ -226,11 +287,12 @@ function configRefreshComplete()	{
 	configRefreshInProgress = false;
 	configRefreshState = 0;
 	configRefreshIndex = 0;
-	hideBagTypesTable();
+	showBagTypesTable();
+	enableBagtypesTable();
 	updateScenarioTable();
 	showScenarioTable();
+	enableScenarioForm();
 	uiBleTransactionComplete();
-	disableScenarioForm();
 }
 
 // Bag send button
