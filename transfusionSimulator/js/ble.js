@@ -517,8 +517,14 @@ function handleCharacteristicChange(event){	//This happens on a notify
 				break;
 				case bleScenarioNarrativeUpdateResponse:
 					if(scenarioSendInProgress == true)	{
-						console.log(`Scenario update narrative data OK`);
-						scenarioSendState = 4;
+						scenarioSendBlock += 1;	//Move on to next block
+						if(bleBlockSize * scenarioSendBlock >= scenarioNarrativeLength[responseReceived[2]])	{
+							scenarioSendBlock = 0;
+							scenarioSendState = 4;
+							console.log(`Scenario ${responseReceived[2]} update narrative data finished OK`);
+						} else {
+							console.log(`Scenario ${responseReceived[2]} update narrative block ${responseReceived[3]} data OK`);
+						}
 					}
 				break;
 				case bleScenarioAvailableUpdateResponse:
