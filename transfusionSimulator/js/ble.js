@@ -92,25 +92,25 @@ function bleManageSendingScenario()	{
 			if(scenarioSendState == 0)	{
 				console.log("Sending name length update");
 				const nameLength = document.getElementById("scenarioName").value.length; 
-				const bleBagsscenarioSendPacket = Uint8Array.of(bleScenarioNameLengthUpdateRequest,sequenceNumber,nameLength);
+				const bleBagsscenarioSendPacket = Uint8Array.of(bleScenarioNameLengthUpdateRequest,sequenceNumber,scenarioSendIndex,nameLength);
 				bleSendCommand(bleBagsscenarioSendPacket);
 			} else if(scenarioSendState == 1)	{
 				console.log("Sending name data update");
-				const bleBagsscenarioSendPacket = Uint8Array.of(bleScenarioNameUpdateRequest,sequenceNumber);
+				const bleBagsscenarioSendPacket = Uint8Array.of(bleScenarioNameUpdateRequest,sequenceNumber,scenarioSendIndex,scenarioSendBlock);
 				bleSendCommand(bleBagsscenarioSendPacket);
 			} else if(scenarioSendState == 2)	{
 				console.log("Sending narrative length update");
 				const narrativeLength = document.getElementById("scenarioNarrative").value.length; 
-				const bleBagsscenarioSendPacket = Uint8Array.of(bleScenarioNarrativeLengthUpdateRequest,sequenceNumber,narrativeLength);
+				const bleBagsscenarioSendPacket = Uint8Array.of(bleScenarioNarrativeLengthUpdateRequest,sequenceNumber,scenarioSendIndex,narrativeLength);
 				bleSendCommand(bleBagsscenarioSendPacket);
 			} else if(scenarioSendState == 3)	{
 				console.log("Sending narrative data update");
-				const bleBagsscenarioSendPacket = Uint8Array.of(bleScenarioNarrativeUpdateRequest,sequenceNumber);
+				const bleBagsscenarioSendPacket = Uint8Array.of(bleScenarioNarrativeUpdateRequest,sequenceNumber,scenarioSendIndex,scenarioSendBlock);
 				bleSendCommand(bleBagsscenarioSendPacket);
 			} else if(scenarioSendState == 4)	{
 				console.log("Sending availability update");
 				const availability = document.getElementById("available").checked;
-				const bleBagsscenarioSendPacket = Uint8Array.of(bleScenarioAvailableUpdateRequest,sequenceNumber,availability);
+				const bleBagsscenarioSendPacket = Uint8Array.of(bleScenarioAvailableUpdateRequest,sequenceNumber,scenarioSendIndex,availability);
 				bleSendCommand(bleBagsscenarioSendPacket);
 			} else if(scenarioSendState == 5)	{
 				console.log("Sending available blood types update");
@@ -122,12 +122,12 @@ function bleManageSendingScenario()	{
 						bagAvailability[i] = 0;
 					}
 				}
-				const bleBagsscenarioSendPacket = Uint8Array.of(bleScenarioAvailableBloodTypesUpdateRequest,sequenceNumber,bagAvailability[0],bagAvailability[1],bagAvailability[2],bagAvailability[3],bagAvailability[4],bagAvailability[5],bagAvailability[6],bagAvailability[7]);
+				const bleBagsscenarioSendPacket = Uint8Array.of(bleScenarioAvailableBloodTypesUpdateRequest,sequenceNumber,scenarioSendIndex,bagAvailability[0],bagAvailability[1],bagAvailability[2],bagAvailability[3],bagAvailability[4],bagAvailability[5],bagAvailability[6],bagAvailability[7]);
 				bleSendCommand(bleBagsscenarioSendPacket);
 			} else if(scenarioSendState == 6)	{
 				console.log("Sending patient blood group update");
 				const bloodType = document.getElementById("recipientBloodType").value;
-				const bleBagsscenarioSendPacket = Uint8Array.of(bleScenarioBloodTypeUpdateRequest,sequenceNumber,bloodType);
+				const bleBagsscenarioSendPacket = Uint8Array.of(bleScenarioBloodTypeUpdateRequest,sequenceNumber,scenarioSendIndex,bloodType);
 				bleSendCommand(bleBagsscenarioSendPacket);
 			} else {
 				console.log(`Scenario send unknown state`);

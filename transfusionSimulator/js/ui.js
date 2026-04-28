@@ -161,8 +161,9 @@ function tableOnClick(row)	{
 }
 
 function updateRefreshStatus()	{
-	document.getElementById("scenarioProgress1").innerHTML=`Updating - ${(configRefreshIndex*7)+(configRefreshState-2)}/${(7 * numberOfScenarios)}`;
-	document.getElementById("scenarioProgress2").innerHTML=`Updating - ${(configRefreshIndex*7)+(configRefreshState-2)}/${(7 * numberOfScenarios)}`;
+	const percentage = 100*(configRefreshIndex*7)+(configRefreshState-2)}/${(7 * numberOfScenarios);
+	document.getElementById("scenarioProgress1").innerHTML=`Updating - ${percentage}%`;
+	document.getElementById("scenarioProgress2").innerHTML=`Updating - ${percentage}%`;
 }
 
 /*
