@@ -91,7 +91,8 @@ function bleManageSendingScenario()	{
 		if(bleBusy == false)	{
 			if(scenarioSendState == 0)	{
 				console.log("Sending name length update");
-				const bleBagsscenarioSendPacket = Uint8Array.of(bleScenarioNameLengthUpdateRequest,sequenceNumber);
+				const nameLength = document.getElementById("scenarioName").value.length; 
+				const bleBagsscenarioSendPacket = Uint8Array.of(bleScenarioNameLengthUpdateRequest,sequenceNumber,nameLength);
 				bleSendCommand(bleBagsscenarioSendPacket);
 			} else if(scenarioSendState == 1)	{
 				console.log("Sending name data update");
@@ -99,7 +100,8 @@ function bleManageSendingScenario()	{
 				bleSendCommand(bleBagsscenarioSendPacket);
 			} else if(scenarioSendState == 2)	{
 				console.log("Sending narrative length update");
-				const bleBagsscenarioSendPacket = Uint8Array.of(bleScenarioNarrativeLengthUpdateRequest,sequenceNumber);
+				const narrativeLength = document.getElementById("scenarioNarrative").value.length; 
+				const bleBagsscenarioSendPacket = Uint8Array.of(bleScenarioNarrativeLengthUpdateRequest,sequenceNumber,narrativeLength);
 				bleSendCommand(bleBagsscenarioSendPacket);
 			} else if(scenarioSendState == 3)	{
 				console.log("Sending narrative data update");
@@ -107,15 +109,25 @@ function bleManageSendingScenario()	{
 				bleSendCommand(bleBagsscenarioSendPacket);
 			} else if(scenarioSendState == 4)	{
 				console.log("Sending availability update");
-				const bleBagsscenarioSendPacket = Uint8Array.of(bleScenarioAvailableUpdateRequest,sequenceNumber);
+				const availability = document.getElementById("available").checked;
+				const bleBagsscenarioSendPacket = Uint8Array.of(bleScenarioAvailableUpdateRequest,sequenceNumber,availability);
 				bleSendCommand(bleBagsscenarioSendPacket);
 			} else if(scenarioSendState == 5)	{
 				console.log("Sending available blood types update");
-				const bleBagsscenarioSendPacket = Uint8Array.of(bleScenarioAvailableBloodTypesUpdateRequest,sequenceNumber);
+				const bagAvailability = new Uint8Array(8);
+				for (var i = 0; i < 8; i++) {
+					if(document.getElementById(`type${i}`).checked == true)	{
+						bagAvailability[i] = 1;
+					} else {
+						bagAvailability[i] = 0;
+					}
+				}
+				const bleBagsscenarioSendPacket = Uint8Array.of(bleScenarioAvailableBloodTypesUpdateRequest,sequenceNumber,bagAvailability[0],bagAvailability[1],bagAvailability[2],bagAvailability[3],bagAvailability[4],bagAvailability[5],bagAvailability[6],bagAvailability[7]);
 				bleSendCommand(bleBagsscenarioSendPacket);
 			} else if(scenarioSendState == 6)	{
 				console.log("Sending patient blood group update");
-				const bleBagsscenarioSendPacket = Uint8Array.of(bleScenarioBloodTypeUpdateRequest,sequenceNumber);
+				const bloodType = document.getElementById("recipientBloodType").value;
+				const bleBagsscenarioSendPacket = Uint8Array.of(bleScenarioBloodTypeUpdateRequest,sequenceNumber,bloodType);
 				bleSendCommand(bleBagsscenarioSendPacket);
 			} else {
 				console.log(`Scenario send unknown state`);
