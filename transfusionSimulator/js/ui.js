@@ -15,13 +15,13 @@ function uiBleTransactionComplete()	{
 	Bags table
 
 */
-function showBagTypesTable()	{
+function showBagTypesForm()	{
 	document.getElementById("bagTypes1").style.display = "block";	//Show bag options
 	document.getElementById("bagTypes2").style.display = "block";	//Show bag options
 	document.getElementById("bagTypes3").style.display = "block";	//Show bag options
 	document.getElementById("bagTypesPlaceholder").style.display = "none";	//Hide bag placeholder
 }
-function hideBagTypesTable()	{
+function hideBagTypesForm()	{
 	document.getElementById("bagTypes1").style.display = "none";	//Show bag options
 	document.getElementById("bagTypes2").style.display = "none";	//Show bag options
 	document.getElementById("bagTypes3").style.display = "none";	//Show bag options
@@ -51,6 +51,20 @@ function enableBagTypesForm()	{
 	document.getElementById("bag7").disabled = false;
 	document.getElementById("sendBagsButton").disabled = false;
 	document.getElementById("sendBagsButton").className = "button-primary u-full-width";
+}
+
+function updateBagTypesForm()	{
+	for (var i = 0; i < 8; i++) {
+		var bag = document.getElementById(`bag${i}`);
+		if(remoteBags[i] < 9)	{
+			bag.value = `${remoteBags[i]}`;
+			bag.disabled = false;
+		} else {
+			bag.value = "8";
+			bag.disabled = true;
+		}
+		console.log(`Bag ${i} type ${remoteBags[i]}`);
+	}
 }
 
 // Bag send button
@@ -283,7 +297,7 @@ function startConfigRefresh()	{
 		configRefreshState = 0;
 		configRefreshIndex = 0;
 		uiBleTransactionInProgress();
-		hideBagTypesTable();
+		hideBagTypesForm();
 		disableBagTypesForm();
 		hideScenarioTable();
 		hideScenarioForm();
@@ -296,8 +310,9 @@ function configRefreshComplete()	{
 	configRefreshInProgress = false;
 	configRefreshState = 0;
 	configRefreshIndex = 0;
-	showBagTypesTable();
+	showBagTypesForm();
 	enableBagTypesForm();
+	updateBagTypesForm();
 	updateScenarioTable();
 	showScenarioTable();
 	enableScenarioForm();

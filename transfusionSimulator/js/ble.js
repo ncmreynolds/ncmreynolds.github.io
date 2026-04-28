@@ -333,16 +333,6 @@ function handleCharacteristicChange(event){	//This happens on a notify
 					console.log(`Bags response, data for ${responseReceived[2]} bags`);
 					for (var i = 0; i < responseReceived[2] && i < 8; i++) {
 						remoteBags[i] = responseReceived[i+3];
-						var bag = document.getElementById(`bag${i}`);
-						if(responseReceived[i+3] < 9)	{
-							bag.value = `${responseReceived[i+3]}`;
-							bag.disabled = false;
-						} else {
-							bag.value = "8";
-							bag.disabled = true;
-						}
-						console.log(`Bag ${i} type ${responseReceived[i+3]}`);
-						showBagTypesTable();
 					}
 					if(configRefreshInProgress == true)	{
 						configRefreshState = 1;
