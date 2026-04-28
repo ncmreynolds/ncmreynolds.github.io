@@ -1,4 +1,5 @@
 //Values for sending/receiving commands. All have the response with bit 8 as I've a C/embedded mindset
+
 const blePingRequest = 0;		//Check the client is responding with a 'ping'
 const blePingResponse = blePingRequest | 128;
 

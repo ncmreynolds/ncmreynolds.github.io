@@ -1,13 +1,6 @@
-//Elements from page
-
 const connectButton = document.getElementById('connectBleButton');
 const disconnectButton = document.getElementById('disconnectBleButton');
-//const onButton = document.getElementById('onButton');
-//const offButton = document.getElementById('offButton');
-//const retrievedValue = document.getElementById('valueContainer');
-//const latestValueSent = document.getElementById('valueSent');
 const bleStateContainer = document.getElementById('bleState');
-//const timestampContainer = document.getElementById('timestamp');
 
 //Define BLE Device Specs
 var deviceName ='TransfusionSimulator';
@@ -20,38 +13,6 @@ var bleServer;
 var bleServiceFound;
 var responseCharacteristicFound;
 
-//Values for sending/receiving commands. All have the response with bit 8 as I've a C/embedded mindset
-const blePingRequest = 0;		//Check the client is responding with a 'ping'
-const blePingResponse = blePingRequest | 128;
-const bleSaveRequest = 1;		//Save config
-const bleSaveResponse = bleSaveRequest | 128;
-const bleRestartRequest = 2;		//Restart
-const bleRestartResponse = bleRestartRequest | 128;
-const bleBagsRequest = 10;		//Ask for bags
-const bleBagsResponse = bleBagsRequest | 128;
-const bleBagUpdateRequest = 11;		//Set bags
-const bleBagUpdateResponse = bleBagUpdateRequest | 128;
-const bleScenarioCountRequest = 12;		//Set bags
-const bleScenarioCountResponse = bleScenarioCountRequest | 128;
-const bleScenarioIdRequest = 13;		//Set bags
-const bleScenarioIdResponse = bleScenarioIdRequest | 128;
-const bleScenarioNameLengthRequest = 14;		//Set bags
-const bleScenarioNameLengthResponse = bleScenarioNameLengthRequest | 128;
-const bleScenarioNameRequest = 15;		//Set bags
-const bleScenarioNameResponse = bleScenarioNameRequest | 128;
-const bleScenarioNarrativeLengthRequest = 16;		//Set bags
-const bleScenarioNarrativeLengthResponse = bleScenarioNarrativeLengthRequest | 128;
-const bleScenarioNarrativeRequest = 17;		//Set bags
-const bleScenarioNarrativeResponse = bleScenarioNarrativeRequest | 128;
-const bleScenarioAvailableRequest = 18;		//Set bags
-const bleScenarioAvailableResponse = bleScenarioAvailableRequest | 128;
-const bleScenarioAvailableBloodTypesRequest = 19;		//Set bags
-const bleScenarioAvailableBloodTypesResponse = bleScenarioAvailableBloodTypesRequest | 128;
-const bleScenarioBloodTypeRequest = 20;		//Set bags
-const bleScenarioBloodTypeResponse = bleScenarioBloodTypeRequest | 128;
-
-const bleDummyRequest = 127;		//Dummy value that does nothing and should never be sent
-const bleDummyResponse = bleDummyRequest | 128;	//'dummy' response
 
 var bleConnected = false;	//Simple mark of connection status
 var bleBusy = false;
