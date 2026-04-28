@@ -92,3 +92,5 @@ const sendBagsButtonObj = document.getElementById("sendBagsButton");
 const scenarioTableRow = document.getElementById("scenarioTable");
 const scenarioTableObj = document.getElementById('scenarioTableItself');
 const scenarioTablePlaceholderObj = document.getElementById("scenarioTablePlaceholder");
+const scenarioCancelButtonObj = document.getElementById("scenarioCancelButton");
+const scenarioSendButtonObj = document.getElementById("scenarioSendButton");

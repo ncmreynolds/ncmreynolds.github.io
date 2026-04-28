@@ -178,6 +178,7 @@ function showScenarioForm()	{
 	document.getElementById("scenarioForm4").style.display = "block";	//Show scenario form
 	document.getElementById("scenarioForm5").style.display = "block";	//Show scenario form
 	document.getElementById("scenarioForm6").style.display = "block";	//Show scenario form
+	document.getElementById("scenarioForm7").style.display = "block";	//Show scenario form
 }
 
 function hideScenarioForm()	{
@@ -187,6 +188,7 @@ function hideScenarioForm()	{
 	document.getElementById("scenarioForm4").style.display = "none";	//Show scenario form
 	document.getElementById("scenarioForm5").style.display = "none";	//Show scenario form
 	document.getElementById("scenarioForm6").style.display = "none";	//Show scenario form
+	document.getElementById("scenarioForm7").style.display = "none";	//Show scenario form
 }
 function enableScenarioForm()	{
 	document.getElementById("scenarioName").disabled = false;
@@ -201,8 +203,10 @@ function enableScenarioForm()	{
 	document.getElementById("type6").disabled = false;
 	document.getElementById("type7").disabled = false;
 	document.getElementById("recipientBloodType").disabled = false;
-	document.getElementById("scenarioSendButton").disabled = false;
-	document.getElementById("scenarioSendButton").className = "button-primary u-full-width";
+	scenarioSendButtonObj.disabled = false;
+	scenarioSendButtonObj.className = "button-primary u-full-width";
+	document.getElementById("scenarioCancelButton").disabled = false;
+	document.getElementById("scenarioCancelButton").className = "button-primary u-full-width";
 }
 function disableScenarioForm()	{
 	document.getElementById("scenarioName").disabled = true;
@@ -217,12 +221,18 @@ function disableScenarioForm()	{
 	document.getElementById("type6").disabled = true;
 	document.getElementById("type7").disabled = true;
 	document.getElementById("recipientBloodType").disabled = true;
-	document.getElementById("scenarioSendButton").disabled = true;
-	document.getElementById("scenarioSendButton").className = "u-full-width";
+	scenarioSendButtonObj.disabled = true;
+	scenarioSendButtonObj.className = "u-full-width";
+	document.getElementById("scenarioCancelButton").disabled = true;
+	document.getElementById("scenarioCancelButton").className = "u-full-width";
 }
 
 // Scenario send button
-document.getElementById('scenarioSendButton').addEventListener('click', startSendingScenario);
+scenarioSendButtonObj.addEventListener('click', startSendingScenario);
+scenarioCancelButtonObj.addEventListener('click', function()	{
+		hideScenarioForm()
+	}
+);
 
 function startSendingScenario()	{
 	if(scenarioSendInProgress == false)	{
