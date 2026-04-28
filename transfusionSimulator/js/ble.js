@@ -91,26 +91,32 @@ function bleManageSendingScenario()	{
 		if(bleBusy == false)	{
 			if(scenarioSendState == 0)	{
 				console.log("Sending name length update");
-				const nameLength = document.getElementById("scenarioName").value.length; 
-				const bleBagsscenarioSendPacket = Uint8Array.of(bleScenarioNameLengthUpdateRequest,sequenceNumber,scenarioSendIndex,nameLength);
+				scenarioNameLength[scenarioSendIndex] = document.getElementById("scenarioName").value.length;
+				const bleBagsscenarioSendPacket = Uint8Array.of(bleScenarioNameLengthUpdateRequest,sequenceNumber,scenarioSendIndex,scenarioNameLength[scenarioSendIndex]);
 				bleSendCommand(bleBagsscenarioSendPacket);
 			} else if(scenarioSendState == 1)	{
 				console.log("Sending name data update");
+				if(scenarioSendBlock == 0)	{
+					scenarioName[scenarioSendIndex] = document.getElementById("scenarioName").value;
+				}
 				const bleBagsscenarioSendPacket = Uint8Array.of(bleScenarioNameUpdateRequest,sequenceNumber,scenarioSendIndex,scenarioSendBlock);
 				bleSendCommand(bleBagsscenarioSendPacket);
 			} else if(scenarioSendState == 2)	{
 				console.log("Sending narrative length update");
-				const narrativeLength = document.getElementById("scenarioNarrative").value.length; 
-				const bleBagsscenarioSendPacket = Uint8Array.of(bleScenarioNarrativeLengthUpdateRequest,sequenceNumber,scenarioSendIndex,narrativeLength);
+				scenarioNarrativeLength[scenarioSendIndex] = document.getElementById("scenarioNarrative").value.length; 
+				const bleBagsscenarioSendPacket = Uint8Array.of(bleScenarioNarrativeLengthUpdateRequest,sequenceNumber,scenarioSendIndex,scenarioNarrativeLength[scenarioSendIndex]);
 				bleSendCommand(bleBagsscenarioSendPacket);
 			} else if(scenarioSendState == 3)	{
 				console.log("Sending narrative data update");
+				if(scenarioSendBlock == 0)	{
+					scenarioNarrative[scenarioSendIndex] = document.getElementById("scenarioNarrative").value;
+				}
 				const bleBagsscenarioSendPacket = Uint8Array.of(bleScenarioNarrativeUpdateRequest,sequenceNumber,scenarioSendIndex,scenarioSendBlock);
 				bleSendCommand(bleBagsscenarioSendPacket);
 			} else if(scenarioSendState == 4)	{
 				console.log("Sending availability update");
-				const availability = document.getElementById("available").checked;
-				const bleBagsscenarioSendPacket = Uint8Array.of(bleScenarioAvailableUpdateRequest,sequenceNumber,scenarioSendIndex,availability);
+				scenarioAvailable[scenarioSendIndex] = document.getElementById("available").checked;
+				const bleBagsscenarioSendPacket = Uint8Array.of(bleScenarioAvailableUpdateRequest,sequenceNumber,scenarioSendIndex,scenarioAvailable[scenarioSendIndex]);
 				bleSendCommand(bleBagsscenarioSendPacket);
 			} else if(scenarioSendState == 5)	{
 				console.log("Sending available blood types update");
@@ -118,16 +124,18 @@ function bleManageSendingScenario()	{
 				for (var i = 0; i < 8; i++) {
 					if(document.getElementById(`type${i}`).checked == true)	{
 						bagAvailability[i] = 1;
+						scenarioAvailableBloodTypes[scenarioSendIndex][i] = true;
 					} else {
 						bagAvailability[i] = 0;
+						scenarioAvailableBloodTypes[scenarioSendIndex][i] = false;
 					}
 				}
 				const bleBagsscenarioSendPacket = Uint8Array.of(bleScenarioAvailableBloodTypesUpdateRequest,sequenceNumber,scenarioSendIndex,bagAvailability[0],bagAvailability[1],bagAvailability[2],bagAvailability[3],bagAvailability[4],bagAvailability[5],bagAvailability[6],bagAvailability[7]);
 				bleSendCommand(bleBagsscenarioSendPacket);
 			} else if(scenarioSendState == 6)	{
 				console.log("Sending patient blood group update");
-				const bloodType = document.getElementById("recipientBloodType").value;
-				const bleBagsscenarioSendPacket = Uint8Array.of(bleScenarioBloodTypeUpdateRequest,sequenceNumber,scenarioSendIndex,bloodType);
+				scenarioBloodType[scenarioSendIndex] = document.getElementById("recipientBloodType").value;
+				const bleBagsscenarioSendPacket = Uint8Array.of(bleScenarioBloodTypeUpdateRequest,sequenceNumber,scenarioSendIndex,scenarioBloodType[scenarioSendIndex]);
 				bleSendCommand(bleBagsscenarioSendPacket);
 			} else {
 				console.log(`Scenario send unknown state`);
