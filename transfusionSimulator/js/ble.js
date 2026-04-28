@@ -63,13 +63,15 @@ var lastSequenceNumber = 0;	//Checks the packet coming back
 var lastCommand = bleDummyRequest;
 var remoteBags = new Uint8Array(8);
 var remoteBagDataReceived = false;
-var numberOfScenarios = 0;
+
+//Full config refresh
 var configRefreshInProgress = false;
 var configRefreshState = 0;
 var configRefreshIndex = 0;
 var configRefreshBlock = 0;
 
 //Scenario data
+var numberOfScenarios = 0;
 const scenarioName = [];
 const scenarioNameLength = [];
 const scenarioNarrative = [];
@@ -77,7 +79,13 @@ const scenarioNarrativeLength = [];
 const scenarioAvailable = [];
 const scenarioBloodType = [];
 const scenarioAvailableBloodTypes = [];
+
+//Scenario send
 var lastClickedScenario = 255;
+var scenarioSendInProgress = 0;
+var scenarioSendState = 0;
+var scenarioSendIndex = 0;
+var scenarioSendBlock = 0;
 
 /* Full sync */
 
@@ -111,21 +119,6 @@ function bleRequestRestart()	{
 
 /* Scenario admin */
 
-function startSendingScenario()	{
-	console.log(`Updating scenario ${lastClickedScenario}`);
-	uiBleTransactionInProgress();
-	hideScenarioForm();
-}
-
-function startConfigRefresh()	{
-	if(configRefreshInProgress == false)	{
-		configRefreshInProgress = true;
-		configRefreshState = 0;
-		configRefreshIndex = 0;
-		uiBleTransactionInProgress();
-		console.log("Starting config update process");
-	}
-}
 
 function bleRequestScenarioUpdate()	{
 	if(configRefreshInProgress == true)	{
@@ -178,10 +171,6 @@ function bleRequestScenarioUpdate()	{
 			console.log("Scenario update waiting, BLE busy");
 		}
 	}
-}
-
-function updateRefreshStatus()	{
-	document.getElementById("scenarioProgress").innerHTML=`Updating - ${(configRefreshIndex*7)+(configRefreshState-2)}/${(7 * numberOfScenarios)}`;
 }
 
 setInterval(bleRequestScenarioUpdate, 250);
@@ -307,18 +296,6 @@ function connectToDevice(){
 	.catch(error => {
 		console.log('Error: ', error);
 	})
-}
-
-
-
-function uiChangeOnConnect()	{
-	document.getElementById("disconnectBleButton").className = "u-full-width";
-	document.getElementById("disconnectBleButton").disabled = false;
-	document.getElementById("disconnectBleButton").className = "button-primary u-full-width";
-	document.getElementById("configRefreshButton").disabled = false;
-	document.getElementById("configRefreshButton").className = "button-primary u-full-width";
-	document.getElementById("configSaveButton").disabled = false;
-	document.getElementById("configSaveButton").className = "button-primary u-full-width";
 }
 
 /* Characteristic change/notify */
@@ -470,11 +447,7 @@ function handleCharacteristicChange(event){	//This happens on a notify
 						configRefreshState = 2;
 						configRefreshIndex+=1;
 						if(configRefreshIndex>=numberOfScenarios)	{	//Stop refreshing
-							configRefreshInProgress = false;
-							configRefreshIndex = 0;
-							updateScenarioTable();
-							showScenarioTable();
-							uiBleTransactionComplete();
+							configRefreshComplete();
 						}
 					}
 				break;
@@ -497,54 +470,6 @@ function handleCharacteristicChange(event){	//This happens on a notify
 		console.log("Short packet received, ${event.target.value.byteLength}");
 	}
 }
-
-
-function updateScenarioTable()	{
-	var table = document.getElementById("scenarioTableItself");
-	var rowCount = table.rows.length;	//This includes the header which is row 0
-	for (var i = 0; i < rowCount-1; i++) {
-		table.deleteRow(1);	//Delete row 1 which skips the header
-	}
-	for (var i = 0; i < numberOfScenarios; i++) {
-		var row = table.insertRow(i+1);
-		const index = i;
-		var cell0 = row.insertCell(0);
-		var cell1 = row.insertCell(1);
-		var cell2 = row.insertCell(2);
-		//cell0.innerHTML = `Name ${i}`;
-		cell0.innerHTML = scenarioName[index];
-		if(i > 0)	{
-			cell1.innerHTML = "&#8593;";
-		}
-		if(i < numberOfScenarios -1)	{
-			cell2.innerHTML = "&#8595;";
-		}
-		cell0.addEventListener("click", function(){tableOnClick(`${index}`)});
-		row.id = `scenario${index}`;
-		row.backgroundColor="red";
-	}
-}
-
-function tableOnClick(row)	{
-	if(row != lastClickedScenario)	{
-		console.log(`Scenario ${row} clicked`);
-		showScenarioForm();
-		if(lastClickedScenario != 255)	{
-			document.getElementById(`scenario${lastClickedScenario}`).backgroundColor="white";
-		}
-		document.getElementById(`scenario${row}`).backgroundColor="red";
-		lastClickedScenario = row;
-		//Load in the data
-		document.getElementById("scenarioName").value = scenarioName[row];
-		document.getElementById("scenarioNarrative").value = scenarioNarrative[row];
-		document.getElementById("available").checked = scenarioAvailable[row];
-		for (var i = 0; i < 8; i++) {
-			document.getElementById(`type${i}`).checked = scenarioAvailableBloodTypes[row][i];
-		}
-		document.getElementById("recipientBloodType").value = scenarioBloodType[row];
-	}
-}
-
 
 function bleSendCommand(value){
 	if (bleServer && bleServer.connected) {
@@ -609,7 +534,6 @@ function onDisconnected(event){
 	bleConnected = false;
 	configRefreshInProgress = false;
 	uiChangeOnDisconnect ();
-	//console.log('Device Disconnected:', event.target.device.name);
 	console.log('Disconnected');
 	lastCommand = bleDummyRequest;
 }

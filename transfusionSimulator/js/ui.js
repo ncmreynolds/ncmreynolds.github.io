@@ -1,20 +1,82 @@
-function uiBleTransactionInProgress	{
+function uiBleTransactionInProgress()	{
 	document.getElementById("configRefreshButton").disabled = true;
 	document.getElementById("configRefreshButton").className = "u-full-width";
 	document.getElementById("configSaveButton").disabled = true;
 	document.getElementById("configSaveButton").className = "u-full-width";
 }
-function uiBleTransactionComplete	{
+function uiBleTransactionComplete()	{
 	document.getElementById("configRefreshButton").disabled = false;
 	document.getElementById("configRefreshButton").className = "button-primary u-full-width";
 	document.getElementById("configSaveButton").disabled = false;
 	document.getElementById("configSaveButton").className = "button-primary u-full-width";
 }
+/*
+
+	Scenario table
+
+*/
+
 function showScenarioTable()	{
 	document.getElementById("scenarioTable").style.display = "block";	//Show scenario table
 	document.getElementById('scenarioTableItself').style.height='100px';
 	document.getElementById("scenarioTablePlaceholder").style.display = "none";	//Hide scenario table placeholder
 }
+
+function updateScenarioTable()	{
+	var table = document.getElementById("scenarioTableItself");
+	var rowCount = table.rows.length;	//This includes the header which is row 0
+	for (var i = 0; i < rowCount-1; i++) {
+		table.deleteRow(1);	//Delete row 1 which skips the header
+	}
+	for (var i = 0; i < numberOfScenarios; i++) {
+		var row = table.insertRow(i+1);
+		const index = i;
+		var cell0 = row.insertCell(0);
+		var cell1 = row.insertCell(1);
+		var cell2 = row.insertCell(2);
+		//cell0.innerHTML = `Name ${i}`;
+		cell0.innerHTML = scenarioName[index];
+		if(i > 0)	{
+			cell1.innerHTML = "&#8593;";
+		}
+		if(i < numberOfScenarios -1)	{
+			cell2.innerHTML = "&#8595;";
+		}
+		cell0.addEventListener("click", function(){tableOnClick(`${index}`)});
+		row.id = `scenario${index}`;
+		row.backgroundColor="red";
+	}
+}
+
+function tableOnClick(row)	{
+	if(row != lastClickedScenario)	{
+		console.log(`Scenario ${row} clicked`);
+		showScenarioForm();
+		if(lastClickedScenario != 255)	{
+			document.getElementById(`scenario${lastClickedScenario}`).backgroundColor="white";
+		}
+		document.getElementById(`scenario${row}`).backgroundColor="red";
+		lastClickedScenario = row;
+		//Load in the data
+		document.getElementById("scenarioName").value = scenarioName[row];
+		document.getElementById("scenarioNarrative").value = scenarioNarrative[row];
+		document.getElementById("available").checked = scenarioAvailable[row];
+		for (var i = 0; i < 8; i++) {
+			document.getElementById(`type${i}`).checked = scenarioAvailableBloodTypes[row][i];
+		}
+		document.getElementById("recipientBloodType").value = scenarioBloodType[row];
+	}
+}
+
+function updateRefreshStatus()	{
+	document.getElementById("scenarioProgress").innerHTML=`Updating - ${(configRefreshIndex*7)+(configRefreshState-2)}/${(7 * numberOfScenarios)}`;
+}
+
+/*
+
+	Scenario from
+
+*/
 
 function showScenarioForm()	{
 	document.getElementById("scenarioForm1").style.display = "block";	//Show scenario form
@@ -33,6 +95,59 @@ function hideScenarioForm()	{
 	document.getElementById("scenarioForm5").style.display = "none";	//Show scenario form
 	document.getElementById("scenarioForm6").style.display = "none";	//Show scenario form
 }
+function enableScenarioForm()	{
+	document.getElementById("scenarioName").disabled = false;
+	document.getElementById("available_label").disabled = false;
+	document.getElementById("scenarioNarrative").disabled = false;
+	document.getElementById("type0").disabled = false;
+	document.getElementById("type1").disabled = false;
+	document.getElementById("type2").disabled = false;
+	document.getElementById("type3").disabled = false;
+	document.getElementById("type4").disabled = false;
+	document.getElementById("type5").disabled = false;
+	document.getElementById("type6").disabled = false;
+	document.getElementById("type7").disabled = false;
+	document.getElementById("recipientBloodType").disabled = false;
+	document.getElementById("scenarioSendButton").disabled = false;
+	document.getElementById("scenarioSendButton").className = "button-primary u-full-width";
+}
+function disableScenarioForm()	{
+	document.getElementById("scenarioName").disabled = true;
+	document.getElementById("available_label").disabled = true;
+	document.getElementById("scenarioNarrative").disabled = true;
+	document.getElementById("type0").disabled = true;
+	document.getElementById("type1").disabled = true;
+	document.getElementById("type2").disabled = true;
+	document.getElementById("type3").disabled = true;
+	document.getElementById("type4").disabled = true;
+	document.getElementById("type5").disabled = true;
+	document.getElementById("type6").disabled = true;
+	document.getElementById("type7").disabled = true;
+	document.getElementById("recipientBloodType").disabled = true;
+	document.getElementById("scenarioSendButton").disabled = true;
+	document.getElementById("scenarioSendButton").className = "button-primary u-full-width";
+}
+
+// Scenario send button
+document.getElementById('scenarioSendButton').addEventListener('click', startSendingScenario);
+
+function startSendingScenario()	{
+	if(scenarioSendInProgress == false)	{
+		scenarioSendInProgress = true;
+		scenarioSendState = 0;
+		scenarioSendIndex = lastClickedScenario;
+		uiBleTransactionInProgress();
+		disableScenarioForm();
+		console.log(`Updating scenario ${lastClickedScenario}`);
+	}
+}
+
+/*
+
+	Disconnect
+
+*/
+
 function uiChangeOnDisconnect ()	{
 	bleStateContainer.innerHTML = "Device Disconnected";
 	bleStateContainer.style.color = "#d13a30";
@@ -45,6 +160,26 @@ function uiChangeOnDisconnect ()	{
 	document.getElementById("configSaveButton").className = "u-full-width";
 }
 
+// Disconnect Button
+disconnectButton.addEventListener('click', disconnectDevice);
+
+/*
+
+	Connect
+
+*/
+
+function uiChangeOnConnect()	{
+	document.getElementById("disconnectBleButton").className = "u-full-width";
+	document.getElementById("disconnectBleButton").disabled = false;
+	document.getElementById("disconnectBleButton").className = "button-primary u-full-width";
+	document.getElementById("configRefreshButton").disabled = false;
+	document.getElementById("configRefreshButton").className = "button-primary u-full-width";
+	document.getElementById("configSaveButton").disabled = false;
+	document.getElementById("configSaveButton").className = "button-primary u-full-width";
+}
+
+
 // Connect Button (search for BLE Devices only if BLE is available)
 connectButton.addEventListener('click', (event) => {
 	if (isWebBluetoothEnabled()){
@@ -52,14 +187,29 @@ connectButton.addEventListener('click', (event) => {
 	}
 });
 
-// Disconnect Button
-disconnectButton.addEventListener('click', disconnectDevice);
-
-// Scenario send button
-document.getElementById('scenarioSendButton').addEventListener('click', startSendingScenario);
-
 // Config refresh button
 document.getElementById('configRefreshButton').addEventListener('click', startConfigRefresh);
+
+function startConfigRefresh()	{
+	if(configRefreshInProgress == false)	{
+		configRefreshInProgress = true;
+		configRefreshState = 0;
+		configRefreshIndex = 0;
+		uiBleTransactionInProgress();
+		disableScenarioForm();
+		console.log("Starting config update process");
+	}
+}
+
+function configRefreshComplete()	{
+	configRefreshInProgress = false;
+	configRefreshState = 0;
+	configRefreshIndex = 0;
+	updateScenarioTable();
+	showScenarioTable();
+	uiBleTransactionComplete();
+	disableScenarioForm();
+}
 
 // Bag send button
 document.getElementById('configSaveButton').addEventListener('click', bleSaveBags);
