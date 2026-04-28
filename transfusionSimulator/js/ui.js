@@ -272,6 +272,9 @@ function uiChangeOnDisconnect ()	{
 	configRefreshButtonObj.className = "u-full-width";
 	configSaveButtonObj.disabled = true;
 	configSaveButtonObj.className = "u-full-width";
+	hideScenarioForm();
+	hideScenarioTable();
+	hideBagTypesForm();
 }
 
 // Disconnect Button
