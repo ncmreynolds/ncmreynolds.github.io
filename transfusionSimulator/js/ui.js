@@ -55,6 +55,8 @@ function enableBagTypesForm()	{
 
 // Bag send button
 document.getElementById('sendBagsButton').addEventListener('click', startSendingBags);
+// Bag send button
+//document.getElementById('configSaveButton').addEventListener('click', bleSaveBags);
 
 function startSendingBags()	{
 	if(bagSendInProgress == false)	{
@@ -302,8 +304,6 @@ function configRefreshComplete()	{
 	uiBleTransactionComplete();
 }
 
-// Bag send button
-document.getElementById('configSaveButton').addEventListener('click', bleSaveBags);
 
 //document.getElementById('saveButton').addEventListener('click', bleRequestSaveConfig);
 
