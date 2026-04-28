@@ -248,6 +248,7 @@ function scenarioSendComplete()	{
 		uiBleTransactionComplete();
 		enableScenarioForm();
 		enableBagTypesForm();
+		updateScenarioTable();
 		clearInterval(scenarioSendHandle);
 		console.log(`Sent scenario ${scenarioSendIndex}`);
 	} else {
