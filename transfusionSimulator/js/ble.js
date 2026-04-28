@@ -41,6 +41,7 @@ var configRefreshInProgress = false;
 var configRefreshState = 0;
 var configRefreshIndex = 0;
 var configRefreshBlock = 0;
+var configRefreshHandle;	//Handle for interval function
 
 //Bag send
 var bagSendInProgress = false;
@@ -85,7 +86,7 @@ function bleRequestRestart()	{
 /* Scenario admin */
 
 
-function bleRequestScenarioUpdate()	{
+function bleManageConfigRefresh()	{
 	if(configRefreshInProgress == true)	{
 		if(bleBusy == false)	{
 			if(configRefreshState == 0)	{
@@ -138,7 +139,7 @@ function bleRequestScenarioUpdate()	{
 	}
 }
 
-setInterval(bleRequestScenarioUpdate, 250);
+
 
 /* Bag admin */
 

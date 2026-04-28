@@ -303,6 +303,7 @@ function startConfigRefresh()	{
 		hideScenarioForm();
 		disableScenarioForm();
 		console.log("Starting config update process");
+		configRefreshHandle = setInterval(bleManageConfigRefresh, 250);
 	}
 }
 
@@ -317,6 +318,7 @@ function configRefreshComplete()	{
 	showScenarioTable();
 	enableScenarioForm();
 	uiBleTransactionComplete();
+	clearInterval(configRefreshHandle);
 }
 
 
