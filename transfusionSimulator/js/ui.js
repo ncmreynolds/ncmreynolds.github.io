@@ -234,17 +234,24 @@ function startSendingScenario()	{
 		disableBagTypesForm();
 		console.log(`Sending scenario ${scenarioSendIndex}`);
 		scenarioSendHandle = setInterval(bleManageSendingScenario, bleStateMachineInterval);
+	} else {
+		console.log("Already sending scenario");
 	}
 }
 
 function scenarioSendComplete()	{
-	scenarioSendState = 0;
-	scenarioSendIndex = lastClickedScenario;
-	uiBleTransactionComplete();
-	enableScenarioForm();
-	enableBagTypesForm();
-	clearInterval(scenarioSendHandle);
-	console.log(`Sent scenario ${scenarioSendIndex}`);
+	if(scenarioSendInProgress == true)	{
+		scenarioSendInProgress = false;
+		scenarioSendState = 0;
+		scenarioSendIndex = lastClickedScenario;
+		uiBleTransactionComplete();
+		enableScenarioForm();
+		enableBagTypesForm();
+		clearInterval(scenarioSendHandle);
+		console.log(`Sent scenario ${scenarioSendIndex}`);
+	} else {
+		console.log("Scenario send not started");
+	}
 }
 
 /*
