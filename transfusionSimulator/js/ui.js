@@ -139,7 +139,8 @@ function updateScenarioTable()	{
 }
 
 function tableOnClick(row)	{
-	if(row != lastClickedScenario)	{
+	//if(row != lastClickedScenario)
+	{
 		console.log(`Scenario ${row} clicked`);
 		showScenarioForm();
 		if(lastClickedScenario != 255)	{
