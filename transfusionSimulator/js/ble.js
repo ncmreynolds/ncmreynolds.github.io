@@ -18,7 +18,6 @@ var bleConnected = false;	//Simple mark of connection status
 var bleBusy = false;
 var bleTimeouts = 0;
 const bleErrorThreshold = 20;
-const bleBlockSize = 50;
 var sequenceNumber = 1;	//Every response includes the 'sequence number' (0-255) of the command it's responding to
 var lastSequenceNumber = 0;	//Checks the packet coming back
 var lastCommand = bleDummyRequest;
@@ -99,7 +98,15 @@ function bleManageSendingScenario()	{
 				if(scenarioSendBlock == 0)	{
 					scenarioName[scenarioSendIndex] = document.getElementById("scenarioName").value;
 				}
-				const bleBagsscenarioSendPacket = Uint8Array.of(bleScenarioNameUpdateRequest,sequenceNumber,scenarioSendIndex,scenarioSendBlock);
+				const bleBagsscenarioSendPacket = new Uint8Array();
+				bleBagsscenarioSendPacket[0] = bleScenarioNameUpdateRequest;
+				bleBagsscenarioSendPacket[1] = sequenceNumber;
+				bleBagsscenarioSendPacket[2] = scenarioSendIndex;
+				bleBagsscenarioSendPacket[3] = scenarioSendBlock;
+				const blockStart = bleBlockSize * scenarioSendBlock;
+				for (var i = blockStart; i < scenarioNameLength[scenarioSendIndex] && i-blockStart < bleBlockSize; i++) {
+						bleBagsscenarioSendPacket[4+i-blockStart] = scenarioName[i];
+				}
 				bleSendCommand(bleBagsscenarioSendPacket);
 			} else if(scenarioSendState == 2)	{
 				console.log("Sending narrative length update");
@@ -478,14 +485,20 @@ function handleCharacteristicChange(event){	//This happens on a notify
 				break;
 				case bleScenarioNameLengthUpdateResponse:
 					if(scenarioSendInProgress == true)	{
-						console.log(`Scenario update name length OK`);
+						console.log(`Scenario ${responseReceived[2]} update name length OK`);
 						scenarioSendState = 1;
 					}
 				break;
 				case bleScenarioNameUpdateResponse:
 					if(scenarioSendInProgress == true)	{
-						console.log(`Scenario update name data OK`);
-						scenarioSendState = 2;
+						scenarioSendBlock+=1;	//Move on to next block
+						if(bleBlockSize * scenarioSendBlock >= scenarioNameLength[responseReceived[2]])	{
+							scenarioSendBlock = 0;
+							scenarioSendState = 2;
+							console.log(`Scenario ${responseReceived[2]} update name data finished OK`);
+						} else {
+							console.log(`Scenario ${responseReceived[2]} update name block ${responseReceived[3]} data OK`);
+						}
 					}
 				break;
 				case bleScenarioNarrativeLengthUpdateResponse:
