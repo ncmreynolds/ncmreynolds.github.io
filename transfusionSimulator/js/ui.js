@@ -305,7 +305,7 @@ connectButton.addEventListener('click', (event) => {
 });
 
 // Config refresh button
-document.getElementById('configRefreshButton').addEventListener('click', startConfigRefresh);
+//configRefreshButtonObj.addEventListener('click', startConfigRefresh);
 
 function startConfigRefresh()	{
 	if(configRefreshInProgress == false)	{
