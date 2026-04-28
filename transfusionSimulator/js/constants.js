@@ -73,7 +73,7 @@ const bleStateMachineInterval = 250;
 
 //UI constants
 
-const configRefreshButtonObj = document.getElementById("configRefreshButton");
+//const configRefreshButtonObj = document.getElementById("configRefreshButton");
 const configSaveButtonObj = document.getElementById("configSaveButton");
 const bagTypes1Obj = document.getElementById("bagTypes1");
 const bagTypes2Obj = document.getElementById("bagTypes2");
