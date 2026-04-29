@@ -334,6 +334,8 @@ function startConfigRefresh()	{
 		hideScenarioTable();
 		hideScenarioForm();
 		disableScenarioForm();
+		showBagTypesPlaceholder();
+		showScenarioTablePlaceholder();
 		console.log("Starting config update process");
 		configRefreshHandle = setInterval(bleManageConfigRefresh, bleStateMachineInterval);
 	}
@@ -350,6 +352,8 @@ function configRefreshComplete()	{
 	showScenarioTable();
 	enableScenarioForm();
 	uiBleTransactionComplete();
+	hideBagTypesPlaceholder();
+	hideScenarioTablePlaceholder();
 	clearInterval(configRefreshHandle);
 	console.log("Config update process finished");
 }
