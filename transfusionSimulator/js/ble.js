@@ -93,7 +93,7 @@ function bleManageSendingScenario()	{
 				console.log("Sending sort order update");
 				const bleBagsscenarioSendPacket = Uint8Array.of(bleScenarioSortOrderUpdateRequest,sequenceNumber,scenarioSendIndex,scenarioSortOrder[scenarioSendIndex]);
 				bleSendCommand(bleBagsscenarioSendPacket);
-			else if(scenarioSendState == 1)	{
+			} else if(scenarioSendState == 1)	{
 				console.log("Sending name length update");
 				scenarioNameLength[scenarioSendIndex] = document.getElementById("scenarioName").value.length;
 				const bleBagsscenarioSendPacket = Uint8Array.of(bleScenarioNameLengthUpdateRequest,sequenceNumber,scenarioSendIndex,scenarioNameLength[scenarioSendIndex]);
