@@ -27,6 +27,7 @@ var remoteBags = new Uint8Array(8);
 
 //Scenario data
 var numberOfScenarios = 0;
+const scenarioSortOrder = [];
 const scenarioName = [];
 const scenarioNameLength = [];
 const scenarioNarrative = [];
@@ -89,11 +90,15 @@ function bleManageSendingScenario()	{
 	if(scenarioSendInProgress == true)	{
 		if(bleBusy == false)	{
 			if(scenarioSendState == 0)	{
+				console.log("Sending sort order update");
+				const bleBagsscenarioSendPacket = Uint8Array.of(bleScenarioSortOrderUpdateRequest,sequenceNumber,scenarioSendIndex,scenarioSortOrder[scenarioSendIndex]);
+				bleSendCommand(bleBagsscenarioSendPacket);
+			else if(scenarioSendState == 1)	{
 				console.log("Sending name length update");
 				scenarioNameLength[scenarioSendIndex] = document.getElementById("scenarioName").value.length;
 				const bleBagsscenarioSendPacket = Uint8Array.of(bleScenarioNameLengthUpdateRequest,sequenceNumber,scenarioSendIndex,scenarioNameLength[scenarioSendIndex]);
 				bleSendCommand(bleBagsscenarioSendPacket);
-			} else if(scenarioSendState == 1)	{
+			} else if(scenarioSendState == 2)	{
 				console.log("Sending name data update");
 				if(scenarioSendBlock == 0)	{
 					scenarioName[scenarioSendIndex] = document.getElementById("scenarioName").value;
@@ -108,12 +113,12 @@ function bleManageSendingScenario()	{
 						bleBagsscenarioSendPacket[4+i-blockStart] = scenarioName[scenarioSendIndex].charCodeAt(i);
 				}
 				bleSendCommand(bleBagsscenarioSendPacket);
-			} else if(scenarioSendState == 2)	{
+			} else if(scenarioSendState == 3)	{
 				console.log("Sending narrative length update");
 				scenarioNarrativeLength[scenarioSendIndex] = document.getElementById("scenarioNarrative").value.length; 
 				const bleBagsscenarioSendPacket = Uint8Array.of(bleScenarioNarrativeLengthUpdateRequest,sequenceNumber,scenarioSendIndex,scenarioNarrativeLength[scenarioSendIndex]);
 				bleSendCommand(bleBagsscenarioSendPacket);
-			} else if(scenarioSendState == 3)	{
+			} else if(scenarioSendState == 4)	{
 				console.log("Sending narrative data update");
 				if(scenarioSendBlock == 0)	{
 					scenarioNarrative[scenarioSendIndex] = document.getElementById("scenarioNarrative").value;
@@ -128,12 +133,12 @@ function bleManageSendingScenario()	{
 						bleBagsscenarioSendPacket[4+i-blockStart] = scenarioNarrative[scenarioSendIndex].charCodeAt(i);
 				}
 				bleSendCommand(bleBagsscenarioSendPacket);
-			} else if(scenarioSendState == 4)	{
+			} else if(scenarioSendState == 5)	{
 				console.log("Sending availability update");
 				scenarioAvailable[scenarioSendIndex] = document.getElementById("available").checked;
 				const bleBagsscenarioSendPacket = Uint8Array.of(bleScenarioAvailableUpdateRequest,sequenceNumber,scenarioSendIndex,scenarioAvailable[scenarioSendIndex]);
 				bleSendCommand(bleBagsscenarioSendPacket);
-			} else if(scenarioSendState == 5)	{
+			} else if(scenarioSendState == 6)	{
 				console.log("Sending available blood types update");
 				const bagAvailability = new Uint8Array(8);
 				for (var i = 0; i < 8; i++) {
@@ -147,7 +152,7 @@ function bleManageSendingScenario()	{
 				}
 				const bleBagsscenarioSendPacket = Uint8Array.of(bleScenarioAvailableBloodTypesUpdateRequest,sequenceNumber,scenarioSendIndex,bagAvailability[0],bagAvailability[1],bagAvailability[2],bagAvailability[3],bagAvailability[4],bagAvailability[5],bagAvailability[6],bagAvailability[7]);
 				bleSendCommand(bleBagsscenarioSendPacket);
-			} else if(scenarioSendState == 6)	{
+			} else if(scenarioSendState == 7)	{
 				console.log("Sending patient blood group update");
 				scenarioBloodType[scenarioSendIndex] = document.getElementById("recipientBloodType").value;
 				const bleBagsscenarioSendPacket = Uint8Array.of(bleScenarioBloodTypeUpdateRequest,sequenceNumber,scenarioSendIndex,scenarioBloodType[scenarioSendIndex]);
@@ -176,36 +181,41 @@ function bleManageConfigRefresh()	{
 				const bleScenarioUpdateRequestPacket = Uint8Array.of(bleScenarioCountRequest,sequenceNumber);
 				bleSendCommand(bleScenarioUpdateRequestPacket);
 			} else if(configRefreshState == 2)	{
+				console.log(`Requesting scenario ${configRefreshIndex} sort order update`);
+				const bleScenarioUpdateRequestPacket = Uint8Array.of(bleScenarioSortOrderRequest,sequenceNumber,configRefreshIndex);
+				bleSendCommand(bleScenarioUpdateRequestPacket);
+				updateRefreshStatus();
+			} else if(configRefreshState == 3)	{
 				console.log(`Requesting scenario ${configRefreshIndex} name length update`);
 				const bleScenarioUpdateRequestPacket = Uint8Array.of(bleScenarioNameLengthRequest,sequenceNumber,configRefreshIndex);
 				bleSendCommand(bleScenarioUpdateRequestPacket);
 				updateRefreshStatus();
-			} else if(configRefreshState == 3)	{
+			} else if(configRefreshState == 4)	{
 				console.log(`Requesting scenario ${configRefreshIndex} name update`);
 				const bleScenarioUpdateRequestPacket = Uint8Array.of(bleScenarioNameRequest,sequenceNumber,configRefreshIndex,configRefreshBlock);
 				bleSendCommand(bleScenarioUpdateRequestPacket);
 				updateRefreshStatus();
-			} else if(configRefreshState == 4)	{
+			} else if(configRefreshState == 5)	{
 				console.log(`Requesting scenario ${configRefreshIndex} narrative length update`);
 				const bleScenarioUpdateRequestPacket = Uint8Array.of(bleScenarioNarrativeLengthRequest,sequenceNumber,configRefreshIndex);
 				bleSendCommand(bleScenarioUpdateRequestPacket);
 				updateRefreshStatus();
-			} else if(configRefreshState == 5)	{
+			} else if(configRefreshState == 6)	{
 				console.log(`Requesting scenario ${configRefreshIndex} narrative update`);
 				const bleScenarioUpdateRequestPacket = Uint8Array.of(bleScenarioNarrativeRequest,sequenceNumber,configRefreshIndex,configRefreshBlock);
 				bleSendCommand(bleScenarioUpdateRequestPacket);
 				updateRefreshStatus();
-			} else if(configRefreshState == 6)	{
+			} else if(configRefreshState == 7)	{
 				console.log(`Requesting scenario ${configRefreshIndex} availability update`);
 				const bleScenarioUpdateRequestPacket = Uint8Array.of(bleScenarioAvailableRequest,sequenceNumber,configRefreshIndex);
 				bleSendCommand(bleScenarioUpdateRequestPacket);
 				updateRefreshStatus();
-			} else if(configRefreshState == 7)	{
+			} else if(configRefreshState == 8)	{
 				console.log(`Requesting scenario ${configRefreshIndex} groups update`);
 				const bleScenarioUpdateRequestPacket = Uint8Array.of(bleScenarioAvailableBloodTypesRequest,sequenceNumber,configRefreshIndex);
 				bleSendCommand(bleScenarioUpdateRequestPacket);
 				updateRefreshStatus();
-			} else if(configRefreshState == 8)	{
+			} else if(configRefreshState == 9)	{
 				console.log(`Requesting scenario ${configRefreshIndex} blood type update`);
 				const bleScenarioUpdateRequestPacket = Uint8Array.of(bleScenarioBloodTypeRequest,sequenceNumber,configRefreshIndex);
 				bleSendCommand(bleScenarioUpdateRequestPacket);
@@ -394,11 +404,18 @@ function handleCharacteristicChange(event){	//This happens on a notify
 						configRefreshState = 2;
 					}
 				break;
+				case bleScenarioSortOrderResponse:
+					if(configRefreshInProgress == true)	{
+						scenarioSortOrder[responseReceived[2]] = responseReceived[3];
+						console.log(`Scenario ${responseReceived[2]} sort order ${responseReceived[3]} received`);
+						configRefreshState = 3;
+					}
+				break;
 				case bleScenarioNameLengthResponse:
 					if(configRefreshInProgress == true)	{
 						scenarioNameLength[responseReceived[2]] = responseReceived[3];
 						console.log(`Scenario ${responseReceived[2]} name length ${responseReceived[3]} received`);
-						configRefreshState = 3;
+						configRefreshState = 4;
 					}
 				break;
 				case bleScenarioNameResponse:
@@ -414,7 +431,7 @@ function handleCharacteristicChange(event){	//This happens on a notify
 							configRefreshBlock = configRefreshBlock + 1;	//Move on to the next block
 							if(bleBlockSize * configRefreshBlock >= scenarioNameLength[responseReceived[2]])	{	//We've had the last block
 								console.log(`Scenario ${responseReceived[2]} name received "${scenarioName[responseReceived[2]]}"`);
-								configRefreshState = 4;	//Move on to next state
+								configRefreshState = 5;	//Move on to next state
 								configRefreshBlock = 0;	//Reset to first block
 							} else {
 								console.log(`Scenario ${responseReceived[2]} name block ${responseReceived[3]} received`);
@@ -428,7 +445,7 @@ function handleCharacteristicChange(event){	//This happens on a notify
 					if(configRefreshInProgress == true)	{
 						scenarioNarrativeLength[responseReceived[2]] = responseReceived[3];
 						console.log(`Scenario ${responseReceived[2]} narrative length ${responseReceived[3]} received"`);
-						configRefreshState = 5;
+						configRefreshState = 6;
 					}
 				break;
 				case bleScenarioNarrativeResponse:
@@ -444,7 +461,7 @@ function handleCharacteristicChange(event){	//This happens on a notify
 							configRefreshBlock = configRefreshBlock + 1;	//Move on to the next block
 							if(bleBlockSize * configRefreshBlock >= scenarioNarrativeLength[responseReceived[2]])	{	//We've had the last block
 								console.log(`Scenario ${responseReceived[2]} narrative received "${scenarioNarrative[responseReceived[2]]}"`);
-								configRefreshState = 6;	//Move on to next state
+								configRefreshState = 7;	//Move on to next state
 								configRefreshBlock = 0;	//Reset to first block
 							} else {
 								console.log(`Scenario ${responseReceived[2]} narrative block ${responseReceived[3]} received`);
@@ -462,7 +479,7 @@ function handleCharacteristicChange(event){	//This happens on a notify
 							scenarioAvailable[responseReceived[2]] = false;
 						}
 						console.log(`Scenario ${responseReceived[2]} availability ${responseReceived[3]} received`);
-						configRefreshState = 7;
+						configRefreshState = 8;
 					}
 				break;
 				case bleScenarioAvailableBloodTypesResponse:
@@ -477,7 +494,7 @@ function handleCharacteristicChange(event){	//This happens on a notify
 							}
 							console.log(`Group ${i} available ${responseReceived[4+i]}`);
 						}
-						configRefreshState = 8;
+						configRefreshState = 9;
 					}
 				break;
 				case bleScenarioBloodTypeResponse:
@@ -491,10 +508,16 @@ function handleCharacteristicChange(event){	//This happens on a notify
 						}
 					}
 				break;
+				case bleScenarioSortOrderUpdateResponse:
+					if(scenarioSendInProgress == true)	{
+						console.log(`Scenario ${responseReceived[2]} update sort order OK`);
+						scenarioSendState = 1;
+					}
+				break;
 				case bleScenarioNameLengthUpdateResponse:
 					if(scenarioSendInProgress == true)	{
 						console.log(`Scenario ${responseReceived[2]} update name length OK`);
-						scenarioSendState = 1;
+						scenarioSendState = 2;
 					}
 				break;
 				case bleScenarioNameUpdateResponse:
@@ -502,7 +525,7 @@ function handleCharacteristicChange(event){	//This happens on a notify
 						scenarioSendBlock += 1;	//Move on to next block
 						if(bleBlockSize * scenarioSendBlock >= scenarioNameLength[responseReceived[2]])	{
 							scenarioSendBlock = 0;
-							scenarioSendState = 2;
+							scenarioSendState = 3;
 							console.log(`Scenario ${responseReceived[2]} update name data finished OK`);
 						} else {
 							console.log(`Scenario ${responseReceived[2]} update name block ${responseReceived[3]} data OK`);
@@ -512,7 +535,7 @@ function handleCharacteristicChange(event){	//This happens on a notify
 				case bleScenarioNarrativeLengthUpdateResponse:
 					if(scenarioSendInProgress == true)	{
 						console.log(`Scenario update narrative length OK`);
-						scenarioSendState = 3;
+						scenarioSendState = 4;
 					}
 				break;
 				case bleScenarioNarrativeUpdateResponse:
@@ -520,7 +543,7 @@ function handleCharacteristicChange(event){	//This happens on a notify
 						scenarioSendBlock += 1;	//Move on to next block
 						if(bleBlockSize * scenarioSendBlock >= scenarioNarrativeLength[responseReceived[2]])	{
 							scenarioSendBlock = 0;
-							scenarioSendState = 4;
+							scenarioSendState = 5;
 							console.log(`Scenario ${responseReceived[2]} update narrative data finished OK`);
 						} else {
 							console.log(`Scenario ${responseReceived[2]} update narrative block ${responseReceived[3]} data OK`);
@@ -530,13 +553,13 @@ function handleCharacteristicChange(event){	//This happens on a notify
 				case bleScenarioAvailableUpdateResponse:
 					if(scenarioSendInProgress == true)	{
 						console.log(`Scenario update availability OK`);
-						scenarioSendState = 5;
+						scenarioSendState = 6;
 					}
 				break;
 				case bleScenarioAvailableBloodTypesUpdateResponse:
 					if(scenarioSendInProgress == true)	{
 						console.log(`Scenario update availabile blood types OK`);
-						scenarioSendState = 6;
+						scenarioSendState = 7;
 					}
 				break;
 				case bleScenarioBloodTypeUpdateResponse:
