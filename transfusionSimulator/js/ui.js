@@ -235,7 +235,8 @@ function disableScenarioForm()	{
 // Scenario send button
 scenarioSendButtonObj.addEventListener('click', startSendingScenario);
 scenarioCancelButtonObj.addEventListener('click', function()	{
-		hideScenarioForm()
+		hideScenarioForm();
+		showScenarioTable();
 	}
 );
 
