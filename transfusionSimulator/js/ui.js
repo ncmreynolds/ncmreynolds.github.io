@@ -130,39 +130,42 @@ function updateScenarioTable()	{
 		var cell0 = row.insertCell(0);
 		var cell1 = row.insertCell(1);
 		var cell2 = row.insertCell(2);
-		//cell0.innerHTML = `Name ${i}`;
 		cell0.innerHTML = scenarioName[index];
+		cell0.addEventListener("click", function(){tableOnClick(`${index}`)});
 		if(i > 0)	{
 			cell1.innerHTML = "&#8593;";
+			cell1.addEventListener("click", function(){tableOnMoveUpClicked(`${index}`)});
 		}
 		if(i < numberOfScenarios -1)	{
 			cell2.innerHTML = "&#8595;";
+			cell2.addEventListener("click", function(){tableOnMoveDownClicked(`${index}`)});
 		}
-		cell0.addEventListener("click", function(){tableOnClick(`${index}`)});
 		row.id = `scenario${index}`;
-		row.backgroundColor="red";
 	}
 }
 function tableOnClick(row)	{
-	//if(row != lastClickedScenario)
-	{
-		console.log(`Scenario ${row} clicked`);
-		showScenarioForm();
-		hideScenarioTable();
-		if(lastClickedScenario != 255)	{
-			document.getElementById(`scenario${lastClickedScenario}`).backgroundColor="white";
-		}
-		document.getElementById(`scenario${row}`).backgroundColor="red";
-		lastClickedScenario = row;
-		//Load in the data
-		document.getElementById("scenarioName").value = scenarioName[row];
-		document.getElementById("scenarioNarrative").value = scenarioNarrative[row];
-		document.getElementById("available").checked = scenarioAvailable[row];
-		for (var i = 0; i < 8; i++) {
-			document.getElementById(`type${i}`).checked = scenarioAvailableBloodTypes[row][i];
-		}
-		document.getElementById("recipientBloodType").value = scenarioBloodType[row];
+	console.log(`Scenario ${row} selected`);
+	showScenarioForm();
+	hideScenarioTable();
+	if(lastClickedScenario != 255)	{
+		document.getElementById(`scenario${lastClickedScenario}`).backgroundColor="white";
 	}
+	document.getElementById(`scenario${row}`).backgroundColor="red";
+	lastClickedScenario = row;
+	//Load in the data
+	document.getElementById("scenarioName").value = scenarioName[row];
+	document.getElementById("scenarioNarrative").value = scenarioNarrative[row];
+	document.getElementById("available").checked = scenarioAvailable[row];
+	for (var i = 0; i < 8; i++) {
+		document.getElementById(`type${i}`).checked = scenarioAvailableBloodTypes[row][i];
+	}
+	document.getElementById("recipientBloodType").value = scenarioBloodType[row];
+}
+function tableOnMoveDownClicked(row)	{
+	console.log(`Scenario ${row} shuffle down`);
+}
+function tableOnMoveUpClicked(row)	{
+	console.log(`Scenario ${row} shuffle up`);
 }
 function updateRefreshStatus()	{
 	const percentage = Math.round(100*((configRefreshIndex*7)+(configRefreshState-2))/(7 * numberOfScenarios));
