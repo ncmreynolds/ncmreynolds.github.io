@@ -15,6 +15,12 @@ function uiBleTransactionComplete()	{
 	Bags table
 
 */
+function showBagTypesPlaceholder()	{
+	bagTypesPlaceholder.style.display = "block";	//Show bag placeholder
+}
+function hideBagTypesPlaceholder()	{
+	bagTypesPlaceholder.style.display = "none";	//Hide bag placeholder
+}
 function showBagTypesForm()	{
 	bagTypes1Obj.style.display = "block";	//Show bag options
 	bagTypes2Obj.style.display = "block";	//Show bag options
@@ -26,7 +32,6 @@ function hideBagTypesForm()	{
 	bagTypes2Obj.style.display = "none";	//Show bag options
 	bagTypes3Obj.style.display = "none";	//Show bag options
 	scenarioProgress1.innerHTML = "Waiting for bag data";
-	bagTypesPlaceholder.style.display = "block";	//Hide bag placeholder
 }
 function disableBagTypesForm()	{
 	bag0Obj.disabled = true;
@@ -99,19 +104,20 @@ function bagsSendFailed()	{
 	Scenario table
 
 */
-
+function showScenarioTablePlaceholder()	{
+	scenarioTablePlaceholderObj.style.display = "block";	//Show scenario table placeholder
+	scenarioProgress2.innerHTML = "Waiting for scenario data";
+}
+function hideScenarioTablePlaceholder()	{
+	scenarioTablePlaceholderObj.style.display = "none";	//Hide scenario table placeholder
+}
 function showScenarioTable()	{
 	scenarioTableRow.style.display = "block";	//Show scenario table
 	scenarioTableObj.style.height='100px';
-	scenarioTablePlaceholderObj.style.display = "none";	//Hide scenario table placeholder
 }
-
 function hideScenarioTable()	{
 	scenarioTableRow.style.display = "none";	//Show scenario table
-	scenarioTablePlaceholderObj.style.display = "block";	//Hide scenario table placeholder
-	scenarioProgress2.innerHTML = "Waiting for scenario data";
 }
-
 function updateScenarioTable()	{
 	var table = document.getElementById("scenarioTableItself");
 	var rowCount = table.rows.length;	//This includes the header which is row 0
@@ -137,12 +143,12 @@ function updateScenarioTable()	{
 		row.backgroundColor="red";
 	}
 }
-
 function tableOnClick(row)	{
 	//if(row != lastClickedScenario)
 	{
 		console.log(`Scenario ${row} clicked`);
 		showScenarioForm();
+		hideScenarioTable();
 		if(lastClickedScenario != 255)	{
 			document.getElementById(`scenario${lastClickedScenario}`).backgroundColor="white";
 		}
@@ -158,7 +164,6 @@ function tableOnClick(row)	{
 		document.getElementById("recipientBloodType").value = scenarioBloodType[row];
 	}
 }
-
 function updateRefreshStatus()	{
 	const percentage = Math.round(100*((configRefreshIndex*7)+(configRefreshState-2))/(7 * numberOfScenarios));
 	scenarioProgress1.innerHTML=`Updating - ${percentage}%`;
@@ -259,6 +264,7 @@ function scenarioSendComplete()	{
 		enableBagTypesForm();
 		updateScenarioTable();
 		hideScenarioForm();
+		showScenarioTable();
 		clearInterval(scenarioSendHandle);
 		console.log(`Sent scenario ${scenarioSendIndex}`);
 	} else {
