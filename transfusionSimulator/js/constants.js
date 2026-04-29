@@ -21,8 +21,8 @@ const bleBagUpdateResponse = bleBagUpdateRequest | 128;
 const bleScenarioCountRequest = 12;		//Ask for scenario count
 const bleScenarioCountResponse = bleScenarioCountRequest | 128;
 
-const bleScenarioIdRequest = 13;		//Ask for ID
-const bleScenarioIdResponse = bleScenarioIdRequest | 128;
+const bleScenarioSortOrderRequest = 13;		//Ask for Sort order
+const bleScenarioSortOrderResponse = bleScenarioSortOrderRequest | 128;
 
 const bleScenarioNameLengthRequest = 14;		//Ask for name length
 const bleScenarioNameLengthResponse = bleScenarioNameLengthRequest | 128;
@@ -45,25 +45,28 @@ const bleScenarioAvailableBloodTypesResponse = bleScenarioAvailableBloodTypesReq
 const bleScenarioBloodTypeRequest = 20;		//Ask for patient blood type
 const bleScenarioBloodTypeResponse = bleScenarioBloodTypeRequest | 128;
 
-const bleScenarioNameLengthUpdateRequest = 21;		//Set name length
+const bleScenarioSortOrderUpdateRequest = 21;		//Set name length
+const bleScenarioSortOrderUpdateResponse = bleScenarioSortOrderUpdateRequest | 128;
+
+const bleScenarioNameLengthUpdateRequest = 22;		//Set name length
 const bleScenarioNameLengthUpdateResponse = bleScenarioNameLengthUpdateRequest | 128;
 
-const bleScenarioNameUpdateRequest = 22;		//Set name data
+const bleScenarioNameUpdateRequest = 23;		//Set name data
 const bleScenarioNameUpdateResponse = bleScenarioNameUpdateRequest | 128;
 
-const bleScenarioNarrativeLengthUpdateRequest = 23;		//Set narrative length
+const bleScenarioNarrativeLengthUpdateRequest = 24;		//Set narrative length
 const bleScenarioNarrativeLengthUpdateResponse = bleScenarioNarrativeLengthUpdateRequest | 128;
 
-const bleScenarioNarrativeUpdateRequest = 24;		//Set narrative data
+const bleScenarioNarrativeUpdateRequest = 25;		//Set narrative data
 const bleScenarioNarrativeUpdateResponse = bleScenarioNarrativeUpdateRequest | 128;
 
-const bleScenarioAvailableUpdateRequest = 25;		//Set scenario available data
+const bleScenarioAvailableUpdateRequest = 26;		//Set scenario available data
 const bleScenarioAvailableUpdateResponse = bleScenarioAvailableUpdateRequest | 128;
 
-const bleScenarioAvailableBloodTypesUpdateRequest = 26;		//Set available blood types
+const bleScenarioAvailableBloodTypesUpdateRequest = 27;		//Set available blood types
 const bleScenarioAvailableBloodTypesUpdateResponse = bleScenarioAvailableBloodTypesUpdateRequest | 128;
 
-const bleScenarioBloodTypeUpdateRequest = 27;		//Set patient blood type
+const bleScenarioBloodTypeUpdateRequest = 28;		//Set patient blood type
 const bleScenarioBloodTypeUpdateResponse = bleScenarioBloodTypeUpdateRequest | 128;
 
 const bleDummyRequest = 127;		//Dummy value that does nothing and should never be sent
