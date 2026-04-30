@@ -383,7 +383,7 @@ function configRefreshComplete()	{
 	hideBagTypesPlaceholder();
 	hideScenarioTablePlaceholder();
 	clearInterval(configRefreshHandle);
-	console.log(`Config update process finished, took ${transactionEnd - transactionStart}`);
+	console.log(`Config update process finished, took ${(transactionEnd - transactionStart)/1000}s`);
 }
 
 // Configuration save button
