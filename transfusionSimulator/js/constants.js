@@ -1,6 +1,7 @@
 //Protocol numerical Values
 
 const bleBlockSize = 50;
+const bleStateMachineInterval = 250;
 
 //Values for sending/receiving commands. All have the response with bit 8 as I've a C/embedded mindset
 
@@ -72,7 +73,6 @@ const bleScenarioBloodTypeUpdateResponse = bleScenarioBloodTypeUpdateRequest | 1
 const bleDummyRequest = 127;		//Dummy value that does nothing and should never be sent
 const bleDummyResponse = bleDummyRequest | 128;	//'dummy' response
 
-const bleStateMachineInterval = 250;
 
 //UI constants
 
@@ -93,7 +93,10 @@ const bag6Obj = document.getElementById("bag6");
 const bag7Obj = document.getElementById("bag7");
 const sendBagsButtonObj = document.getElementById("sendBagsButton");
 const scenarioTableRow = document.getElementById("scenarioTable");
-const scenarioTableObj = document.getElementById('scenarioTableItself');
+const scenarioTableObj = document.getElementById("scenarioTableItself");
 const scenarioTablePlaceholderObj = document.getElementById("scenarioTablePlaceholder");
 const scenarioCancelButtonObj = document.getElementById("scenarioCancelButton");
 const scenarioSendButtonObj = document.getElementById("scenarioSendButton");
+const connectButton = document.getElementById("connectBleButton");
+const disconnectButton = document.getElementById("disconnectBleButton");
+const bleStateContainer = document.getElementById("bleState");

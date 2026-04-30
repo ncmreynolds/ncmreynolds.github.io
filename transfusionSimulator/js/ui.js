@@ -1,3 +1,5 @@
+var Date transactionStart = Date.now();
+
 function uiBleTransactionInProgress()	{
 	//configRefreshButtonObj.disabled = true;
 	//configRefreshButtonObj.className = "u-full-width";
@@ -349,6 +351,7 @@ connectButton.addEventListener('click', (event) => {
 function startConfigRefresh()	{
 	if(configRefreshInProgress == false)	{
 		configRefreshInProgress = true;
+		transactionStart = Date.now();	//We're going to time this
 		configRefreshState = 0;
 		configRefreshIndex = 0;
 		uiBleTransactionInProgress();
@@ -366,6 +369,7 @@ function startConfigRefresh()	{
 
 function configRefreshComplete()	{
 	configRefreshInProgress = false;
+	const Date transactionEnd = Date.now();
 	configRefreshState = 0;
 	configRefreshIndex = 0;
 	showBagTypesForm();
@@ -379,7 +383,7 @@ function configRefreshComplete()	{
 	hideBagTypesPlaceholder();
 	hideScenarioTablePlaceholder();
 	clearInterval(configRefreshHandle);
-	console.log("Config update process finished");
+	console.log(`Config update process finished, took ${transactionEnd - transactionStart}`);
 }
 
 // Configuration save button

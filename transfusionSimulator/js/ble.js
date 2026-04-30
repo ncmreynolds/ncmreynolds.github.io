@@ -1,6 +1,3 @@
-const connectButton = document.getElementById('connectBleButton');
-const disconnectButton = document.getElementById('disconnectBleButton');
-const bleStateContainer = document.getElementById('bleState');
 
 //Define BLE Device Specs
 var deviceName ='TransfusionSimulator';
