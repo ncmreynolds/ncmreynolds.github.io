@@ -133,7 +133,7 @@ function updateScenarioTable()	{
 		var cell0 = row.insertCell(0);
 		var cell1 = row.insertCell(1);
 		var cell2 = row.insertCell(2);
-		cell0.innerHTML = `${scenarioSortOrder[sortedScenarioIndex[index]]} ${scenarioName[sortedScenarioIndex[index]]}`;
+		cell0.innerHTML = `${scenarioName[sortedScenarioIndex[index]]} sort ${scenarioSortOrder[sortedScenarioIndex[index]]}`;
 		cell0.addEventListener("click", function(){tableOnClick(`${index}`)});
 		if(i > 0)	{
 			cell1.innerHTML = "&#8593;";
