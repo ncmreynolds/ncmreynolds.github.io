@@ -1,7 +1,7 @@
 //Protocol numerical Values
 
 const bleBlockSize = 50;
-const bleStateMachineInterval = 100;
+const bleStateMachineInterval = 150;
 
 //Values for sending/receiving commands. All have the response with bit 8 as I've a C/embedded mindset
 
