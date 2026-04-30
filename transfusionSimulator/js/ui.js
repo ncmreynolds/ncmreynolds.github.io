@@ -284,6 +284,7 @@ function startSendingScenario()	{
 function scenarioSendComplete()	{
 	if(scenarioSendInProgress == true)	{
 		scenarioSendInProgress = false;
+		const transactionEnd = Date.now();
 		scenarioSendState = 0;
 		scenarioSendIndex = lastClickedScenario;
 		uiBleTransactionComplete();
