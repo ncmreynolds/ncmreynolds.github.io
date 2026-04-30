@@ -348,6 +348,8 @@ function uiChangeOnDisconnect ()	{
 	hideScenarioForm();
 	hideScenarioTable();
 	hideBagTypesForm();
+	showBagTypesPlaceholder();
+	showScenarioTablePlaceholder();
 }
 
 // Disconnect Button
