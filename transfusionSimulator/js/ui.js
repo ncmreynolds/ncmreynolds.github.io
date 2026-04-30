@@ -165,30 +165,25 @@ function tableOnClick(row)	{
 	document.getElementById("recipientBloodType").value = scenarioBloodType[row];
 }
 function tableOnMoveDownClicked(row)	{
+	//const row1 = parseInt(row);
+	//const row2 = parseInt(row)+1;
 	console.log(`Scenario ${row} shuffle down`);
-	console.log(`Scenario ${row} sortOrder ${scenarioSortOrder[row]}`);
-	console.log(`Scenario ${row+1} sortOrder ${scenarioSortOrder[row+1]}`);
-	console.log(`Swapping`);
-	const thingToSwap1 = scenarioSortOrder[row];
-	const thingToSwap2 = scenarioSortOrder[row+1];
-	scenarioSortOrder[row] =thingToSwap2;
-	scenarioSortOrder[row+1] =thingToSwap1;
-	console.log(`Scenario ${row} sortOrder ${scenarioSortOrder[row]}`);
-	console.log(`Scenario ${row+1} sortOrder ${scenarioSortOrder[row+1]}`);
-	sortScenarioTable();
-	updateScenarioTable();
+	swapRows(parseInt(row),parseInt(row)+1)
 }
 function tableOnMoveUpClicked(row)	{
 	console.log(`Scenario ${row} shuffle up`);
-	console.log(`Scenario ${row} sortOrder ${scenarioSortOrder[row]}`);
-	console.log(`Scenario ${row-1} sortOrder ${scenarioSortOrder[row-1]}`);
+	swapRows(parseInt(row),parseInt(row)-1)
+}
+function swapRows(row1,row2){
+	console.log(`Scenario ${row1} sortOrder ${scenarioSortOrder[row1]}`);
+	console.log(`Scenario ${row2} sortOrder ${scenarioSortOrder[row2]}`);
 	console.log(`Swapping`);
-	const thingToSwap1 = scenarioSortOrder[row];
-	const thingToSwap2 = scenarioSortOrder[row-1];
-	scenarioSortOrder[row] =thingToSwap2;
-	scenarioSortOrder[row-1] =thingToSwap1;
-	console.log(`Scenario ${row} sortOrder ${scenarioSortOrder[row]}`);
-	console.log(`Scenario ${row-1} sortOrder ${scenarioSortOrder[row-1]}`);
+	const thingToSwap1 = scenarioSortOrder[row1];
+	const thingToSwap2 = scenarioSortOrder[row2];
+	scenarioSortOrder[row1] =thingToSwap2;
+	scenarioSortOrder[row2] =thingToSwap1;
+	console.log(`Scenario ${row1} sortOrder ${scenarioSortOrder[row1]}`);
+	console.log(`Scenario ${row2} sortOrder ${scenarioSortOrder[row2]}`);
 	sortScenarioTable();
 	updateScenarioTable();
 }
