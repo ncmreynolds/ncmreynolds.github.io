@@ -88,7 +88,7 @@ function bleRequestRestart()	{
 /* Scenario swapping */
 
 function bleManageSwappingScenarios()	{
-	if(scenarioSendInProgress == true)	{
+	if(scenarioSwapOrderInProgress == true)	{
 		if(bleBusy == false)	{
 			if(scenarioSwapState == 0)	{
 				console.log("Sending scenario swap update");
