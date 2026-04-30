@@ -1,4 +1,5 @@
 var transactionStart = Date.now();
+var transactionErrors = 0;
 
 function uiBleTransactionInProgress()	{
 	//configRefreshButtonObj.disabled = true;
@@ -266,6 +267,8 @@ scenarioCancelButtonObj.addEventListener('click', function()	{
 function startSendingScenario()	{
 	if(scenarioSendInProgress == false)	{
 		scenarioSendInProgress = true;
+		const transactionEnd = Date.now();
+		transactionErrors = 0;
 		scenarioSendState = 0;
 		scenarioSendIndex = lastClickedScenario;
 		uiBleTransactionInProgress();
@@ -291,7 +294,7 @@ function scenarioSendComplete()	{
 		hideScenarioForm();
 		showScenarioTable();
 		clearInterval(scenarioSendHandle);
-		console.log(`Sent scenario ${scenarioSendIndex}`);
+		console.log(`Sent scenario ${scenarioSendIndex}, took ${(transactionEnd - transactionStart)/1000}s, ${transactionErrors} errors`);
 	} else {
 		console.log("Scenario send not started");
 	}
@@ -370,6 +373,7 @@ function startConfigRefresh()	{
 function configRefreshComplete()	{
 	configRefreshInProgress = false;
 	const transactionEnd = Date.now();
+	transactionErrors = 0;
 	configRefreshState = 0;
 	configRefreshIndex = 0;
 	showBagTypesForm();
@@ -383,7 +387,7 @@ function configRefreshComplete()	{
 	hideBagTypesPlaceholder();
 	hideScenarioTablePlaceholder();
 	clearInterval(configRefreshHandle);
-	console.log(`Config update process finished, took ${(transactionEnd - transactionStart)/1000}s`);
+	console.log(`Config update process finished, took ${(transactionEnd - transactionStart)/1000}s, ${transactionErrors} errors`);
 }
 
 // Configuration save button

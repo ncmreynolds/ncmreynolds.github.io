@@ -353,6 +353,7 @@ function connectToDevice(){
 	})
 	.catch(error => {
 		console.log('Error: ', error);
+		transactionErrors += 1;
 	})
 }
 
@@ -606,6 +607,7 @@ function bleSendCommand(value){
 		})
 		.catch(error => {
 			console.error("Error writing to the command characteristic: ", error);
+			transactionErrors += 1;
 		});
 	} else {
 		console.error ("Bluetooth is not connected. Cannot write to characteristic.")
