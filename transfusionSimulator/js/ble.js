@@ -58,6 +58,7 @@ var scenarioSwapOrderInProgress = false;
 var scenarioSwapState = 0;
 var scenarioSwapIndex1 = 0;
 var scenarioSwapIndex2 = 0;
+var scenarioSwapHandle;	//Handle for interval function
 
 
 /* Save requests */

@@ -193,16 +193,20 @@ function scenarioSwapOrderStart(scenario1,scenario2) {
 		scenarioSwapState = 0;
 		scenarioSwapIndex1 = scenario1;
 		scenarioSwapIndex2 = scenario2;
-		scenarioSendHandle = setInterval(bleManageSendingScenario, bleStateMachineInterval);
+		scenarioSwapHandle = setInterval(bleManageSwappingScenarios, bleStateMachineInterval);
+		console.log(`Swap scenario started`);
 	} else {
 		console.log("Already swapping scenarios");
 	}
 }
 function scenarioSwapOrderComplete() {
 	scenarioSwapOrderInProgress = false;
+	clearInterval(scenarioSwapHandle);
+	console.log(`Swap scenario complete`);
 }
 function bagsSendFailed()	{
 	scenarioSwapOrderInProgress = false;
+	clearInterval(scenarioSwapHandle);
 	console.log(`Swap scenario failed`);
 	window.alert("Swap scenario failed!");
 }
