@@ -1,4 +1,4 @@
-var Date transactionStart = Date.now();
+var transactionStart = Date.now();
 
 function uiBleTransactionInProgress()	{
 	//configRefreshButtonObj.disabled = true;
@@ -369,7 +369,7 @@ function startConfigRefresh()	{
 
 function configRefreshComplete()	{
 	configRefreshInProgress = false;
-	const Date transactionEnd = Date.now();
+	const transactionEnd = Date.now();
 	configRefreshState = 0;
 	configRefreshIndex = 0;
 	showBagTypesForm();
