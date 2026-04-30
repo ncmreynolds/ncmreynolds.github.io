@@ -284,6 +284,7 @@ function scenarioSendComplete()	{
 		uiBleTransactionComplete();
 		enableScenarioForm();
 		enableBagTypesForm();
+		sortScenarioTable();
 		updateScenarioTable();
 		hideScenarioForm();
 		showScenarioTable();
@@ -370,6 +371,7 @@ function configRefreshComplete()	{
 	showBagTypesForm();
 	enableBagTypesForm();
 	updateBagTypesForm();
+	sortScenarioTable();
 	updateScenarioTable();
 	showScenarioTable();
 	enableScenarioForm();
