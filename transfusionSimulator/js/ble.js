@@ -95,6 +95,8 @@ function bleManageSwappingScenarios()	{
 				const bleBagsscenarioSendPacket = Uint8Array.of(bleScenarioSwapOrderUpdateRequest,sequenceNumber,scenarioSwapIndex1,scenarioSwapIndex2);
 				bleSendCommand(bleBagsscenarioSendPacket);
 			}
+		} else {
+			console.log("Scenario swap waiting, BLE busy");
 		}
 	}
 }

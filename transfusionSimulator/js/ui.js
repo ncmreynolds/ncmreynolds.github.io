@@ -204,7 +204,7 @@ function scenarioSwapOrderComplete() {
 	clearInterval(scenarioSwapHandle);
 	console.log(`Swap scenario complete`);
 }
-function bagsSendFailed()	{
+function scenarioSwapFailed()	{
 	scenarioSwapOrderInProgress = false;
 	clearInterval(scenarioSwapHandle);
 	console.log(`Swap scenario failed`);
