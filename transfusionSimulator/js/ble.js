@@ -36,6 +36,8 @@ const scenarioAvailable = [];
 const scenarioBloodType = [];
 const scenarioAvailableBloodTypes = [];
 
+const sortedScenarioIndex = [];	//An index in sort order arrangement
+
 //Full config refresh
 var configRefreshInProgress = false;
 var configRefreshState = 0;

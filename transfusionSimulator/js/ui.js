@@ -130,7 +130,7 @@ function updateScenarioTable()	{
 		var cell0 = row.insertCell(0);
 		var cell1 = row.insertCell(1);
 		var cell2 = row.insertCell(2);
-		cell0.innerHTML = scenarioName[index];
+		cell0.innerHTML = scenarioName[sortedScenarioIndex[index]];
 		cell0.addEventListener("click", function(){tableOnClick(`${index}`)});
 		if(i > 0)	{
 			cell1.innerHTML = "&#8593;";
@@ -163,9 +163,27 @@ function tableOnClick(row)	{
 }
 function tableOnMoveDownClicked(row)	{
 	console.log(`Scenario ${row} shuffle down`);
+	const thingToSwap1 = sortOrder[row];
+	const thingToSwap2 = sortOrder[row+1];
+	sortOrder[row] =thingToSwap2;
+	sortOrder[row+1] =thingToSwap1;
+	sortScenarioTable();
+	updateScenarioTable();
 }
 function tableOnMoveUpClicked(row)	{
 	console.log(`Scenario ${row} shuffle up`);
+	const thingToSwap1 = sortOrder[row];
+	const thingToSwap2 = sortOrder[row-1];
+	sortOrder[row] =thingToSwap2;
+	sortOrder[row-1] =thingToSwap1;
+	sortScenarioTable();
+	updateScenarioTable();
+}
+function sortScenarioTable()	{
+	for (var i = 0; i < numberOfScenarios; i++) {
+		sortedScenarioIndex[i] = i;
+	}
+	sortedScenarioIndex.sort((a, b) => sortOrder.indexOf(a) - sortOrder.indexOf(b));
 }
 function updateRefreshStatus()	{
 	const percentage = Math.round(100*((configRefreshIndex*7)+(configRefreshState-2))/(7 * numberOfScenarios));
