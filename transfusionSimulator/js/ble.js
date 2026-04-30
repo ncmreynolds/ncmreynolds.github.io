@@ -53,11 +53,12 @@ var scenarioSendIndex = 0;
 var scenarioSendBlock = 0;
 var scenarioSendHandle;	//Handle for interval function
 
-/* Full sync */
+//Scenario swap order
+var scenarioSwapOrderInProgress = false;
+var scenarioSwapState = 0;
+var scenarioSwapIndex1 = 0;
+var scenarioSwapIndex2 = 0;
 
-function startFullSync()	{
-	
-}
 
 /* Save requests */
 
@@ -82,6 +83,21 @@ function bleRequestRestart()	{
 		console.log("Restart request aborted, BLE busy");
 	}
 }
+
+/* Scenario swapping */
+
+function bleManageSwappingScenarios()	{
+	if(scenarioSendInProgress == true)	{
+		if(bleBusy == false)	{
+			if(scenarioSwapState == 0)	{
+				console.log("Sending scenario swap update");
+				const bleBagsscenarioSendPacket = Uint8Array.of(bleScenarioSwapOrderUpdateRequest,sequenceNumber,scenarioSwapIndex1,scenarioSwapIndex2);
+				bleSendCommand(bleBagsscenarioSendPacket);
+			}
+		}
+	}
+}
+
 
 /* Scenario sending */
 
@@ -292,6 +308,8 @@ function bleTimeoutCommand()	{
 		}
 		if(bagSendInProgress == true)	{
 			bagsSendFailed();
+		} else if(scenarioSwapOrderInProgress == true)	{
+			scenarioSwapFailed();
 		}
 	}
 }
@@ -566,6 +584,12 @@ function handleCharacteristicChange(event){	//This happens on a notify
 					if(scenarioSendInProgress == true)	{
 						console.log(`Scenario update patient blood type OK`);
 						scenarioSendComplete();
+					}
+				break;
+				case bleScenarioSwapOrderUpdateResponse:
+					if(scenarioSwapOrderInProgress == true)	{
+						console.log(`Scenario order swap OK`);
+						scenarioSwapOrderComplete();
 					}
 				break;
 				default:

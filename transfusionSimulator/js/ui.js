@@ -165,14 +165,14 @@ function tableOnClick(row)	{
 	document.getElementById("recipientBloodType").value = scenarioBloodType[row];
 }
 function tableOnMoveDownClicked(row)	{
-	//const row1 = parseInt(row);
-	//const row2 = parseInt(row)+1;
+	scenarioSwapOrderStart(parseInt(row),parseInt(row)+1);
 	console.log(`Scenario ${row} shuffle down`);
-	swapRows(parseInt(row),parseInt(row)+1)
+	//swapRows(parseInt(row),parseInt(row)+1)
 }
 function tableOnMoveUpClicked(row)	{
+	scenarioSwapOrderStart(parseInt(row),parseInt(row)-1);
 	console.log(`Scenario ${row} shuffle up`);
-	swapRows(parseInt(row),parseInt(row)-1)
+	//swapRows(parseInt(row),parseInt(row)-1)
 }
 function swapRows(row1,row2){
 	console.log(`Scenario ${row1} sortOrder ${scenarioSortOrder[row1]}`);
@@ -187,6 +187,26 @@ function swapRows(row1,row2){
 	sortScenarioTable();
 	updateScenarioTable();
 }
+function scenarioSwapOrderStart(scenario1,scenario2) {
+	if(scenarioSwapOrderInProgress == false)	{
+		scenarioSwapOrderInProgress = true;
+		scenarioSwapState = 0;
+		scenarioSwapIndex1 = scenario1;
+		scenarioSwapIndex2 = scenario2;
+		scenarioSendHandle = setInterval(bleManageSendingScenario, bleStateMachineInterval);
+	} else {
+		console.log("Already swapping scenarios");
+	}
+}
+function scenarioSwapOrderComplete() {
+	scenarioSwapOrderInProgress = false;
+}
+function bagsSendFailed()	{
+	scenarioSwapOrderInProgress = false;
+	console.log(`Swap scenario failed`);
+	window.alert("Swap scenario failed!");
+}
+
 function sortScenarioTable()	{
 	for (var i = 0; i < numberOfScenarios; i++) {
 		sortedScenarioIndex[i] = i;

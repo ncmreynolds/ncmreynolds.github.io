@@ -70,6 +70,9 @@ const bleScenarioAvailableBloodTypesUpdateResponse = bleScenarioAvailableBloodTy
 const bleScenarioBloodTypeUpdateRequest = 28;		//Set patient blood type
 const bleScenarioBloodTypeUpdateResponse = bleScenarioBloodTypeUpdateRequest | 128;
 
+const bleScenarioSwapOrderUpdateRequest = 29;		//Set patient blood type
+const bleScenarioSwapOrderUpdateResponse = bleScenarioSwapOrderUpdateRequest | 128;
+
 const bleDummyRequest = 127;		//Dummy value that does nothing and should never be sent
 const bleDummyResponse = bleDummyRequest | 128;	//'dummy' response
 
