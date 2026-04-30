@@ -167,25 +167,10 @@ function tableOnClick(row)	{
 function tableOnMoveDownClicked(row)	{
 	scenarioSwapOrderStart(parseInt(row),parseInt(row)+1);
 	console.log(`Scenario ${row} shuffle down`);
-	//swapRows(parseInt(row),parseInt(row)+1)
 }
 function tableOnMoveUpClicked(row)	{
 	scenarioSwapOrderStart(parseInt(row),parseInt(row)-1);
 	console.log(`Scenario ${row} shuffle up`);
-	//swapRows(parseInt(row),parseInt(row)-1)
-}
-function swapRows(row1,row2){
-	console.log(`Scenario ${row1} sortOrder ${scenarioSortOrder[row1]}`);
-	console.log(`Scenario ${row2} sortOrder ${scenarioSortOrder[row2]}`);
-	console.log(`Swapping`);
-	const thingToSwap1 = scenarioSortOrder[row1];
-	const thingToSwap2 = scenarioSortOrder[row2];
-	scenarioSortOrder[row1] =thingToSwap2;
-	scenarioSortOrder[row2] =thingToSwap1;
-	console.log(`Scenario ${row1} sortOrder ${scenarioSortOrder[row1]}`);
-	console.log(`Scenario ${row2} sortOrder ${scenarioSortOrder[row2]}`);
-	sortScenarioTable();
-	updateScenarioTable();
 }
 function scenarioSwapOrderStart(scenario1,scenario2) {
 	if(scenarioSwapOrderInProgress == false)	{
@@ -200,6 +185,7 @@ function scenarioSwapOrderStart(scenario1,scenario2) {
 	}
 }
 function scenarioSwapOrderComplete() {
+	swapScenarioOrder(scenarioSwapIndex1,scenarioSwapIndex2);
 	scenarioSwapOrderInProgress = false;
 	clearInterval(scenarioSwapHandle);
 	console.log(`Swap scenario complete`);
@@ -209,6 +195,19 @@ function scenarioSwapFailed()	{
 	clearInterval(scenarioSwapHandle);
 	console.log(`Swap scenario failed`);
 	window.alert("Swap scenario failed!");
+}
+function swapScenarioOrder(row1,row2){
+	console.log(`Scenario ${row1} sortOrder ${scenarioSortOrder[row1]}`);
+	console.log(`Scenario ${row2} sortOrder ${scenarioSortOrder[row2]}`);
+	console.log(`Swapping`);
+	const thingToSwap1 = scenarioSortOrder[row1];
+	const thingToSwap2 = scenarioSortOrder[row2];
+	scenarioSortOrder[row1] =thingToSwap2;
+	scenarioSortOrder[row2] =thingToSwap1;
+	console.log(`Scenario ${row1} sortOrder ${scenarioSortOrder[row1]}`);
+	console.log(`Scenario ${row2} sortOrder ${scenarioSortOrder[row2]}`);
+	sortScenarioTable();
+	updateScenarioTable();
 }
 
 function sortScenarioTable()	{
