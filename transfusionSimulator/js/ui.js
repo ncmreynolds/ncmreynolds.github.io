@@ -163,19 +163,19 @@ function tableOnClick(row)	{
 }
 function tableOnMoveDownClicked(row)	{
 	console.log(`Scenario ${row} shuffle down`);
-	const thingToSwap1 = sortOrder[row];
-	const thingToSwap2 = sortOrder[row+1];
-	sortOrder[row] =thingToSwap2;
-	sortOrder[row+1] =thingToSwap1;
+	const thingToSwap1 = scenarioSortOrder[row];
+	const thingToSwap2 = scenarioSortOrder[row+1];
+	scenarioSortOrder[row] =thingToSwap2;
+	scenarioSortOrder[row+1] =thingToSwap1;
 	sortScenarioTable();
 	updateScenarioTable();
 }
 function tableOnMoveUpClicked(row)	{
 	console.log(`Scenario ${row} shuffle up`);
-	const thingToSwap1 = sortOrder[row];
-	const thingToSwap2 = sortOrder[row-1];
-	sortOrder[row] =thingToSwap2;
-	sortOrder[row-1] =thingToSwap1;
+	const thingToSwap1 = scenarioSortOrder[row];
+	const thingToSwap2 = scenarioSortOrder[row-1];
+	scenarioSortOrder[row] =thingToSwap2;
+	scenarioSortOrder[row-1] =thingToSwap1;
 	sortScenarioTable();
 	updateScenarioTable();
 }
@@ -183,7 +183,7 @@ function sortScenarioTable()	{
 	for (var i = 0; i < numberOfScenarios; i++) {
 		sortedScenarioIndex[i] = i;
 	}
-	sortedScenarioIndex.sort((a, b) => sortOrder.indexOf(a) - sortOrder.indexOf(b));
+	sortedScenarioIndex.sort((a, b) => scenarioSortOrder.indexOf(a) - scenarioSortOrder.indexOf(b));
 }
 function updateRefreshStatus()	{
 	const percentage = Math.round(100*((configRefreshIndex*7)+(configRefreshState-2))/(7 * numberOfScenarios));
