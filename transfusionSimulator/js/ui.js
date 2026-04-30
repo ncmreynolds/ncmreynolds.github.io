@@ -166,19 +166,29 @@ function tableOnClick(row)	{
 }
 function tableOnMoveDownClicked(row)	{
 	console.log(`Scenario ${row} shuffle down`);
+	console.log(`Scenario ${row} sortOrder ${scenarioSortOrder[row]}`);
+	console.log(`Scenario ${row+1} sortOrder ${scenarioSortOrder[row+1]}`);
+	console.log(`Swapping`);
 	const thingToSwap1 = scenarioSortOrder[row];
 	const thingToSwap2 = scenarioSortOrder[row+1];
 	scenarioSortOrder[row] =thingToSwap2;
 	scenarioSortOrder[row+1] =thingToSwap1;
+	console.log(`Scenario ${row} sortOrder ${scenarioSortOrder[row]}`);
+	console.log(`Scenario ${row+1} sortOrder ${scenarioSortOrder[row+1]}`);
 	sortScenarioTable();
 	updateScenarioTable();
 }
 function tableOnMoveUpClicked(row)	{
 	console.log(`Scenario ${row} shuffle up`);
+	console.log(`Scenario ${row} sortOrder ${scenarioSortOrder[row]}`);
+	console.log(`Scenario ${row-1} sortOrder ${scenarioSortOrder[row-1]}`);
+	console.log(`Swapping`);
 	const thingToSwap1 = scenarioSortOrder[row];
 	const thingToSwap2 = scenarioSortOrder[row-1];
 	scenarioSortOrder[row] =thingToSwap2;
 	scenarioSortOrder[row-1] =thingToSwap1;
+	console.log(`Scenario ${row} sortOrder ${scenarioSortOrder[row]}`);
+	console.log(`Scenario ${row-1} sortOrder ${scenarioSortOrder[row-1]}`);
 	sortScenarioTable();
 	updateScenarioTable();
 }
