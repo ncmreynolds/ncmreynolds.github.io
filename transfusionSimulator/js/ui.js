@@ -267,7 +267,7 @@ scenarioCancelButtonObj.addEventListener('click', function()	{
 function startSendingScenario()	{
 	if(scenarioSendInProgress == false)	{
 		scenarioSendInProgress = true;
-		const transactionEnd = Date.now();
+		transactionStart = Date.now();	//We're going to time this
 		transactionErrors = 0;
 		scenarioSendState = 0;
 		scenarioSendIndex = lastClickedScenario;
