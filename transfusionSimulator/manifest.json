@@ -1,6 +1,6 @@
  {
     "name": "Transfusion Simulator admin",
-    "short_name": "TS admin",
+    "short_name": "Transfusion simulator",
 	"description": "Companion app to the Transfusion Simulator. Allows provision of bags, editing of scenarios etc.",
 	"categories": ["utilities"],
 	"id": "/transfusionSimulator/index.html",
@@ -11,20 +11,6 @@
 	"orientation": "portrait",
     "background_color": "#ffffff",
     "theme_color": "#33c3f0",
-	"shortcuts": [
-		{
-			"name": "Connect",
-			"url": "index.html"
-		},
-		{
-			"name": "Bags",
-			"url": "bags.html"
-		},
-		{
-			"name": "Scenarios",
-			"url": "scenarios.html"
-		}
-	],
 	"icons": [
        {
           "src": "/transfusionSimulator/images/icons/launchericon-48x48.png",
@@ -68,14 +54,14 @@
 			"sizes": "1123x794",
 			"type": "image/png",
 			"form_factor": "wide",
-			"label": "Simple PWA"
+			"label": "Transfusion Simulator admin"
 		},
 		{
 			"src": "/transfusionSimulator/images/screenshots/portraitScreenshotPlaceholder.png",
 			"sizes": "794x1123",
 			"type": "image/png",
 			"form_factor": "narrow",
-			"label": "Simple PWA"
+			"label": "Transfusion Simulator admin"
 		}
 	]
 }
