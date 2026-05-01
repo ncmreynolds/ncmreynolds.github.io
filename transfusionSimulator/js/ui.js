@@ -289,8 +289,7 @@ function disableScenarioForm()	{
 }
 
 //Resize the text area on input
-const scenarioNarrativeObj = document.getElementById("scenarioNarrative");
-scenarioNarrativeObj.addEventListener("input", () => {
+	scenarioNarrativeObj.addEventListener("input", () => {
 	scenarioNarrativeObj.style.height = "auto";
 	scenarioNarrativeObj.style.height = scenarioNarrativeObj.scrollHeight + "px";
 });
