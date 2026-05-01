@@ -419,34 +419,34 @@ there.
 
 /* Hide element if the viewport width is 600px or less */
 @media screen and (max-width: 600px) {
-  wideOnly01 {
+  #wideOnly01 {
     display: none;
   }
-  wideOnly02 {
+  #wideOnly02 {
     display: none;
   }
-  wideOnly03 {
+  #wideOnly03 {
     display: none;
   }
-  wideOnly04 {
+  #wideOnly04 {
     display: none;
   }
-  wideOnly05 {
+  #wideOnly05 {
     display: none;
   }
-  wideOnly06 {
+  #wideOnly06 {
     display: none;
   }
-  wideOnly07 {
+  #wideOnly07 {
     display: none;
   }
-  wideOnly08 {
+  #wideOnly08 {
     display: none;
   }
-  wideOnly09 {
+  #wideOnly09 {
     display: none;
   }
-  wideOnly10 {
+  #wideOnly10 {
     display: none;
   }
 }
