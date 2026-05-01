@@ -115,6 +115,7 @@ function hideScenarioTablePlaceholder()	{
 	scenarioTablePlaceholderObj.style.display = "none";	//Hide scenario table placeholder
 }
 function showScenarioTable()	{
+	updateScenarioTable();
 	scenarioTableRow.style.display = "block";	//Show scenario table
 	scenarioTableObj.style.height='100px';
 }
@@ -336,7 +337,6 @@ function scenarioSendComplete()	{
 		enableScenarioForm();
 		enableBagTypesForm();
 		hideScenarioForm();
-		updateScenarioTable();
 		showScenarioTable();
 		clearInterval(scenarioSendHandle);
 		console.log(`Sent scenario ${scenarioSendIndex}, took ${(transactionEnd - transactionStart)/1000}s, ${transactionErrors} errors`);
@@ -426,7 +426,6 @@ function configRefreshComplete()	{
 	showBagTypesForm();
 	enableBagTypesForm();
 	updateBagTypesForm();
-	updateScenarioTable();
 	showScenarioTable();
 	enableScenarioForm();
 	uiBleTransactionComplete();
