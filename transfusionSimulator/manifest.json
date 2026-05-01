@@ -51,14 +51,14 @@
 	"screenshots": [
 		{
 			"src": "/transfusionSimulator/images/screenshots/landscapeScreenshotPlaceholder.png",
-			"sizes": "1123x794",
+			"sizes": "1028x873",
 			"type": "image/png",
 			"form_factor": "wide",
 			"label": "Transfusion Simulator admin"
 		},
 		{
 			"src": "/transfusionSimulator/images/screenshots/portraitScreenshotPlaceholder.png",
-			"sizes": "794x1123",
+			"sizes": "446x853",
 			"type": "image/png",
 			"form_factor": "narrow",
 			"label": "Transfusion Simulator admin"
