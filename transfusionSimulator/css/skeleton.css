@@ -418,7 +418,7 @@ there.
 @media (min-width: 1200px) {}
 
 /* Hide element if the viewport width is 600px or less */
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 549px) {
   #wideOnly01 {
     display: none;
   }
