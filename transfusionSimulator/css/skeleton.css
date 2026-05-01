@@ -409,22 +409,44 @@ there.
 @media (min-width: 550px) {}
 
 /* Larger than tablet */
-@media (min-width: 750px) {
-	#wideOnly01 {display: block;}
-	#wideOnly02 {display: block;}
-	#wideOnly03 {display: block;}
-	#wideOnly04 {display: block;}
-	#wideOnly05 {display: block;}
-	#wideOnly06 {display: block;}
-	#wideOnly07 {display: block;}
-	#wideOnly08 {display: block;}
-	#wideOnly09 {display: block;}
-	#wideOnly10 {display: block;}
-  }
-}
+@media (min-width: 750px) {}
 
 /* Larger than desktop */
 @media (min-width: 1000px) {}
 
 /* Larger than Desktop HD */
 @media (min-width: 1200px) {}
+
+/* Hide element if the viewport width is 600px or less */
+@media screen and (max-width: 600px) {
+  wideOnly01 {
+    display: none;
+  }
+  wideOnly02 {
+    display: none;
+  }
+  wideOnly03 {
+    display: none;
+  }
+  wideOnly04 {
+    display: none;
+  }
+  wideOnly05 {
+    display: none;
+  }
+  wideOnly06 {
+    display: none;
+  }
+  wideOnly07 {
+    display: none;
+  }
+  wideOnly08 {
+    display: none;
+  }
+  wideOnly09 {
+    display: none;
+  }
+  wideOnly10 {
+    display: none;
+  }
+}
