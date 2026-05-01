@@ -122,6 +122,7 @@ function hideScenarioTable()	{
 	scenarioTableRow.style.display = "none";	//Show scenario table
 }
 function updateScenarioTable()	{
+	sortScenarioTable();
 	var table = document.getElementById("scenarioTableItself");
 	var rowCount = table.rows.length;	//This includes the header which is row 0
 	for (var i = 0; i < rowCount-1; i++) {
@@ -207,15 +208,20 @@ function swapScenarioOrder(row1,row2){
 	scenarioSortOrder[row2] =thingToSwap1;
 	console.log(`Scenario ${row1} sortOrder ${scenarioSortOrder[row1]}`);
 	console.log(`Scenario ${row2} sortOrder ${scenarioSortOrder[row2]}`);
-	sortScenarioTable();
 	updateScenarioTable();
 }
 
 function sortScenarioTable()	{
+	console.log(`Unsorted scenario list`);
 	for (var i = 0; i < numberOfScenarios; i++) {
 		sortedScenarioIndex[i] = i;
+		console.log(`Index ${i} sort order ${scenarioSortOrder[i]}`);
 	}
 	sortedScenarioIndex.sort((a, b) => scenarioSortOrder.indexOf(a) - scenarioSortOrder.indexOf(b));
+	console.log(`Sorted scenario list`);
+	for (var i = 0; i < numberOfScenarios; i++) {
+		console.log(`Order ${i} index ${sortedScenarioIndex[i]}`);
+	}
 }
 function updateRefreshStatus()	{
 	const percentage = Math.round(100*((configRefreshIndex*7)+(configRefreshState-2))/(7 * numberOfScenarios));
@@ -329,9 +335,8 @@ function scenarioSendComplete()	{
 		uiBleTransactionComplete();
 		enableScenarioForm();
 		enableBagTypesForm();
-		sortScenarioTable();
-		updateScenarioTable();
 		hideScenarioForm();
+		updateScenarioTable();
 		showScenarioTable();
 		clearInterval(scenarioSendHandle);
 		console.log(`Sent scenario ${scenarioSendIndex}, took ${(transactionEnd - transactionStart)/1000}s, ${transactionErrors} errors`);
@@ -421,7 +426,6 @@ function configRefreshComplete()	{
 	showBagTypesForm();
 	enableBagTypesForm();
 	updateBagTypesForm();
-	sortScenarioTable();
 	updateScenarioTable();
 	showScenarioTable();
 	enableScenarioForm();
