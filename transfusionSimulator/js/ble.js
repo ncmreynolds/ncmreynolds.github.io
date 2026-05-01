@@ -12,6 +12,7 @@ var responseCharacteristicFound;
 
 
 var bleConnected = false;	//Simple mark of connection status
+var bleDevice;
 var bleBusy = false;
 var bleTimeouts = 0;
 const bleErrorThreshold = 20;
@@ -339,8 +340,9 @@ function connectToDevice(){
 		optionalServices: [bleService]
 	})
 	.then(device => {
-		console.log('Device Selected:', device.name);
-		bleStateContainer.innerHTML = 'Connected to device ' + device.name;
+		bleDevice = device.name;
+		console.log('Device Selected:', bleDevice);
+		bleStateContainer.innerHTML = 'Connected to ' + bleDevice;
 		bleStateContainer.style.color = "#24af37";
 		bleConnected = true;
 		device.addEventListener('gattserverdisconnected', onDisconnected);

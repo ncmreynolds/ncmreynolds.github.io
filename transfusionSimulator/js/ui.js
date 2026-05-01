@@ -163,6 +163,7 @@ function tableOnClick(row)	{
 		document.getElementById(`type${i}`).checked = scenarioAvailableBloodTypes[row][i];
 	}
 	document.getElementById("recipientBloodType").value = scenarioBloodType[row];
+	enableScenarioForm(); //May need to resize textarea
 }
 function tableOnMoveDownClicked(row)	{
 	scenarioSwapOrderStart(parseInt(row),parseInt(row)+1);
@@ -220,6 +221,7 @@ function updateRefreshStatus()	{
 	const percentage = Math.round(100*((configRefreshIndex*7)+(configRefreshState-2))/(7 * numberOfScenarios));
 	scenarioProgress1.innerHTML=`Updating - ${percentage}%`;
 	scenarioProgress2.innerHTML=`Updating - ${percentage}%`;
+	bleStateContainer.innerHTML = `Connected to ${bleDevice}, updating ${percentage}%`;
 }
 
 /*
@@ -251,6 +253,8 @@ function enableScenarioForm()	{
 	document.getElementById("scenarioName").disabled = false;
 	document.getElementById("available").disabled = false;
 	document.getElementById("scenarioNarrative").disabled = false;
+	scenarioNarrativeObj.style.height = "auto";
+	scenarioNarrativeObj.style.height = scenarioNarrativeObj.scrollHeight + "px";
 	document.getElementById("type0").disabled = false;
 	document.getElementById("type1").disabled = false;
 	document.getElementById("type2").disabled = false;
@@ -285,10 +289,10 @@ function disableScenarioForm()	{
 }
 
 //Resize the text area on input
-const textarea = document.getElementById("scenarioNarrative");
-textarea.addEventListener("input", () => {
-  textarea.style.height = "auto";
-  textarea.style.height = textarea.scrollHeight + "px";
+const scenarioNarrativeObj = document.getElementById("scenarioNarrative");
+scenarioNarrativeObj.addEventListener("input", () => {
+	scenarioNarrativeObj.style.height = "auto";
+	scenarioNarrativeObj.style.height = scenarioNarrativeObj.scrollHeight + "px";
 });
 
 
@@ -426,6 +430,7 @@ function configRefreshComplete()	{
 	hideBagTypesPlaceholder();
 	hideScenarioTablePlaceholder();
 	clearInterval(configRefreshHandle);
+	bleStateContainer.innerHTML = `Connected to ${bleDevice}`;
 	console.log(`Config update process finished, took ${(transactionEnd - transactionStart)/1000}s, ${transactionErrors} errors`);
 }
 
