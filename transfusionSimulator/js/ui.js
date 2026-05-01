@@ -284,6 +284,14 @@ function disableScenarioForm()	{
 	document.getElementById("scenarioCancelButton").className = "u-full-width";
 }
 
+//Resize the text area on input
+const textarea = document.getElementById("scenarioNarrative");
+textarea.addEventListener("input", () => {
+  textarea.style.height = "auto";
+  textarea.style.height = textarea.scrollHeight + "px";
+});
+
+
 // Scenario send button
 scenarioSendButtonObj.addEventListener('click', startSendingScenario);
 scenarioCancelButtonObj.addEventListener('click', function()	{

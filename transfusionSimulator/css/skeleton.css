@@ -455,4 +455,6 @@ there.
 }
 textarea {
 	field-sizing: content;
+	resize: none;
+	overflow: hidden;
 }
