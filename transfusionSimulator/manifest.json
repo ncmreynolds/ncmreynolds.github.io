@@ -1,6 +1,6 @@
  {
     "name": "Transfusion Simulator admin",
-    "short_name": "Transfusion simulator",
+    "short_name": "TS Admin",
 	"description": "Companion app to the Transfusion Simulator. Allows provision of bags, editing of scenarios etc.",
 	"categories": ["utilities"],
 	"id": "/transfusionSimulator/index.html",
