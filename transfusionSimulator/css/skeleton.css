@@ -453,3 +453,6 @@ there.
     display: none;
   }
 }
+textarea {
+	field-sizing: content;
+}
