@@ -409,7 +409,19 @@ there.
 @media (min-width: 550px) {}
 
 /* Larger than tablet */
-@media (min-width: 750px) {}
+@media (min-width: 750px) {
+	#wideOnly01 {display: block;}
+	#wideOnly02 {display: block;}
+	#wideOnly03 {display: block;}
+	#wideOnly04 {display: block;}
+	#wideOnly05 {display: block;}
+	#wideOnly06 {display: block;}
+	#wideOnly07 {display: block;}
+	#wideOnly08 {display: block;}
+	#wideOnly09 {display: block;}
+	#wideOnly10 {display: block;}
+  }
+}
 
 /* Larger than desktop */
 @media (min-width: 1000px) {}
