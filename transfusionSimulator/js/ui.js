@@ -217,13 +217,13 @@ function sortScenarioTable()	{
 	console.log(`Unsorted scenario list`);
 	for (var i = 0; i < numberOfScenarios; i++) {
 		sortedScenarioIndex[i] = i;
-		console.log(`Index ${i} sort order ${scenarioSortOrder[i]}`);
+		//console.log(`Index ${i} sort order ${scenarioSortOrder[i]}`);
 	}
 	sortedScenarioIndex.sort((a, b) => scenarioSortOrder.indexOf(a) - scenarioSortOrder.indexOf(b));
-	console.log(`Sorted scenario list`);
-	for (var i = 0; i < numberOfScenarios; i++) {
-		console.log(`Order ${i} index ${sortedScenarioIndex[i]}`);
-	}
+	//console.log(`Sorted scenario list`);
+	//for (var i = 0; i < numberOfScenarios; i++) {
+	//	console.log(`Order ${i} index ${sortedScenarioIndex[i]}`);
+	//}
 }
 function updateRefreshStatus()	{
 	const percentage = Math.round(100*((configRefreshIndex*7)+(configRefreshState-2))/(7 * numberOfScenarios));
