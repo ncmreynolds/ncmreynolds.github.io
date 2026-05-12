@@ -30,13 +30,25 @@
 		<div class="row">
 			<div class="tab">
 				<div class="four columns" style="margin-top: 5%">
-					<button class="tablinks u-full-width" onclick="openTab(event, 'DocumentsTab');document.getElementById('documentsButton').classList.add("button-primary");" id="documentsButton">Mission Documents</button>
+					<button class="tablinks u-full-width" onclick="openTab(event, 'DocumentsTab');
+						document.getElementById('documentsButton').classList.add('button-primary');
+						document.getElementById('mapButton').element.classList.remove('button-primary');
+						document.getElementById('settingsButton').element.classList.remove('button-primary');"
+						id="documentsButton">Mission Documents</button>
 				</div>
 				<div class="four columns" style="margin-top: 5%">
-					<button class="tablinks u-full-width" onclick="openTab(event, 'MapTab');document.getElementById('mapButton').classList.add("button-primary");" id="mapButton">Mission Map</button>
+					<button class="tablinks u-full-width" onclick="openTab(event, 'MapTab');
+						document.getElementById('documentsButton').element.classList.remove('button-primary');
+						document.getElementById('mapButton').classList.add('button-primary');
+						document.getElementById('settingsButton').element.classList.remove('button-primary');"
+						id="mapButton">Mission Map</button>
 				</div>
 				<div class="four columns" style="margin-top: 5%">
-					<button class="tablinks u-full-width" onclick="openTab(event, 'SettingsTab');document.getElementById('settingsButton').classList.add("button-primary");" id="settingsButton">App Settings</button>
+					<button class="tablinks u-full-width" onclick="openTab(event, 'SettingsTab');
+					document.getElementById('documentsButton').element.classList.remove('button-primary');
+					document.getElementById('mapButton').element.classList.remove('button-primary');
+					document.getElementById('settingsButton').classList.add('button-primary');"
+					id="settingsButton">App Settings</button>
 				</div>
 			</div>
 		</div>
