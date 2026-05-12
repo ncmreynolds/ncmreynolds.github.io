@@ -30,13 +30,13 @@
 		<div class="row">
 			<div class="tab">
 				<div class="four columns" style="margin-top: 5%">
-					<button class="tablinks u-full-width" onclick="openTab(event, 'DocumentsTab')" id="defaultOpen">Mission Documents</button>
+					<button class="tablinks u-full-width" onclick="openTab(event, 'DocumentsTab');document.getElementById('documentsButton').classList.add("button-primary");" id="documentsButton">Mission Documents</button>
 				</div>
 				<div class="four columns" style="margin-top: 5%">
-					<button class="tablinks u-full-width" onclick="openTab(event, 'MapTab')">Mission Map</button>
+					<button class="tablinks u-full-width" onclick="openTab(event, 'MapTab');document.getElementById('mapButton').classList.add("button-primary");" id="mapButton">Mission Map</button>
 				</div>
 				<div class="four columns" style="margin-top: 5%">
-					<button class="tablinks u-full-width" onclick="openTab(event, 'SettingsTab')">App Settings</button>
+					<button class="tablinks u-full-width" onclick="openTab(event, 'SettingsTab');document.getElementById('settingsButton').classList.add("button-primary");" id="settingsButton">App Settings</button>
 				</div>
 			</div>
 		</div>
@@ -99,7 +99,7 @@
 	</div>
 </body>
 <script>
-// Get the element with id="defaultOpen" and click on it
-document.getElementById("defaultOpen").click();
+// Get the element with id="documentsButton" and click on it
+document.getElementById("documentsButton").click();
 </script>
 </html>
