@@ -30,13 +30,13 @@
 		<div class="row">
 			<div class="tab">
 				<div class="four columns" style="margin-top: 5%">
-					<button class="tablinks u-full-width" onclick="openTab(event, 'DocumentsTab')" id="defaultOpen">Documents</button>
+					<button class="tablinks u-full-width" onclick="openTab(event, 'DocumentsTab')" id="defaultOpen">Mission Documents</button>
 				</div>
 				<div class="four columns" style="margin-top: 5%">
-					<button class="tablinks u-full-width" onclick="openTab(event, 'MapTab')">Map</button>
+					<button class="tablinks u-full-width" onclick="openTab(event, 'MapTab')">Mission Map</button>
 				</div>
 				<div class="four columns" style="margin-top: 5%">
-					<button class="tablinks u-full-width" onclick="openTab(event, 'SettingsTab')">Settings</button>
+					<button class="tablinks u-full-width" onclick="openTab(event, 'SettingsTab')">App Settings</button>
 				</div>
 			</div>
 		</div>
@@ -67,7 +67,7 @@
 						&q=52.383105,-1.661714
 						&center=52.383966,-1.659957
 						&maptype=satellite
-						&zoom=20
+						&zoom=17
 						">
 					</iframe>
 				</div>
@@ -76,7 +76,23 @@
 		<div id="SettingsTab" class="tabcontent">
 			<div class="row">
 				<div class="twelve columns">
-					<h1>Settings</h1>
+					<h1>App Settings</h1>
+				</div>
+			</div>
+			<div class="row">
+				<div class="twelve columns">
+					<label class="darkmode_label">
+						<input type="checkbox" id="darkmode">
+						<span class="label-body">Dark mode</span>
+					</label>
+				</div>
+			</div>
+			<div class="row">
+				<div class="twelve columns">
+					<label class="darkmode_label">
+						<input type="checkbox" id="wakelock">
+						<span class="label-body">Keep screen awake</span>
+					</label>
 				</div>
 			</div>
 		</div>
