@@ -1,10 +1,4 @@
-// When the window has finished loading create our google map below
-google.maps.event.addDomListener(window, 'load', initMap);
-
 function initMap() {
-	//Import the maps and markers libraries
-	await google.maps.importLibrary('maps') as google.maps.MapsLibrary;
-	await google.maps.importLibrary('marker') as google.maps.MarkerLibrary;
 	// Basic options for a simple Google Map
 	// For more options see: https://developers.google.com/maps/documentation/javascript/reference#MapOptions
 	var mapOptions = {
