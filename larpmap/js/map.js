@@ -5,6 +5,14 @@ function initMap() {
 	// Basic options for a simple Google Map
 	// For more options see: https://developers.google.com/maps/documentation/javascript/reference#MapOptions
 	var mapOptions = {
+		panControl: false,
+		zoomControl: false,
+		mapTypeControl: false,
+		scaleControl: false,
+		streetViewControl: false,
+		overviewMapControl: false,
+		rotateControl: false,
+		mapTypeId: TERRAIN,
 		// How zoomed in you want the map to start at (always required)
 		zoom: 18,
 
