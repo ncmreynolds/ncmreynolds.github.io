@@ -2,6 +2,9 @@
 google.maps.event.addDomListener(window, 'load', initMap);
 
 function initMap() {
+	//Import the maps and markers libraries
+	await google.maps.importLibrary('maps') as google.maps.MapsLibrary;
+	await google.maps.importLibrary('marker') as google.maps.MarkerLibrary;
 	// Basic options for a simple Google Map
 	// For more options see: https://developers.google.com/maps/documentation/javascript/reference#MapOptions
 	var mapOptions = {
@@ -220,10 +223,12 @@ function initMap() {
 	// Create the Google Map using our element and options defined above
 	var map = new google.maps.Map(mapElement, mapOptions);
 
-	// Let's also add a marker while we're at it
-	var marker = new google.maps.Marker({
-		position: new google.maps.LatLng(52.383105,-1.661714),
-		map: map,
-		title: 'Objective'
+	// The mission marker position
+	const missionMarkerPosition = { lat: 52.383105, lng: -1.661714 };
+	// The marker
+	const marker = new google.maps.marker.AdvancedMarkerElement({
+		map,
+		position: missionMarkerPosition,
+		title: 'Objective',
 	});
 }
