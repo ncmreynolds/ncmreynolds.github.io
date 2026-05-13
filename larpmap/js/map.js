@@ -12,7 +12,6 @@ function initMap() {
 		streetViewControl: false,
 		overviewMapControl: false,
 		rotateControl: false,
-		mapTypeId: TERRAIN,
 		// How zoomed in you want the map to start at (always required)
 		zoom: 18,
 
