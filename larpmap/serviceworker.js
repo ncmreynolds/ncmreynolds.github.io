@@ -13,7 +13,7 @@ async function precache() {
 }
 
 self.addEventListener("install", event => {
-	event.waitUntil(precache());
+	//event.waitUntil(precache());
     console.log("Service worker installed", event);
 });
 
