@@ -3,12 +3,13 @@
 const cacheName = "PWA_cache";
 const precachedResources = ["/", "css/map.css", "css/normalise.css", "css/skeleton.css",
 	"js/app.js", "js/map.js", "js/tabs.js",
-	"images/icons/launchericon-48x48.png", "images/icons/launchericon-72x72.png", "images/icons/launchericon-96x96.png", "images/icons/launchericon-144x144.png", "images/icons/launchericon-1982x192.png", "images/icons/launchericon-512x512.png"
+	"images/icons/launchericon-48x48.png", "images/icons/launchericon-72x72.png", "images/icons/launchericon-96x96.png", "images/icons/launchericon-144x144.png", "images/icons/launchericon-192x192.png", "images/icons/launchericon-512x512.png"
 	];
 
 async function precache() {
-  const cache = await caches.open(cacheName);
-  return cache.addAll(precachedResources);
+	console.log("Caching resources");
+	const cache = await caches.open(cacheName);
+	return cache.addAll(precachedResources);
 }
 
 self.addEventListener("install", event => {
@@ -26,12 +27,11 @@ function isCacheable(request) {
 async function cacheFirstWithRefresh(request) {
   const fetchResponsePromise = fetch(request).then(async (networkResponse) => {
     if (networkResponse.ok) {
-      const cache = await caches.open("PWA_cache");
+      const cache = await caches.open(cacheName);
       cache.put(request, networkResponse.clone());
     }
     return networkResponse;
   });
-
   return (await caches.match(request)) || (await fetchResponsePromise);
 }
 
@@ -43,7 +43,7 @@ async function cacheFirst(request) {
   try {
     const networkResponse = await fetch(request);
     if (networkResponse.ok) {
-      const cache = await caches.open("PWA_cache");
+      const cache = await caches.open(cacheName);
       cache.put(request, networkResponse.clone());
     }
     return networkResponse;
