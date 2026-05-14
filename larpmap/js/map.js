@@ -2,7 +2,7 @@ const useJavaScriptMapAPI = false;
 const mapElement = document.getElementById('map');
 
 function initMap() {
-	if(useJavaScriptMapAPI)
+	if(useJavaScriptMapAPI == true)
 	{
 		// Basic options for a simple Google Map
 		// For more options see: https://developers.google.com/maps/documentation/javascript/reference#MapOptions
@@ -34,20 +34,9 @@ function initMap() {
 		const marker = new google.maps.marker.AdvancedMarkerElement({
 			map,
 			position: missionMarkerPosition,
-			title: 'Objective',
+			title: 'Objective'
 		});
 	} else {
-		mapElement.innerHTML = '
-		<iframe	width="100%" height="800" frameborder="0" style="border:1px solid black;"
-			referrerpolicy="no-referrer-when-downgrade"
-			src="https://www.google.com/maps/embed/v1/place?
-			key=AIzaSyAUNxj5qu6Y2e6mWH-p55IOn9-r6pH_jHk
-			&q=52.383105,-1.661714
-			&center=52.383966,-1.659957
-			&maptype=satellite
-			&zoom=18
-			">
-		</iframe>
-		';
+		mapElement.innerHTML = '<iframe	width="100%" height="800" frameborder="0" style="border:1px solid black;" referrerpolicy="no-referrer-when-downgrade" src="https://www.google.com/maps/embed/v1/place?key=AIzaSyAUNxj5qu6Y2e6mWH-p55IOn9-r6pH_jHk&q=52.383105,-1.661714&center=52.383966,-1.659957&maptype=satellite&zoom=18"></iframe>';
 	}
 }
