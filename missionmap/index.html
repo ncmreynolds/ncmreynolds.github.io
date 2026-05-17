@@ -111,6 +111,11 @@
 			</div>
 			<div class="row">
 				<div class="twelve columns">
+					<h2>Admin access</h2>
+				</div>
+			</div>
+			<div class="row">
+				<div class="twelve columns">
 					<label class="adminpassword_label">
 						<input type="password" id="adminpassword">
 						<span class="label-body">Enter password for admin access</span>
@@ -128,14 +133,33 @@
 				<div class="twelve columns" height="100%">
 					<label for="scenario">Choose the scenario</label>
 					<select id="scenario" name="scenario">
-					<option value="0">Scenario 1</option>
-					<option value="1">Scenario 2</option>
+						<option value="0">Scenario 1</option>
+						<option value="1">Scenario 2</option>
 					</select>
 				</div>
 			</div>
 			<div class="row">
 				<div class="twelve columns" height="100%">
 					<h2>Map method</h2>
+				</div>
+			</div>
+			<div class="row">
+				<div class="twelve columns" height="100%">
+					<label for="mapMethod">How to embed the map</label>
+					<select id="mapMethod" name="mapMethod">
+						<option value="0">Simple iframe embed</option>
+						<option value="1">Javascript API insert</option>
+					</select>
+				</div>
+			</div>
+			<div class="row">
+				<div class="twelve columns" height="100%">
+					<h2>App log</h2>
+				</div>
+			</div>
+			<div class="row">
+				<div class="twelve columns" height="400">
+					<div id="mission-map-log"></div>
 				</div>
 			</div>
 		</div>
