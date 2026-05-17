@@ -5,7 +5,8 @@ function log(message, type = 'info') {
   const timestamp = new Date().toLocaleTimeString();
   const entry = document.createElement('div');
   entry.className = type === 'error' ? 'log-error' : (type === 'success' ? 'log-success' : 'log-info')
-  entry.innerHTML = `<span>[${timestamp}]</span> ${message}`;  
+  entry.innerHTML = `<span>[${timestamp}]</span> ${message}`;
+  console.log(`[${timestamp}] ${message}`);
   logEl.appendChild(entry);
   logEl.scrollTop = logEl.scrollHeight; // Auto scroll to bottom
 }
