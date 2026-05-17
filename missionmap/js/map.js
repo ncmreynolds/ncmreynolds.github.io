@@ -1,7 +1,7 @@
 const mapElement = document.getElementById('map');
 
 function initMap() {
-	if(useJavaScriptMapAPI == true)
+	if(useJavaScriptMapAPI == 1)
 	{
 		// Basic options for a simple Google Map
 		// For more options see: https://developers.google.com/maps/documentation/javascript/reference#MapOptions

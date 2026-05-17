@@ -33,16 +33,16 @@ function checkAdminPassword()
 }
 
 function showAdminButton()	{
-	document.getElementById('documentsButtonColumn"').className="three columns";
-	document.getElementById('mapButtonColumn"').className="three columns";
-	document.getElementById('settingsButtonColumn"').className="three columns";
+	document.getElementById('documentsButtonColumn').className="three columns";
+	document.getElementById('mapButtonColumn').className="three columns";
+	document.getElementById('settingsButtonColumn').className="three columns";
 	document.getElementById('adminButton').style.display = "block";
 	log("Showing admin options");
 }
 function hideAdminButton()	{
-	document.getElementById('documentsButtonColumn"').className="four columns";
-	document.getElementById('mapButtonColumn"').className="four columns";
-	document.getElementById('settingsButtonColumn"').className="four columns";
+	document.getElementById('documentsButtonColumn').className="four columns";
+	document.getElementById('mapButtonColumn').className="four columns";
+	document.getElementById('settingsButtonColumn').className="four columns";
 	document.getElementById('adminButton').style.display = "none";
 	log("Hiding admin options");
 }
