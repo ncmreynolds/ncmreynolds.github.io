@@ -21,7 +21,7 @@ function openTab(tabEvent, tabName) {
 
 function checkAdminPassword()
 {
-	if(document.getElementById('darkmode').value == "scallywag")
+	if(document.getElementById('adminpassword').value === "scallywag")
 	{
 		showAdminButton();
 	}
@@ -32,10 +32,10 @@ function checkAdminPassword()
 }
 
 function showAdminButton()	{
-	document.getElementById('adminButton').style.display = "none";
+	document.getElementById('adminButton').style.display = "block";
 }
 function hideAdminButton()	{
-	document.getElementById('adminButton').style.display = "block";
+	document.getElementById('adminButton').style.display = "none";
 }
 
 function clickButton1() {

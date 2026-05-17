@@ -91,7 +91,7 @@ function changeDarkMode() {
 	saveValue(KEY_NAME_3, darkmode);
 }
 function changeWakeLock() {
-	wakelock = document.getElementById('rotate').checked == true;
+	wakelock = document.getElementById('wakelock').checked == true;
 	saveValue(KEY_NAME_4, wakelock);
 }
 function changeRotate() {
