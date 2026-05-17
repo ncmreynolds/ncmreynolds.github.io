@@ -118,7 +118,7 @@ function loadSettings() {
     if (result) {
 	  scenario = result;
 	  document.getElementById('scenario').value = scenario;
-      log(`Found saved data: "${KEY_NAME_1} ${result.substring(0, 20)}${result.length > 20 ? '...' : ''}"`, 'success');
+      log(`${KEY_NAME_1}:${result}`, 'success');
     } else {
       log(`${KEY_NAME_1}:not found`);
     }
@@ -131,7 +131,7 @@ function loadSettings() {
     if (result) {
 	  useJavaScriptMapAPI = result;
 	  document.getElementById('mapMethod').value = useJavaScriptMapAPI;
-      log(`Found saved data: "${KEY_NAME_2} ${result.substring(0, 20)}${result.length > 20 ? '...' : ''}"`, 'success');
+      log(`${KEY_NAME_2}:${result}`, 'success');
     } else {
       log(`${KEY_NAME_2}:not found`);
     }
@@ -144,7 +144,7 @@ function loadSettings() {
     if (result) {
 	  darkMode = result;
 	  document.getElementById('darkmode').checked = darkMode;
-      log(`Found saved data: "${KEY_NAME_3} ${result.substring(0, 20)}${result.length > 20 ? '...' : ''}"`, 'success');
+      log(`${KEY_NAME_3}:${result}`, 'success');
     } else {
       log(`${KEY_NAME_3}:false`);
     }
@@ -157,7 +157,7 @@ function loadSettings() {
     if (result) {
 	  wakeLock = result;
 	  document.getElementById('wakelock').checked = wakeLock;
-      log(`Found saved data: "${KEY_NAME_4} ${result.substring(0, 20)}${result.length > 20 ? '...' : ''}"`, 'success');
+      log(`${KEY_NAME_4}:${result}`, 'success');
     } else {
       log(`${KEY_NAME_4}:false`);
     }
@@ -170,7 +170,7 @@ function loadSettings() {
     if (result) {
 	  rotate = result;
 	  document.getElementById('rotate').checked = rotate;
-      log(`Found saved data: "${KEY_NAME_5} ${result.substring(0, 20)}${result.length > 20 ? '...' : ''}"`, 'success');
+      log(`${KEY_NAME_5}:${result}`, 'success');
     } else {
       log(`${KEY_NAME_5}:false`);
     }
@@ -183,7 +183,7 @@ function loadSettings() {
     if (result) {
 	  follow = result;
 	  document.getElementById('follow').checked = follow;
-      log(`Found saved data: "${KEY_NAME_6} ${result.substring(0, 20)}${result.length > 20 ? '...' : ''}"`, 'success');
+      log(`${KEY_NAME_6}:${result}`, 'success');
     } else {
       log(`${KEY_NAME_6}:false`);
     }
