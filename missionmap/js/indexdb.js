@@ -78,11 +78,11 @@ function saveValue(key, value)
   const request = objectStore.put(value, key);
 
   request.onsuccess = () => {
-    log(`Saved: ${err.target.error}`, 'success');
+    log(`Saved ${key}:${value}`, 'success');
   };
 
   request.onerror = (err) => {
-    log(`Failed to save: ${err.target.error}`, 'error');
+    log(`Failed to save ${key}:${value} ${err.target.error}`, 'error');
   };
 }
 
