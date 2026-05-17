@@ -24,16 +24,26 @@ function clickButton1() {
 	document.getElementById('documentsButton').classList.add('button-primary');
 	document.getElementById('mapButton').classList.remove('button-primary');
 	document.getElementById('settingsButton').classList.remove('button-primary');	
+	document.getElementById('adminButton').classList.remove('button-primary');
 }
 function clickButton2()	{
 	openTab(event, 'MapTab');
 	document.getElementById('documentsButton').classList.remove('button-primary');
 	document.getElementById('mapButton').classList.add('button-primary');
 	document.getElementById('settingsButton').classList.remove('button-primary');
+	document.getElementById('adminButton').classList.remove('button-primary');
 }
 function clickButton3()	{
 	openTab(event, 'SettingsTab');
 	document.getElementById('documentsButton').classList.remove('button-primary');
 	document.getElementById('mapButton').classList.remove('button-primary');
 	document.getElementById('settingsButton').classList.add('button-primary');
+	document.getElementById('adminButton').classList.remove('button-primary');
+}
+function clickButton4()	{
+	openTab(event, 'AdminTab');
+	document.getElementById('documentsButton').classList.remove('button-primary');
+	document.getElementById('mapButton').classList.remove('button-primary');
+	document.getElementById('settingsButton').classList.remove('button-primary');
+	document.getElementById('adminButton').classList.add('button-primary');
 }
