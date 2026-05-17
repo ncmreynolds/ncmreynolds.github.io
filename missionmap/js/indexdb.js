@@ -1,20 +1,103 @@
-// Open or create a database
-let dbPromise = indexedDB.open("missionMapSettings", 1);
+ // Ripped from https://progressier.com/pwa-capabilities/indexeddb-demo
+ 
+ // --- Configuration ---
+const DB_NAME = 'MissionMapDatabase';
+const DB_VERSION = 1;
+const SETTINGS_STORE_NAME = 'settings';
+const KEY_NAME = 'my_note';
+let db; // Will hold the database object
 
-// When the database opens successfully
-dbPromise.then(function(db) {
-    // Create an object store
-    let objectStore = db.createObjectStore("myStore", { keyPath: "id" });
+// --- IndexedDB Initialization ---
+function initDB() {
+  log("Opening database connection...");
+            
+  // Open (or create) the database
+  const request = indexedDB.open(DB_NAME, DB_VERSION);
 
-    // Insert data
-    objectStore.add({ id: 1, name: "Alice" });
+  // Triggered if the client doesn't have this DB or version is higher
+  request.onupgradeneeded = (event) => {
+    log("Database upgrade needed. Creating object store...", 'success');
+    db = event.target.result;
+                
+    // Create an object store named 'user_notes'
+    // We don't need a keyPath because we will specify the key manually
+    if (!db.objectStoreNames.contains(SETTINGS_STORE_NAME)) {
+      db.createObjectStore(SETTINGS_STORE_NAME);
+    }
+};
 
-    // Query data
-    let transaction = db.transaction(["myStore"], "readonly");
-    let store = transaction.objectStore("myStore");
-    let request = store.get(1);
+  request.onsuccess = (event) => {
+    log("Database connected successfully.", 'success');
+    db = event.target.result;
+    loadData(); // Load data immediately after connection
+  };
 
-    request.onsuccess = function(event) {
-        console.log("Retrieved data:", event.target.result);
+  request.onerror = (event) => {
+    log(`Database error: ${event.target.error}`, 'error');
     };
-});
+}
+
+// --- CRUD Operations ---
+function saveData() {
+  const noteContent = getInputEl().value;
+            
+  if (!db) {
+    log("Error: Database not initialized.", 'error');
+    return;
+  }
+
+  // 1. Start a transaction (readwrite)
+  const transaction = db.transaction([SETTINGS_STORE_NAME], 'readwrite');
+            
+  // 2. Get the object store
+  const objectStore = transaction.objectStore(SETTINGS_STORE_NAME);
+            
+  // 3. Perform the Put operation (Insert or Update)
+  const request = objectStore.put(noteContent, KEY_NAME);
+
+  request.onsuccess = () => {
+    log("Data successfully saved to IndexedDB!", 'success');
+    alert("Saved! Now try reloading the page.");
+  };
+
+  request.onerror = (err) => {
+    log(`Failed to save: ${err.target.error}`, 'error');
+  };
+}
+
+function loadData() {
+  if (!db) return;
+
+  const transaction = db.transaction([SETTINGS_STORE_NAME], 'readonly');
+  const objectStore = transaction.objectStore(SETTINGS_STORE_NAME);
+            
+  // Get the specific key
+  const request = objectStore.get(KEY_NAME);
+
+  request.onsuccess = (event) => {
+    const result = event.target.result;
+    if (result) {
+      //getInputEl().value = result;
+      log(`Found saved data: "${result.substring(0, 20)}${result.length > 20 ? '...' : ''}"`, 'success');
+    } else {
+      log("No saved data found in IndexedDB.");
+    }
+  };
+}
+
+function clearData() {
+  const transaction = db.transaction([SETTINGS_STORE_NAME], 'readwrite');
+  const objectStore = transaction.objectStore(SETTINGS_STORE_NAME);
+  const request = objectStore.clear();
+
+  request.onsuccess = () => {
+    getInputEl().value = '';
+    log("Database cleared.", 'info');
+  };
+}
+
+function getInputEl(){
+  return document.getElementById('indexeddb-demo-input');
+}
+
+window.addEventListener("load", initDB);
