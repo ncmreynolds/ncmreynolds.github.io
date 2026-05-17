@@ -6,10 +6,20 @@ const DB_VERSION = 1;
 const SETTINGS_STORE_NAME = 'settings';
 const KEY_NAME_1 = 'scenarioId';
 const KEY_NAME_2 = 'useJsMap';
+const KEY_NAME_3 = 'darkMode';
+const KEY_NAME_4 = 'wakeLock';
+const KEY_NAME_5 = 'rotate';
+const KEY_NAME_6 = 'follow';
+
 let db; // Will hold the database object
 
 let scenario = 0;
 let useJavaScriptMapAPI = false;
+
+let darkMode = false;
+let wakeLock = false;
+let rotate = true;
+let follow = true;
 
 
 // --- IndexedDB Initialization ---
@@ -44,14 +54,20 @@ function initDB() {
 
 // --- CRUD Operations ---
 function saveSettings() {
-  scenario = document.getElementById('scenario').value;
   useJavaScriptMapAPI = document.getElementById('mapMethod').value == true;
             
   if (!db) {
     log("Error: Database not initialized.", 'error');
     return;
   }
+  scenario = document.getElementById('scenario').value;
+  saveValue(KEY_NAME_1, scenario);
+  useJavaScriptMapAPI = document.getElementById('mapMethod').value;
+  saveValue(KEY_NAME_2, useJavaScriptMapAPI);
+}
 
+function saveValue(key, value)
+{
   // 1. Start a transaction (readwrite)
   const transaction = db.transaction([SETTINGS_STORE_NAME], 'readwrite');
             
@@ -59,16 +75,32 @@ function saveSettings() {
   const objectStore = transaction.objectStore(SETTINGS_STORE_NAME);
             
   // 3. Perform the Put operation (Insert or Update)
-  const request = objectStore.put(scenario, KEY_NAME_1);
+  const request = objectStore.put(value, key);
 
   request.onsuccess = () => {
-    log("Data successfully saved to IndexedDB!", 'success');
-    alert("Settings saved!");
+    log(`Saved: ${err.target.error}`, 'success');
   };
 
   request.onerror = (err) => {
     log(`Failed to save: ${err.target.error}`, 'error');
   };
+}
+
+function changeDarkMode() {
+	darkmode = document.getElementById('darkmode').value;
+	saveValue(KEY_NAME_3, darkmode);
+}
+function changeWakeLock() {
+	wakelock = document.getElementById('rotate').value;
+	saveValue(KEY_NAME_4, wakelock);
+}
+function changeRotate() {
+	rotate = document.getElementById('rotate').value;
+	saveValue(KEY_NAME_5, rotate);
+}
+function changeFollow() {
+	follow = document.getElementById('follow').value;
+	saveValue(KEY_NAME_6, follow);
 }
 
 function loadSettings() {
@@ -83,7 +115,6 @@ function loadSettings() {
   request.onsuccess = (event) => {
     const result = event.target.result;
     if (result) {
-      //getInputEl().value = result;
 	  scenario = result;
       log(`Found saved data: "${KEY_NAME_1} ${result.substring(0, 20)}${result.length > 20 ? '...' : ''}"`, 'success');
     } else {
@@ -91,7 +122,7 @@ function loadSettings() {
     }
   };
 }
-
+/*
 function clearData() {
   const transaction = db.transaction([SETTINGS_STORE_NAME], 'readwrite');
   const objectStore = transaction.objectStore(SETTINGS_STORE_NAME);
@@ -102,9 +133,5 @@ function clearData() {
     log("Database cleared.", 'info');
   };
 }
-
-function getInputEl(){
-  return document.getElementById('indexeddb-demo-input');
-}
-
+*/
 window.addEventListener("load", initDB);

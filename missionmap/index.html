@@ -76,7 +76,7 @@
 			<div class="row">
 				<div class="twelve columns">
 					<label class="darkmode_label">
-						<input type="checkbox" id="darkmode">
+						<input type="checkbox" id="darkmode" onchange="changeDarkMode()">
 						<span class="label-body">Dark mode</span>
 					</label>
 				</div>
@@ -84,7 +84,7 @@
 			<div class="row">
 				<div class="twelve columns">
 					<label class="darkmode_label">
-						<input type="checkbox" id="wakelock">
+						<input type="checkbox" id="wakelock" onchange="changeWakeLock()">
 						<span class="label-body">Keep screen awake</span>
 					</label>
 				</div>
@@ -97,7 +97,7 @@
 			<div class="row">
 				<div class="twelve columns">
 					<label class="rotate_label">
-						<input type="checkbox" id="rotate">
+						<input type="checkbox" id="rotate" onchange="changeRotate()">
 						<span class="label-body">Rotate to match direction of travel</span>
 					</label>
 				</div>
@@ -105,7 +105,7 @@
 			<div class="row">
 				<div class="twelve columns">
 					<label class="follow_label">
-						<input type="checkbox" id="follow">
+						<input type="checkbox" id="follow" onchange="changeFollow()">
 						<span class="label-body">Follow current position</span>
 					</label>
 				</div>
