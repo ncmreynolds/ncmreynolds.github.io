@@ -4,8 +4,13 @@
 const DB_NAME = 'MissionMapDatabase';
 const DB_VERSION = 1;
 const SETTINGS_STORE_NAME = 'settings';
-const KEY_NAME = 'my_note';
+const KEY_NAME_1 = 'scenarioId';
+const KEY_NAME_2 = 'useJsMap';
 let db; // Will hold the database object
+
+let scenario = 0;
+let useJavaScriptMapAPI = false;
+
 
 // --- IndexedDB Initialization ---
 function initDB() {
@@ -38,8 +43,9 @@ function initDB() {
 }
 
 // --- CRUD Operations ---
-function saveData() {
-  const noteContent = getInputEl().value;
+function saveSettings() {
+  scenario = document.getElementById('scenario').value;
+  useJavaScriptMapAPI = document.getElementById('mapMethod').value == true;
             
   if (!db) {
     log("Error: Database not initialized.", 'error');
@@ -53,7 +59,7 @@ function saveData() {
   const objectStore = transaction.objectStore(SETTINGS_STORE_NAME);
             
   // 3. Perform the Put operation (Insert or Update)
-  const request = objectStore.put(noteContent, KEY_NAME);
+  const request = objectStore.put(noteContent, KEY_NAME_1);
 
   request.onsuccess = () => {
     log("Data successfully saved to IndexedDB!", 'success');

@@ -1,4 +1,3 @@
-const useJavaScriptMapAPI = false;
 const mapElement = document.getElementById('map');
 
 function initMap() {
