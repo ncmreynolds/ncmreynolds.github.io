@@ -34,7 +34,7 @@ function initDB() {
   request.onsuccess = (event) => {
     log("Database connected successfully.", 'success');
     db = event.target.result;
-    loadData(); // Load data immediately after connection
+    loadSettings(); // Load settings immediately after connection
   };
 
   request.onerror = (event) => {
@@ -63,7 +63,7 @@ function saveSettings() {
 
   request.onsuccess = () => {
     log("Data successfully saved to IndexedDB!", 'success');
-    alert("Saved! Now try reloading the page.");
+    alert("Settings saved!");
   };
 
   request.onerror = (err) => {
