@@ -44,6 +44,7 @@ function hideAdminButton()	{
 	document.getElementById('mapButtonColumn').className="four columns";
 	document.getElementById('settingsButtonColumn').className="four columns";
 	document.getElementById('adminButton').style.display = "none";
+	document.getElementById('adminpassword').value = "";
 	log("Hiding admin options");
 }
 

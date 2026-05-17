@@ -64,6 +64,7 @@ function saveSettings() {
   saveValue(KEY_NAME_1, scenario);
   useJavaScriptMapAPI = document.getElementById('mapMethod').value;
   saveValue(KEY_NAME_2, useJavaScriptMapAPI);
+  hideAdminButton();
 }
 
 function saveValue(key, value)
