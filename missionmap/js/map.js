@@ -4,6 +4,9 @@ function initMap() {
 	if(settingsLoaded == false)
 	{
 		initDB();
+		while(settingsLoaded == false) {
+			//Wait for the settings to load
+		}
 	}
 	if(mapMethod == 0)
 	{
