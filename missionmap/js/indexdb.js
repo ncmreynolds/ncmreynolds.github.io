@@ -59,7 +59,7 @@ function saveSettings() {
   const objectStore = transaction.objectStore(SETTINGS_STORE_NAME);
             
   // 3. Perform the Put operation (Insert or Update)
-  const request = objectStore.put(noteContent, KEY_NAME_1);
+  const request = objectStore.put(scenario, KEY_NAME_1);
 
   request.onsuccess = () => {
     log("Data successfully saved to IndexedDB!", 'success');
@@ -71,20 +71,21 @@ function saveSettings() {
   };
 }
 
-function loadData() {
+function loadSettings() {
   if (!db) return;
 
   const transaction = db.transaction([SETTINGS_STORE_NAME], 'readonly');
   const objectStore = transaction.objectStore(SETTINGS_STORE_NAME);
             
   // Get the specific key
-  const request = objectStore.get(KEY_NAME);
+  const request = objectStore.get(KEY_NAME_1);
 
   request.onsuccess = (event) => {
     const result = event.target.result;
     if (result) {
       //getInputEl().value = result;
-      log(`Found saved data: "${result.substring(0, 20)}${result.length > 20 ? '...' : ''}"`, 'success');
+	  scenario = result;
+      log(`Found saved data: "${KEY_NAME_1} ${result.substring(0, 20)}${result.length > 20 ? '...' : ''}"`, 'success');
     } else {
       log("No saved data found in IndexedDB.");
     }
