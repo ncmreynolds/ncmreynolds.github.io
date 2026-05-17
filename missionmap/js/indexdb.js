@@ -87,19 +87,19 @@ function saveValue(key, value)
 }
 
 function changeDarkMode() {
-	darkmode = document.getElementById('darkmode').value;
+	darkmode = document.getElementById('darkmode').checked == true;
 	saveValue(KEY_NAME_3, darkmode);
 }
 function changeWakeLock() {
-	wakelock = document.getElementById('rotate').value;
+	wakelock = document.getElementById('rotate').checked == true;
 	saveValue(KEY_NAME_4, wakelock);
 }
 function changeRotate() {
-	rotate = document.getElementById('rotate').value;
+	rotate = document.getElementById('rotate').checked == true;
 	saveValue(KEY_NAME_5, rotate);
 }
 function changeFollow() {
-	follow = document.getElementById('follow').value;
+	follow = document.getElementById('follow').checked == true;
 	saveValue(KEY_NAME_6, follow);
 }
 
