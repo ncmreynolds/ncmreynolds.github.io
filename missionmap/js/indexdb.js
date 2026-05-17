@@ -21,6 +21,8 @@ let wakeLock = false;
 let rotate = false;
 let follow = false;
 
+let settingsLoaded = false;
+
 
 // --- IndexedDB Initialization ---
 function initDB() {
@@ -45,6 +47,7 @@ function initDB() {
     log("Database connected successfully.", 'success');
     db = event.target.result;
     loadSettings(); // Load settings immediately after connection
+	settingsLoaded = true;
   };
 
   request.onerror = (event) => {
@@ -200,4 +203,4 @@ function clearData() {
   };
 }
 */
-window.addEventListener("load", initDB);
+//window.addEventListener("load", initDB);
