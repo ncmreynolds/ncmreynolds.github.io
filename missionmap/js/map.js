@@ -1,13 +1,6 @@
 const mapElement = document.getElementById('map');
 
 function initMap() {
-	if(settingsLoaded == false)
-	{
-		initDB();
-		while(settingsLoaded == false) {
-			//Wait for the settings to load
-		}
-	}
 	if(mapMethod == 0)
 	{
 		log("Adding static map");

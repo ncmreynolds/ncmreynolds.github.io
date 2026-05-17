@@ -48,6 +48,7 @@ function initDB() {
     db = event.target.result;
     loadSettings(); // Load settings immediately after connection
 	settingsLoaded = true;
+	initMap();
   };
 
   request.onerror = (event) => {
