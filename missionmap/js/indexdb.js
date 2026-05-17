@@ -108,6 +108,7 @@ function loadSettings() {
 
   const transaction = db.transaction([SETTINGS_STORE_NAME], 'readonly');
   const objectStore = transaction.objectStore(SETTINGS_STORE_NAME);
+  log("Loading saved settings from IndexDB");
             
   // Get the specific key
   const request1 = objectStore.get(KEY_NAME_1);
@@ -119,7 +120,7 @@ function loadSettings() {
 	  document.getElementById('scenario').value = scenario;
       log(`Found saved data: "${KEY_NAME_1} ${result.substring(0, 20)}${result.length > 20 ? '...' : ''}"`, 'success');
     } else {
-      log("No saved data found in IndexedDB.");
+      log(`${KEY_NAME_1}:not found`);
     }
   };
   // Get the specific key
@@ -132,7 +133,7 @@ function loadSettings() {
 	  document.getElementById('mapMethod').value = useJavaScriptMapAPI;
       log(`Found saved data: "${KEY_NAME_2} ${result.substring(0, 20)}${result.length > 20 ? '...' : ''}"`, 'success');
     } else {
-      log("No saved data found in IndexedDB.");
+      log(`${KEY_NAME_2}:not found`);
     }
   };
   // Get the specific key
@@ -142,10 +143,10 @@ function loadSettings() {
     const result = event.target.result;
     if (result) {
 	  darkMode = result;
-	  document.getElementById('darkMode').checked = darkMode;
+	  document.getElementById('darkmode').checked = darkMode;
       log(`Found saved data: "${KEY_NAME_3} ${result.substring(0, 20)}${result.length > 20 ? '...' : ''}"`, 'success');
     } else {
-      log("No saved data found in IndexedDB.");
+      log(`${KEY_NAME_3}:false`);
     }
   };
   // Get the specific key
@@ -155,10 +156,10 @@ function loadSettings() {
     const result = event.target.result;
     if (result) {
 	  wakeLock = result;
-	  document.getElementById('wakeLock').checked = wakeLock;
+	  document.getElementById('wakelock').checked = wakeLock;
       log(`Found saved data: "${KEY_NAME_4} ${result.substring(0, 20)}${result.length > 20 ? '...' : ''}"`, 'success');
     } else {
-      log("No saved data found in IndexedDB.");
+      log(`${KEY_NAME_4}:false`);
     }
   };
   // Get the specific key
@@ -171,7 +172,7 @@ function loadSettings() {
 	  document.getElementById('rotate').checked = rotate;
       log(`Found saved data: "${KEY_NAME_5} ${result.substring(0, 20)}${result.length > 20 ? '...' : ''}"`, 'success');
     } else {
-      log("No saved data found in IndexedDB.");
+      log(`${KEY_NAME_5}:false`);
     }
   };
   // Get the specific key
@@ -184,7 +185,7 @@ function loadSettings() {
 	  document.getElementById('follow').checked = follow;
       log(`Found saved data: "${KEY_NAME_6} ${result.substring(0, 20)}${result.length > 20 ? '...' : ''}"`, 'success');
     } else {
-      log("No saved data found in IndexedDB.");
+      log(`${KEY_NAME_6}:false`);
     }
   };
 }
