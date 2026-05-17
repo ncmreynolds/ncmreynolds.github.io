@@ -42,7 +42,7 @@
 					<button class="tablinks u-full-width" onclick="clickButton3();" id="settingsButton">Settings</button>
 				</div>
 				<div class="three columns" style="margin-top: 5%">
-					<button class="tablinks u-full-width" onclick="clickButton4();" id="adminButton">Admin</button>
+					<button class="tablinks u-full-width" onclick="clickButton4();" id="adminButton" style="display:none;">Admin</button>
 				</div>
 			</div>
 		</div>
@@ -118,7 +118,7 @@
 			<div class="row">
 				<div class="twelve columns">
 					<label class="adminpassword_label">
-						<input type="password" id="adminpassword">
+						<input type="password" id="adminpassword" onchange="checkAdminPassword()">
 						<span class="label-body">Enter password for admin access</span>
 					</label>
 				</div>

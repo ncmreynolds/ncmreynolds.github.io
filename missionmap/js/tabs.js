@@ -19,6 +19,25 @@ function openTab(tabEvent, tabName) {
   tabEvent.currentTarget.className += " active";
 }
 
+function checkAdminPassword()
+{
+	if(document.getElementById('darkmode').value == "scallywag")
+	{
+		showAdminButton();
+	}
+	else
+	{
+		hideAdminButton();
+	}
+}
+
+function showAdminButton()	{
+	document.getElementById('adminButton').style.display = "none";
+}
+function hideAdminButton()	{
+	document.getElementById('adminButton').style.display = "block";
+}
+
 function clickButton1() {
 	openTab(event, 'DocumentsTab');
 	document.getElementById('documentsButton').classList.add('button-primary');
