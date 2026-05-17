@@ -46,6 +46,7 @@ function hideAdminButton()	{
 	document.getElementById('adminButton').style.display = "none";
 	document.getElementById('adminpassword').value = "";
 	log("Hiding admin options");
+	clickButton3();
 }
 
 function clickButton1() {
