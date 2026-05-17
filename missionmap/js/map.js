@@ -1,7 +1,16 @@
 const mapElement = document.getElementById('map');
 
 function initMap() {
-	if(useJavaScriptMapAPI == 1)
+	if(mapMethod == 0)
+	{
+		mapElement.innerHTML = '<img src="docs/Basic_Park_map.jpg" style="width: 100%;height: 100%;object-fit: contain;">';
+	}
+	else if(mapMethod == 1)
+	{
+		//mapElement.innerHTML = '<iframe	width="100%" height="800" frameborder="0" style="border:1px solid black;" referrerpolicy="no-referrer-when-downgrade" src="https://www.google.com/maps/embed/v1/place?key=AIzaSyAUNxj5qu6Y2e6mWH-p55IOn9-r6pH_jHk&q=52.383105,-1.661714&center=52.383966,-1.659957&maptype=satellite&zoom=18"></iframe>';
+		mapElement.innerHTML = '<iframe width="100%" height="800" frameborder="0" style="border:1px solid black;" referrerpolicy="no-referrer-when-downgrade" src="https://www.google.com/maps/d/u/0/embed?mid=13XVdQfZTCCKRI16VmRAObNzYQ6pv7_c&ehbc=2E312F&noprof=1"></iframe>';
+	}
+	else if(mapMethod == 2)
 	{
 		// Basic options for a simple Google Map
 		// For more options see: https://developers.google.com/maps/documentation/javascript/reference#MapOptions
@@ -35,8 +44,5 @@ function initMap() {
 			position: missionMarkerPosition,
 			title: 'Objective'
 		});
-	} else {
-		//mapElement.innerHTML = '<iframe	width="100%" height="800" frameborder="0" style="border:1px solid black;" referrerpolicy="no-referrer-when-downgrade" src="https://www.google.com/maps/embed/v1/place?key=AIzaSyAUNxj5qu6Y2e6mWH-p55IOn9-r6pH_jHk&q=52.383105,-1.661714&center=52.383966,-1.659957&maptype=satellite&zoom=18"></iframe>';
-		mapElement.innerHTML = '<iframe width="100%" height="800" frameborder="0" style="border:1px solid black;" referrerpolicy="no-referrer-when-downgrade" src="https://www.google.com/maps/d/u/0/embed?mid=13XVdQfZTCCKRI16VmRAObNzYQ6pv7_c&ehbc=2E312F&noprof=1"></iframe>';
 	}
 }

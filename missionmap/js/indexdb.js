@@ -14,7 +14,7 @@ const KEY_NAME_6 = 'follow';
 let db; // Will hold the database object
 
 let scenario = 0;
-let useJavaScriptMapAPI = false;
+let mapMethod = 0;
 
 let darkMode = false;
 let wakeLock = false;
@@ -53,17 +53,15 @@ function initDB() {
 }
 
 // --- CRUD Operations ---
-function saveSettings() {
-  useJavaScriptMapAPI = document.getElementById('mapMethod').value == true;
-            
+function saveSettings() {            
   if (!db) {
     log("Error: Database not initialized.", 'error');
     return;
   }
   scenario = document.getElementById('scenario').value;
   saveValue(KEY_NAME_1, scenario);
-  useJavaScriptMapAPI = document.getElementById('mapMethod').value;
-  saveValue(KEY_NAME_2, useJavaScriptMapAPI);
+  mapMethod = document.getElementById('mapMethod').value;
+  saveValue(KEY_NAME_2, mapMethod);
   hideAdminButton();
 }
 
@@ -130,8 +128,8 @@ function loadSettings() {
   request2.onsuccess = (event) => {
     const result = event.target.result;
     if (result) {
-	  useJavaScriptMapAPI = result;
-	  document.getElementById('mapMethod').value = useJavaScriptMapAPI;
+	  mapMethod = result;
+	  document.getElementById('mapMethod').value = mapMethod;
       log(`${KEY_NAME_2}:${result}`, 'success');
     } else {
       log(`${KEY_NAME_2}:not found`);
