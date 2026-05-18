@@ -1,6 +1,6 @@
 async function initialiseApp()	{
 	await initDB();
-	if(settingsLoaded == true)
+	if(allSettingsLoaded == true)
 	{
 		if(mapsApiReady == true)
 		{

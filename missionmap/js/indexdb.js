@@ -22,7 +22,7 @@ let rotate = false;
 let follow = false;
 
 let objectsLoaded = 0;
-let settingsLoaded = false;
+let allSettingsLoaded = false;
 
 
 // --- IndexedDB Initialization ---
@@ -48,9 +48,6 @@ async function initDB() {
     log("Database connected", 'success');
     db = event.target.result;
     loadSettings(); // Load settings immediately after connection
-	settingsLoaded = true;
-	log("Settings loaded", 'success');
-	//initMap();
   };
 
   request.onerror = (event) => {
@@ -110,13 +107,13 @@ function changeFollow() {
 }
 
 function objectLoaded() {
-	if(settingsLoaded == false)
+	if(allSettingsLoaded === false)
 	{
 		objectsLoaded += 1;
 		log(`Object ${objectsLoaded} loaded`, 'success');
 		if(objectsLoaded >= 6)
 		{
-			settingsLoaded = true;
+			allSettingsLoaded = true;
 			log("All settings loaded", 'success');
 			setTimeout(initMap, 100);
 		}
