@@ -12,21 +12,31 @@ const Minute = 60 * Second;
 
 function geolocationPollUpdatePosition() {
 	let d = new Date() - lastUpdate;
-	let min = Math.floor(d / Minute);
-	let sec = Math.floor(d % Minute / Second);
-	lastUpdate = new Date();
-	log(`Geolocation poll update after ${min}m ${sec}s`,'log-info');
-	navigator.geolocation.getCurrentPosition(geolocationPollSuccess, geolocationPollError);
+	if(d > 75000)	//Only check if there's been no update for 75s
+	{
+		let min = Math.floor(d / Minute);
+		let sec = Math.floor(d % Minute / Second);
+		lastUpdate = new Date();
+		log(`Geolocation poll update after ${min}m ${sec}s`,'log-info');
+		navigator.geolocation.getCurrentPosition(geolocationPollSuccess, geolocationPollError);
+	}
 }
 
 function geolocationPollSuccess(position) {
 	lastKnownLatitude = position.coords.latitude;
 	lastKnownLongitude = position.coords.longitude;
 	geolocationSuccessful = true;
-	log(`Current location ${lastKnownLatitude},${lastKnownLongitude}`,'log-success');
 	if(geolocationWatchPositionEnabled == false)
 	{
 		enableGeolocationWatchPosition();
+	}
+	if(follow == true)
+	{
+		centreMap(lastKnownLatitude,lastKnownLongitude);
+	}
+	else
+	{
+		log(`New position lat:${lastKnownLatitude} lon:${lastKnownLongitude}`,'log-info');
 	}
 }
 
