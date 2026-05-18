@@ -68,7 +68,7 @@ function saveSettings() {
   mapMethod = document.getElementById('mapMethod').value;
   saveValue(KEY_NAME_2, mapMethod);
   rotationOffset = document.getElementById('rotationOffset').value;
-  saveValue(KEY_NAME_7, rotationOffset);
+  saveValue(KEY_NAME_7, Number(rotationOffset));
   //showScenario(scenario);
   //hideAdminButton();
   log("Settings saved", 'success');
@@ -239,7 +239,7 @@ function loadSettings() {
   request7.onsuccess = (event) => {
     const result = event.target.result;
     if (result) {
-	  rotationOffset = result;
+	  rotationOffset = Number(result);
 	  document.getElementById('rotationOffset').value = rotationOffset;
       log(`${KEY_NAME_7}:${result}`, 'success');
     } else {
