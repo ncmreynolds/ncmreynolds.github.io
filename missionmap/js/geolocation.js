@@ -24,6 +24,10 @@ function initGeolocation()
 				log("Geolocation unavailable",'error');
 				return;
 			}
+			else
+			{
+				log("Geolocation initialised",'log-success');
+			}
 			geolocationInitialised = true;
 		}
 		else
