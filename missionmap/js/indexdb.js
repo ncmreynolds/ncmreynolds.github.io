@@ -46,7 +46,7 @@ async function initDB() {
   request.onsuccess = (event) => {
     log("Database connected", 'success');
     db = event.target.result;
-    await loadSettings(); // Load settings immediately after connection
+    loadSettings(); // Load settings immediately after connection
 	settingsLoaded = true;
 	log("Settings loaded", 'success');
 	//initMap();
@@ -111,7 +111,7 @@ function changeFollow() {
 async function loadSettings() {
   if (!db) return;
 
-  const transaction = db.transaction([SETTINGS_STORE_NAME], 'readonly');
+  const transaction = db.transaction([SETTINGS_STORE_NAME], 'readwrite');
   const objectStore = transaction.objectStore(SETTINGS_STORE_NAME);
   log("Loading saved settings from IndexDB");
             
