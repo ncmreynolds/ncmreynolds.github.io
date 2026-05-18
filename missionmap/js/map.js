@@ -98,7 +98,8 @@ async function initMap() {
 				const pin = new PinElement({
 					//glyphText: `${i + 1}`,
 					glyphText: `${legend}`,
-					scale: 0.75,
+					glyphColor: 'white',
+					scale: 1.5,
 				});
 				/*
 				const marker = new AdvancedMarkerElement({
