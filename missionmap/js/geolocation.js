@@ -1,4 +1,8 @@
 let geolocationInitialised = false;
+let geolocationSuccessful = false;
+let geolocationWatchPositionEnabled = false;
+var lastKnownLatitude;
+var lastKnownLongitude;
 
 // The date of the last geolocation update.
 var lastUpdate = new Date();
@@ -6,20 +10,39 @@ const Second = 1000;
 const Minute = 60 * Second;
 
 // Update the duration since the last geolocalisation element.
-function updateTime() {
+function logUpdateTime() {
 	let d = new Date() - lastUpdate;
 	let min = Math.floor(d / Minute);
 	let sec = Math.floor(d % Minute / Second);
-	//document.getElementById("lastUpdate").textContent = `${min}m ${sec}s`;
+	lastUpdate = new Date();
+	log(`Geolocation update after ${min}m ${sec}s`,'log-info');
 }
 
 function geolocationSuccess(position) {
-	const latitude = position.coords.latitude;
-	const longitude = position.coords.longitude;
-	log(`Current location ${latitude},${longitude}`,'log-success');
-	//status.textContent = "";
-	//mapLink.href = `https://www.openstreetmap.org/#map=18/${latitude}/${longitude}`;
-	//mapLink.textContent = `Latitude: ${latitude} °, Longitude: ${longitude} °`;
+	lastKnownLatitude = position.coords.latitude;
+	lastKnownLongitude = position.coords.longitude;
+	geolocationSuccessful = true;
+	log(`Current location ${lastKnownLatitude},${lastKnownLongitude}`,'log-success');
+	enableGeolocationWatchPosition();
+}
+
+function enableGeolocationWatchPosition()
+{
+	if(geolocationSuccessful == true && geolocationWatchPositionEnabled == false)
+	{
+		log("Enabling location watchPosition",'log-info');
+		navigator.geolocation.watchPosition(g => {
+			//Success function
+			logUpdateTime();
+		}, {
+			//Error function
+			log("Geolocation watch error",'log-error');
+		}, {
+			//Options
+			enableHighAccuracy: true,
+		});
+		geolocationWatchPositionEnabled = true;
+	}
 }
 
 function geolocationError() {
@@ -34,7 +57,7 @@ function initGeolocation()
 		if(follow == true)
 		{
 			if (!navigator.geolocation) {
-				log("Geolocation unavailable",'error');
+				log("Geolocation unavailable",'log-error');
 				return;
 			}
 			else
@@ -52,5 +75,6 @@ function initGeolocation()
 	else
 	{
 		log("Geolocation already requested",'log-info');
+		enableGeolocationWatchPosition();
 	}
 }
