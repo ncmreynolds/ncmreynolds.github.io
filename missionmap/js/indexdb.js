@@ -21,6 +21,7 @@ let wakeLock = false;
 let rotate = false;
 let follow = false;
 
+let objectsLoaded = 0;
 let settingsLoaded = false;
 
 
@@ -108,7 +109,20 @@ function changeFollow() {
 	saveValue(KEY_NAME_6, follow);
 }
 
-async function loadSettings() {
+function objectLoaded() {
+	if(settingsLoaded == false)
+	{
+		objectsLoaded += 1;
+		if(objectsLoaded >=6)
+		{
+			settingsLoaded = true;
+			log("All settings loaded", 'success');
+			setTimeout(initMap, 100);
+		}
+	}
+}
+
+function loadSettings() {
   if (!db) return;
 
   const transaction = db.transaction([SETTINGS_STORE_NAME], 'readonly');
@@ -123,6 +137,7 @@ async function loadSettings() {
     if (result) {
 	  scenario = result;
 	  document.getElementById('scenario').value = scenario;
+	  objectLoaded();
       log(`${KEY_NAME_1}:${result}`, 'success');
     } else {
       log(`${KEY_NAME_1}:not found`, 'error');
@@ -136,6 +151,7 @@ async function loadSettings() {
     if (result) {
 	  mapMethod = result;
 	  document.getElementById('mapMethod').value = mapMethod;
+	  objectLoaded();
       log(`${KEY_NAME_2}:${result}`, 'success');
     } else {
       log(`${KEY_NAME_2}:not found`, 'error');
@@ -153,6 +169,7 @@ async function loadSettings() {
     } else {
       log(`${KEY_NAME_3}:false`, 'success');
     }
+	objectLoaded();
   };
   // Get the specific key
   const request4 = objectStore.get(KEY_NAME_4);
@@ -166,6 +183,7 @@ async function loadSettings() {
     } else {
       log(`${KEY_NAME_4}:false`, 'success');
     }
+	objectLoaded();
   };
   // Get the specific key
   const request5 = objectStore.get(KEY_NAME_5);
@@ -179,6 +197,7 @@ async function loadSettings() {
     } else {
       log(`${KEY_NAME_5}:false`, 'success');
     }
+	objectLoaded();
   };
   // Get the specific key
   const request6 = objectStore.get(KEY_NAME_6);
@@ -192,6 +211,7 @@ async function loadSettings() {
     } else {
       log(`${KEY_NAME_6}:false`, 'success');
     }
+	objectLoaded();
   };
 }
 /*
