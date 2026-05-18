@@ -65,6 +65,7 @@ function saveSettings() {
   saveValue(KEY_NAME_1, scenario);
   mapMethod = document.getElementById('mapMethod').value;
   saveValue(KEY_NAME_2, mapMethod);
+  showScenario(scenario);
   hideAdminButton();
   log("Settings saved", 'success');
 }
@@ -153,6 +154,7 @@ function loadSettings() {
 	  document.getElementById('scenario').value = scenario;
 	  objectLoaded();
       log(`${KEY_NAME_1}:${result}`, 'success');
+	  showScenario(scenario);
     } else {
       log(`${KEY_NAME_1}:not found`, 'error');
     }
