@@ -57,12 +57,12 @@ function enableGeolocationWatchPosition()
 		}
 		else
 		{
-			log("geolocation watchPosition already enabled",'log-info');
+			log("Geolocation watchPosition already enabled",'log-info');
 		}
 	}
 	else
 	{
-		log("location watchPosition not possible",'log-info');
+		log("Geolocation watchPosition not possible",'log-info');
 	}
 }
 
