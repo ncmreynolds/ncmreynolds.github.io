@@ -110,7 +110,7 @@ function objectLoaded() {
 	if(allSettingsLoaded === false)
 	{
 		objectsLoaded += 1;
-		log(`Object ${objectsLoaded} loaded`, 'success');
+		//log(`Object ${objectsLoaded} loaded`, 'success');
 		if(objectsLoaded >= 6)
 		{
 			allSettingsLoaded = true;

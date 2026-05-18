@@ -13,6 +13,6 @@ async function initialiseApp()	{
 	}
 	else
 	{
-		log("Settings not loaded yet",'error');
+		log("Settings not all loaded yet",'error');
 	}
 }
