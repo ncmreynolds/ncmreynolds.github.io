@@ -67,26 +67,31 @@ async function initMap() {
 					position: { lat: 52.38469, lng: -1.66174 },
 					title: 'Park Ranger Office',
 					pinLegend: "Rangers",
+					pinInfo: "Lots more info",
 				},
 				{
 					position: { lat: 52.38309, lng: -1.66172 },
 					title: 'Derelict Tin Mine',
 					pinLegend: "Tin Mine",
+					pinInfo: "Lots more info",
 				},
 				{
 					position: { lat: 52.38398, lng: -1.65998 },
 					title: 'Derelict Gold Mining Town',
 					pinLegend: "Town",
+					pinInfo: "Lots more info",
 				},
 				{
 					position: { lat: 52.38387, lng: -1.65899 },
 					title: 'Derelict Gold Mine',
 					pinLegend: "Gold Mine",
+					pinInfo: "Lots more info",
 				},
 				{
 					position: { lat: 52.38294, lng: -1.6593 },
 					title: "Hunters' Lodges",
 					pinLegend: "Lodges",
+					pinInfo: "Lots more info",
 				},
 			];
 
@@ -94,7 +99,7 @@ async function initMap() {
 			const infoWindow = new InfoWindow();
 
 			// Create the markers.
-			markers.forEach(({ position, title, pinLegend }, i) => {
+			markers.forEach(({ position, title, pinLegend, pinInfo }, i) => {
 				const pin = new PinElement({
 					//glyphText: `${i + 1}`,
 					glyphText: `${pinLegend}`,
@@ -122,7 +127,7 @@ async function initMap() {
 				// Add a click listener for each marker, and set up the info window.
 				marker.addEventListener('gmp-click', () => {
 					infoWindow.close();
-					infoWindow.setContent(`${i}`);
+					infoWindow.setContent(`${pinInfo}`);
 					infoWindow.setHeaderDisabled(false);
 					infoWindow.setHeaderContent(marker.title);
 					infoWindow.open(marker.map, marker);
