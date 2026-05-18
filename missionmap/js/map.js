@@ -98,7 +98,7 @@ function rotateMap(angle)
 	if(mapInitialised == true && mapMethod == 2 && map.getHeading() != angle)
 	{
 		//log(`Rotating map to ${angle}`,'log-info');
-		map.setHeading(angle);
+		map.setHeading(360-angle);
 		//document.getElementById('heading').innerHTML = `Heading ${angle}`;
 	}
 }
