@@ -111,7 +111,7 @@ function changeFollow() {
 async function loadSettings() {
   if (!db) return;
 
-  const transaction = db.transaction([SETTINGS_STORE_NAME], 'readwrite');
+  const transaction = db.transaction([SETTINGS_STORE_NAME], 'readonly');
   const objectStore = transaction.objectStore(SETTINGS_STORE_NAME);
   log("Loading saved settings from IndexDB");
             
@@ -125,7 +125,7 @@ async function loadSettings() {
 	  document.getElementById('scenario').value = scenario;
       log(`${KEY_NAME_1}:${result}`, 'success');
     } else {
-      log(`${KEY_NAME_1}:not found`);
+      log(`${KEY_NAME_1}:not found`, 'error');
     }
   };
   // Get the specific key
@@ -138,7 +138,7 @@ async function loadSettings() {
 	  document.getElementById('mapMethod').value = mapMethod;
       log(`${KEY_NAME_2}:${result}`, 'success');
     } else {
-      log(`${KEY_NAME_2}:not found`);
+      log(`${KEY_NAME_2}:not found`, 'error');
     }
   };
   // Get the specific key
@@ -151,7 +151,7 @@ async function loadSettings() {
 	  document.getElementById('darkmode').checked = darkMode;
       log(`${KEY_NAME_3}:${result}`, 'success');
     } else {
-      log(`${KEY_NAME_3}:false`);
+      log(`${KEY_NAME_3}:false`, 'success');
     }
   };
   // Get the specific key
@@ -164,7 +164,7 @@ async function loadSettings() {
 	  document.getElementById('wakelock').checked = wakeLock;
       log(`${KEY_NAME_4}:${result}`, 'success');
     } else {
-      log(`${KEY_NAME_4}:false`);
+      log(`${KEY_NAME_4}:false`, 'success');
     }
   };
   // Get the specific key
@@ -177,7 +177,7 @@ async function loadSettings() {
 	  document.getElementById('rotate').checked = rotate;
       log(`${KEY_NAME_5}:${result}`, 'success');
     } else {
-      log(`${KEY_NAME_5}:false`);
+      log(`${KEY_NAME_5}:false`, 'success');
     }
   };
   // Get the specific key
@@ -190,7 +190,7 @@ async function loadSettings() {
 	  document.getElementById('follow').checked = follow;
       log(`${KEY_NAME_6}:${result}`, 'success');
     } else {
-      log(`${KEY_NAME_6}:false`);
+      log(`${KEY_NAME_6}:false`, 'success');
     }
   };
 }
