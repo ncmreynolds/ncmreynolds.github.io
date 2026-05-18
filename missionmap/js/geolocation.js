@@ -13,6 +13,19 @@ function updateTime() {
 	//document.getElementById("lastUpdate").textContent = `${min}m ${sec}s`;
 }
 
+function geolocationSuccess(position) {
+	const latitude = position.coords.latitude;
+	const longitude = position.coords.longitude;
+	log(`Current location ${latitude},${longitude}`,'log-success');
+	//status.textContent = "";
+	//mapLink.href = `https://www.openstreetmap.org/#map=18/${latitude}/${longitude}`;
+	//mapLink.textContent = `Latitude: ${latitude} °, Longitude: ${longitude} °`;
+}
+
+function geolocationError() {
+	log("Unable to retrieve location",'log-error');
+}
+
 function initGeolocation()
 {
 	log("Initialising geolocation",'log-info');
@@ -26,6 +39,7 @@ function initGeolocation()
 			}
 			else
 			{
+				navigator.geolocation.getCurrentPosition(geolocationSuccess, geolocationError);
 				log("Geolocation initialised",'log-success');
 			}
 			geolocationInitialised = true;
