@@ -53,6 +53,9 @@ async function initMap() {
 
 			// Get the HTML DOM element that will contain your map 
 			// We are using a div with id="map" seen below in the <body>
+			
+			//Insert a gmp-map element
+			//mapElement.innerHTML = '<gmp-map></gmp-map>';
 
 			// Create the Google Map using our element and options defined above
 			map = new google.maps.Map(mapElement, mapOptions);
@@ -91,13 +94,21 @@ async function initMap() {
 					glyphText: `${i + 1}`,
 					scale: 1.5,
 				});
+				/*
 				const marker = new AdvancedMarkerElement({
 					position,
 					title: `${i + 1}. ${title}`,
 					gmpClickable: true,
 				});
+				*/
+				const marker = new google.maps.marker.AdvancedMarkerElement(
+					{
+						map,
+						position: parkRangerOfficeLatLong,
+						title: `${i + 1}. ${title}`
+					}, gmpClickable: true,);
 				marker.append(pin);
-				document.querySelector('gmp-map').append(marker);
+				//document.querySelector('gmp-map').append(marker);
 				// Add a click listener for each marker, and set up the info window.
 				marker.addEventListener('gmp-click', () => {
 					infoWindow.close();
