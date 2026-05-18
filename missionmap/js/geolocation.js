@@ -43,7 +43,10 @@ function geolocationPollSuccess(position) {
 	lastKnownLongitude = position.coords.longitude;
 	geolocationSuccessful = true;
 	log(`Current location ${lastKnownLatitude},${lastKnownLongitude}`,'log-success');
-	enableGeolocationWatchPosition();
+	if(geolocationWatchPositionEnabled == false)
+	{
+		enableGeolocationWatchPosition();
+	}
 }
 
 function geolocationPollError() {
@@ -61,7 +64,7 @@ function enableGeolocationWatchPosition()
 			log("Enabling location watchPosition",'log-info');
 			navigator.geolocation.watchPosition(g => {
 				//Success function
-				geolocationWatchUpdatePosition
+				geolocationWatchUpdatePosition();
 			}, 
 				//Error function
 				geolocationWatchError
@@ -71,6 +74,7 @@ function enableGeolocationWatchPosition()
 			});
 			geolocationWatchPositionEnabled = true;
 			//Also poll on a slow interval
+			log("Enabling location polling",'log-info');
 			geolocationPollingInterval = setInterval(geolocationPollUpdatePosition, 30000);
 		}
 		else
