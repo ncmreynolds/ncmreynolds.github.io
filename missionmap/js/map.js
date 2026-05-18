@@ -69,7 +69,7 @@ async function initMap() {
 					legend: "Rangers",
 				},
 				{
-					position: { lat: lat: 52.38309, lng: -1.66172 },
+					position: { lat: 52.38309, lng: -1.66172 },
 					title: 'Derelict Tin Mine',
 					legend: "Tin Mine",
 				},
