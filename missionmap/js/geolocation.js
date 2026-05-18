@@ -3,6 +3,7 @@ let geolocationSuccessful = false;
 let geolocationWatchPositionEnabled = false;
 var lastKnownLatitude;
 var lastKnownLongitude;
+var geolocationPollingInterval;
 
 // The date of the last geolocation update.
 var lastUpdate = new Date();
@@ -17,7 +18,7 @@ function geolocationWatchUpdatePosition(pos) {
 	let min = Math.floor(d / Minute);
 	let sec = Math.floor(d % Minute / Second);
 	lastUpdate = new Date();
-	log(`Geolocation update after ${min}m ${sec}s`,'log-info');
+	log(`Geolocation watch update after ${min}m ${sec}s`,'log-info');
 	if(follow == true)
 	{
 		log(`Centering map on lat:${lastKnownLatitude} lon:${lastKnownLongitude}`,'log-info');
@@ -28,13 +29,28 @@ function geolocationWatchUpdatePosition(pos) {
 	}
 }
 
-function geolocationSuccess(position) {
+function geolocationPollUpdatePosition() {
+	let d = new Date() - lastUpdate;
+	let min = Math.floor(d / Minute);
+	let sec = Math.floor(d % Minute / Second);
+	lastUpdate = new Date();
+	log(`Geolocation poll update after ${min}m ${sec}s`,'log-info');
+	navigator.geolocation.getCurrentPosition(geolocationPollSuccess, geolocationPollError);
+}
+
+function geolocationPollSuccess(position) {
 	lastKnownLatitude = position.coords.latitude;
 	lastKnownLongitude = position.coords.longitude;
 	geolocationSuccessful = true;
 	log(`Current location ${lastKnownLatitude},${lastKnownLongitude}`,'log-success');
 	enableGeolocationWatchPosition();
 }
+
+function geolocationPollError() {
+	log("Unable to retrieve location",'log-error');
+	geolocationSuccessful = false;
+}
+
 
 function enableGeolocationWatchPosition()
 {
@@ -54,6 +70,8 @@ function enableGeolocationWatchPosition()
 				enableHighAccuracy: true,
 			});
 			geolocationWatchPositionEnabled = true;
+			//Also poll on a slow interval
+			geolocationPollingInterval = setInterval(geolocationPollUpdatePosition, 30000);
 		}
 		else
 		{
@@ -71,10 +89,6 @@ function geolocationWatchError()
 	log("Geolocation watch error",'log-error');
 }
 
-function geolocationError() {
-	log("Unable to retrieve location",'log-error');
-}
-
 function initGeolocation()
 {
 	log("Initialising geolocation",'log-info');
@@ -88,7 +102,7 @@ function initGeolocation()
 			}
 			else
 			{
-				navigator.geolocation.getCurrentPosition(geolocationSuccess, geolocationError);
+				navigator.geolocation.getCurrentPosition(geolocationPollSuccess, geolocationPollError);
 				log("Geolocation initialised",'log-success');
 			}
 			geolocationInitialised = true;
