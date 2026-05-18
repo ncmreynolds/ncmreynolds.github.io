@@ -1,4 +1,5 @@
 const mapElement = document.getElementById('map');
+var map;
 let mapsApiReady = false;
 let mapInitialised = false;
 let grangeCentre;
@@ -49,7 +50,7 @@ function initMap() {
 			// We are using a div with id="map" seen below in the <body>
 
 			// Create the Google Map using our element and options defined above
-			var map = new google.maps.Map(mapElement, mapOptions);
+			map = new google.maps.Map(mapElement, mapOptions);
 
 			// The mission marker position
 			const missionMarkerPosition = { lat: 52.383105, lng: -1.661714 };
@@ -74,6 +75,8 @@ function centreMap(lat,lon)
 	log(`Centering map on lat:${lat} lon:${lon}`,'log-info');
 	if(mapInitialised == true && mapMethod == 2)
 	{
-		map.panTo(new google.maps.LatLng(lat, lon));
+		var latLng = new google.maps.LatLng(lat, lon);
+		map.panTo(latLng);
+		//map.setCenter(latLng);
 	}
 }
