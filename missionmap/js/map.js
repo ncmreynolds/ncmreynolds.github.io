@@ -1,4 +1,10 @@
 const mapElement = document.getElementById('map');
+let mapsApiReady = false;
+
+function mapsReadyCallback() {
+	log("Google maps API ready");
+	mapsApiReady = true;
+}
 
 function initMap() {
 	if(mapMethod == 0)

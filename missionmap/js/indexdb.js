@@ -44,11 +44,12 @@ function initDB() {
 };
 
   request.onsuccess = (event) => {
-    log("Database connected successfully.", 'success');
+    log("Database connected", 'success');
     db = event.target.result;
     loadSettings(); // Load settings immediately after connection
 	settingsLoaded = true;
-	initMap();
+	log("Settings loaded", 'success');
+	//initMap();
   };
 
   request.onerror = (event) => {
@@ -67,6 +68,7 @@ function saveSettings() {
   mapMethod = document.getElementById('mapMethod').value;
   saveValue(KEY_NAME_2, mapMethod);
   hideAdminButton();
+  log("Settings saved", 'success');
 }
 
 function saveValue(key, value)
