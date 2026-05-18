@@ -108,6 +108,10 @@ function changeFollow() {
 	{
 		initGeolocation();
 	}
+	else
+	{
+		centreMap(lat,lon);
+	}
 }
 
 function objectLoaded() {

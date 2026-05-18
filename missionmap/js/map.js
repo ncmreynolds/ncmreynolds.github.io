@@ -76,7 +76,15 @@ function centreMap(lat,lon)
 	if(mapInitialised == true && mapMethod == 2)
 	{
 		var latLng = new google.maps.LatLng(lat, lon);
-		map.panTo(latLng);
+		map.panTo(latLng);	//Move smoothly
 		//map.setCenter(latLng);
+	}
+}
+
+function homeMap()
+{
+	if(mapInitialised == true && mapMethod == 2)
+	{
+		map.setCenter(grangeCentre);	//Jump home
 	}
 }
