@@ -14,7 +14,7 @@ const KEY_NAME_6 = 'follow';
 let db; // Will hold the database object
 
 let scenario = 0;
-let mapMethod = 0;
+let mapMethod = 2; //Default to JS
 
 let darkMode = false;
 let wakeLock = false;
@@ -110,7 +110,7 @@ function changeFollow() {
 	}
 	else
 	{
-		centreMap(lat,lon);
+		homeMap();
 	}
 }
 
