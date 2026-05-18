@@ -25,7 +25,7 @@ let settingsLoaded = false;
 
 
 // --- IndexedDB Initialization ---
-function initDB() {
+async function initDB() {
   log("Opening database connection...");
             
   // Open (or create) the database
@@ -46,7 +46,7 @@ function initDB() {
   request.onsuccess = (event) => {
     log("Database connected", 'success');
     db = event.target.result;
-    loadSettings(); // Load settings immediately after connection
+    await loadSettings(); // Load settings immediately after connection
 	settingsLoaded = true;
 	log("Settings loaded", 'success');
 	//initMap();
@@ -108,7 +108,7 @@ function changeFollow() {
 	saveValue(KEY_NAME_6, follow);
 }
 
-function loadSettings() {
+async function loadSettings() {
   if (!db) return;
 
   const transaction = db.transaction([SETTINGS_STORE_NAME], 'readonly');
