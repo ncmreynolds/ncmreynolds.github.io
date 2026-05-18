@@ -10,9 +10,14 @@ function mapsReadyCallback() {
 	initialiseApp();
 }
 
-function initMap() {
+async function initMap() {
 	if(mapInitialised == false)
 	{
+		const [{ InfoWindow }, { AdvancedMarkerElement, PinElement }] =
+			await Promise.all([
+				google.maps.importLibrary('maps'),
+				google.maps.importLibrary('marker'),
+			]);
 		if(mapMethod == 0)
 		{
 			log("Adding static map");
