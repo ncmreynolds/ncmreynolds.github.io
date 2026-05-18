@@ -10,25 +10,6 @@ var lastUpdate = new Date();
 const Second = 1000;
 const Minute = 60 * Second;
 
-function geolocationWatchUpdatePosition(pos) {
-	const coordinates = pos.coords;
-	lastKnownLatitude = coordinates.latitude;
-	lastKnownLongitude = coordinates.longitude;
-	let d = new Date() - lastUpdate;
-	let min = Math.floor(d / Minute);
-	let sec = Math.floor(d % Minute / Second);
-	lastUpdate = new Date();
-	log(`Geolocation watch update after ${min}m ${sec}s`,'log-info');
-	if(follow == true)
-	{
-		log(`Centering map on lat:${lastKnownLatitude} lon:${lastKnownLongitude}`,'log-info');
-	}
-	else
-	{
-		log(`New position lat:${lastKnownLatitude} lon:${lastKnownLongitude}`,'log-info');
-	}
-}
-
 function geolocationPollUpdatePosition() {
 	let d = new Date() - lastUpdate;
 	let min = Math.floor(d / Minute);
@@ -49,11 +30,35 @@ function geolocationPollSuccess(position) {
 	}
 }
 
-function geolocationPollError() {
-	log("Unable to retrieve location",'log-error');
+function geolocationPollError(err) {
+	log(`Unable to retrieve location (${err.code}): ${err.message}`,'log-error');
 	geolocationSuccessful = false;
 }
 
+
+function geolocationWatchSuccess(pos) {
+	const coordinates = pos.coords;
+	lastKnownLatitude = coordinates.latitude;
+	lastKnownLongitude = coordinates.longitude;
+	let d = new Date() - lastUpdate;
+	let min = Math.floor(d / Minute);
+	let sec = Math.floor(d % Minute / Second);
+	lastUpdate = new Date();
+	log(`Geolocation watch update after ${min}m ${sec}s`,'log-info');
+	if(follow == true)
+	{
+		centreMap(lastKnownLatitude,lastKnownLongitude);
+	}
+	else
+	{
+		log(`New position lat:${lastKnownLatitude} lon:${lastKnownLongitude}`,'log-info');
+	}
+}
+
+function geolocationWatchError()
+{
+	log("Geolocation watch error",'log-error');
+}
 
 function enableGeolocationWatchPosition()
 {
@@ -62,20 +67,22 @@ function enableGeolocationWatchPosition()
 		if(geolocationWatchPositionEnabled == false)
 		{
 			log("Enabling location watchPosition",'log-info');
-			navigator.geolocation.watchPosition(g => {
+			navigator.geolocation.watchPosition(
 				//Success function
-				geolocationWatchUpdatePosition(g.coords);
-			}, 
+				geolocationWatchSuccess
+			,
 				//Error function
 				geolocationWatchError
-			, {
+			,
+			{
 				//Options
 				enableHighAccuracy: true,
-			});
+			}
+			);
 			geolocationWatchPositionEnabled = true;
 			//Also poll on a slow interval
 			log("Enabling location polling",'log-info');
-			geolocationPollingInterval = setInterval(geolocationPollUpdatePosition, 30000);
+			geolocationPollingInterval = setInterval(geolocationPollUpdatePosition, 90000); //Only do this every 90s
 		}
 		else
 		{
@@ -86,11 +93,6 @@ function enableGeolocationWatchPosition()
 	{
 		log("Geolocation watchPosition not possible",'log-info');
 	}
-}
-
-function geolocationWatchError()
-{
-	log("Geolocation watch error",'log-error');
 }
 
 function initGeolocation()

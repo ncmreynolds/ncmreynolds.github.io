@@ -66,3 +66,8 @@ function initMap() {
 		log("Map already initialised", 'error');
 	}
 }
+
+function centreMap(lat,lon)
+{
+	log(`Centering map on lat:${lat} lon:${lon}`,'log-info');
+}
