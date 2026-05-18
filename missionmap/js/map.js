@@ -66,22 +66,27 @@ async function initMap() {
 				{
 					position: { lat: 52.38469, lng: -1.66174 },
 					title: 'Park Ranger Office',
+					legend: "Rangers",
 				},
 				{
-					position: { lat: 52.38469, lng: -1.66174 },
+					position: { lat: lat: 52.38309, lng: -1.66172 },
 					title: 'Derelict Tin Mine',
+					legend: "Tin Mine",
 				},
 				{
 					position: { lat: 52.38398, lng: -1.65998 },
 					title: 'Derelict Gold Mining Town',
+					legend: "Town",
 				},
 				{
 					position: { lat: 52.38387, lng: -1.65899 },
 					title: 'Derelict Gold Mine',
+					legend: "Gold Mine",
 				},
 				{
 					position: { lat: 52.38294, lng: -1.6593 },
 					title: "Hunters' Lodges",
+					legend: "Lodges",
 				},
 			];
 
@@ -89,10 +94,11 @@ async function initMap() {
 			const infoWindow = new InfoWindow();
 
 			// Create the markers.
-			markers.forEach(({ position, title }, i) => {
+			markers.forEach(({ position, title, legend }, i) => {
 				const pin = new PinElement({
-					glyphText: `${i + 1}`,
-					scale: 1.5,
+					//glyphText: `${i + 1}`,
+					glyphText: `${legend}`,
+					scale: 0.75,
 				});
 				/*
 				const marker = new AdvancedMarkerElement({
