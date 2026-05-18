@@ -28,20 +28,31 @@ function geolocationSuccess(position) {
 
 function enableGeolocationWatchPosition()
 {
-	if(geolocationSuccessful == true && geolocationWatchPositionEnabled == false)
+	if(geolocationSuccessful == true)
 	{
-		log("Enabling location watchPosition",'log-info');
-		navigator.geolocation.watchPosition(g => {
-			//Success function
-			logUpdateTime();
-		}, {
-			//Error function
-			log("Geolocation watch error",'log-error');
-		}, {
-			//Options
-			enableHighAccuracy: true,
-		});
-		geolocationWatchPositionEnabled = true;
+		if(geolocationWatchPositionEnabled == false)
+		{
+			log("Enabling location watchPosition",'log-info');
+			navigator.geolocation.watchPosition(g => {
+				//Success function
+				logUpdateTime();
+			}, {
+				//Error function
+				log("Geolocation watch error",'log-error');
+			}, {
+				//Options
+				enableHighAccuracy: true,
+			});
+			geolocationWatchPositionEnabled = true;
+		}
+		else
+		{
+			log("Enabling location watchPosition already enabled",'log-info');
+		}
+	}
+	else
+	{
+		log("location watchPosition not possible",'log-info');
 	}
 }
 
