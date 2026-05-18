@@ -1,7 +1,7 @@
 const mapElement = document.getElementById('map');
 let mapsApiReady = false;
 let mapInitialised = false;
-let grangeCentre = new google.maps.LatLng(52.383966,-1.659957);
+let grangeCentre;
 
 function mapsReadyCallback() {
 	log("Google maps API ready");
@@ -26,6 +26,7 @@ function initMap() {
 		else if(mapMethod == 2)
 		{
 			log("Adding Javascript API map");
+			grangeCentre = new google.maps.LatLng(52.383966,-1.659957);	//Use this to centre the Grange when not following
 			// Basic options for a simple Google Map
 			// For more options see: https://developers.google.com/maps/documentation/javascript/reference#MapOptions
 			var mapOptions = {
