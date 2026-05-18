@@ -64,7 +64,7 @@ function initMap() {
 					title: 'Derelict Tin Mine',
 				},
 				{
-					position: { lat: lat: 52.38398, lng: -1.65998 },
+					position: { lat: 52.38398, lng: -1.65998 },
 					title: 'Derelict Gold Mining Town',
 				},
 				{
