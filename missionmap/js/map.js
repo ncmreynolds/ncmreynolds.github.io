@@ -105,8 +105,9 @@ async function initMap() {
 					{
 						map,
 						position: parkRangerOfficeLatLong,
-						title: `${i + 1}. ${title}`
-					}, gmpClickable: true,);
+						title: `${i + 1}. ${title}`,
+						gmpClickable: true,
+					});
 				marker.append(pin);
 				//document.querySelector('gmp-map').append(marker);
 				// Add a click listener for each marker, and set up the info window.
