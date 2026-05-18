@@ -59,6 +59,7 @@ function initMap() {
 			});
 		}
 		mapInitialised = true;
+		initGeolocation();
 	}
 	else
 	{

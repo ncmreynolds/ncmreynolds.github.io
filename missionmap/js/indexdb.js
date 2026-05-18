@@ -104,6 +104,10 @@ function changeRotate() {
 function changeFollow() {
 	follow = document.getElementById('follow').checked == true;
 	saveValue(KEY_NAME_6, follow);
+	if(follow == true)
+	{
+		initGeolocation();
+	}
 }
 
 function objectLoaded() {
