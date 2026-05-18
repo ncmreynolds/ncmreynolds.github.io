@@ -36,10 +36,10 @@ function enableGeolocationWatchPosition()
 			navigator.geolocation.watchPosition(g => {
 				//Success function
 				logUpdateTime();
-			}, {
+			}, 
 				//Error function
-				geolocationWatchError();
-			}, {
+				geolocationWatchError
+			, {
 				//Options
 				enableHighAccuracy: true,
 			});
