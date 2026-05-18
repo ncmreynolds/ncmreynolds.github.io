@@ -112,7 +112,7 @@ async function initMap() {
 					{
 						map,
 						position: position,
-						title: `${i + 1}. ${title}`,
+						title: `${title}`,
 						gmpClickable: true,
 					});
 				marker.append(pin);
