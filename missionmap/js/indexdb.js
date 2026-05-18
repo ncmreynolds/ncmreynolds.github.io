@@ -10,6 +10,7 @@ const KEY_NAME_3 = 'darkMode';
 const KEY_NAME_4 = 'wakeLock';
 const KEY_NAME_5 = 'rotate';
 const KEY_NAME_6 = 'follow';
+const KEY_NAME_7 = 'rotationOffset';
 
 let db; // Will hold the database object
 
@@ -20,6 +21,7 @@ let darkMode = false;
 let wakeLock = false;
 let rotate = false;
 let follow = false;
+let rotationOffset = 0;
 
 let objectsLoaded = 0;
 let allSettingsLoaded = false;
@@ -65,8 +67,10 @@ function saveSettings() {
   saveValue(KEY_NAME_1, scenario);
   mapMethod = document.getElementById('mapMethod').value;
   saveValue(KEY_NAME_2, mapMethod);
-  showScenario(scenario);
-  hideAdminButton();
+  mapMethod = document.getElementById('rotationOffset').value;
+  saveValue(KEY_NAME_7, rotationOffset);
+  //showScenario(scenario);
+  //hideAdminButton();
   log("Settings saved", 'success');
 }
 
@@ -128,7 +132,7 @@ function objectLoaded() {
 	{
 		objectsLoaded += 1;
 		//log(`Object ${objectsLoaded} loaded`, 'success');
-		if(objectsLoaded >= 6)
+		if(objectsLoaded >= 7)
 		{
 			allSettingsLoaded = true;
 			log("All settings loaded", 'success');
@@ -229,17 +233,18 @@ function loadSettings() {
     }
 	objectLoaded();
   };
-}
-/*
-function clearData() {
-  const transaction = db.transaction([SETTINGS_STORE_NAME], 'readwrite');
-  const objectStore = transaction.objectStore(SETTINGS_STORE_NAME);
-  const request = objectStore.clear();
 
-  request.onsuccess = () => {
-    getInputEl().value = '';
-    log("Database cleared.", 'info');
+  const request7 = objectStore.get(KEY_NAME_7);
+
+  request7.onsuccess = (event) => {
+    const result = event.target.result;
+    if (result) {
+	  rotationOffset = result;
+	  document.getElementById('rotationOffset').value = rotationOffset;
+      log(`${KEY_NAME_7}:${result}`, 'success');
+    } else {
+      log(`${KEY_NAME_7}:false`, 'success');
+    }
+	objectLoaded();
   };
 }
-*/
-//window.addEventListener("load", initDB);

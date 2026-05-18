@@ -10,6 +10,11 @@ function initCompass()
 			if(rotate == true)
 			{
 				let angle = Math.round(event.alpha)
+				angle = angle + rotationOffset;
+				if(angle > 360)
+				{
+					angle = angle - 360;
+				}
 				rotateMap(angle);
 			}
 		});
