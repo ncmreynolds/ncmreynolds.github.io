@@ -54,7 +54,7 @@ function geolocationWatchSuccess(pos) {
 	let min = Math.floor(d / Minute);
 	let sec = Math.floor(d % Minute / Second);
 	lastUpdate = new Date();
-	log(`Geolocation watch update after ${min}m ${sec}s`,'log-info');
+	//log(`Geolocation watch update after ${min}m ${sec}s`,'log-info');
 	if(follow == true)
 	{
 		centreMap(lastKnownLatitude,lastKnownLongitude);
