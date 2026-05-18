@@ -38,7 +38,7 @@ function enableGeolocationWatchPosition()
 				logUpdateTime();
 			}, {
 				//Error function
-				log("Geolocation watch error",'log-error');
+				geolocationWatchError();
 			}, {
 				//Options
 				enableHighAccuracy: true,
@@ -54,6 +54,11 @@ function enableGeolocationWatchPosition()
 	{
 		log("location watchPosition not possible",'log-info');
 	}
+}
+
+function geolocationWatchError()
+{
+	log("Geolocation watch error",'log-error');
 }
 
 function geolocationError() {
