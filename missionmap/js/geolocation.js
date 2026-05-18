@@ -9,13 +9,23 @@ var lastUpdate = new Date();
 const Second = 1000;
 const Minute = 60 * Second;
 
-// Update the duration since the last geolocalisation element.
-function logUpdateTime() {
+function geolocationWatchUpdatePosition(pos) {
+	const coordinates = pos.coords;
+	lastKnownLatitude = coordinates.latitude;
+	lastKnownLongitude = coordinates.longitude;
 	let d = new Date() - lastUpdate;
 	let min = Math.floor(d / Minute);
 	let sec = Math.floor(d % Minute / Second);
 	lastUpdate = new Date();
 	log(`Geolocation update after ${min}m ${sec}s`,'log-info');
+	if(follow == true)
+	{
+		log(`Centering map on lat:${lastKnownLatitude} lon:${lastKnownLongitude}`,'log-info');
+	}
+	else
+	{
+		log(`New position lat:${lastKnownLatitude} lon:${lastKnownLongitude}`,'log-info');
+	}
 }
 
 function geolocationSuccess(position) {
@@ -35,7 +45,7 @@ function enableGeolocationWatchPosition()
 			log("Enabling location watchPosition",'log-info');
 			navigator.geolocation.watchPosition(g => {
 				//Success function
-				logUpdateTime();
+				geolocationWatchUpdatePosition;
 			}, 
 				//Error function
 				geolocationWatchError
@@ -47,7 +57,7 @@ function enableGeolocationWatchPosition()
 		}
 		else
 		{
-			log("Enabling location watchPosition already enabled",'log-info');
+			log("geolocation watchPosition already enabled",'log-info');
 		}
 	}
 	else
