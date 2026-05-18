@@ -240,11 +240,11 @@ function loadSettings() {
     const result = event.target.result;
     if (result) {
 	  rotationOffset = Number(result);
-	  document.getElementById('rotationOffset').value = rotationOffset;
-      log(`${KEY_NAME_7}:${result}`, 'success');
     } else {
-      log(`${KEY_NAME_7}:false`, 'success');
+	  rotationOffset = 0;
     }
+	document.getElementById('rotationOffset').value = rotationOffset;
+	log(`${KEY_NAME_7}:${rotationOffset}`, 'success');
 	objectLoaded();
   };
 }
