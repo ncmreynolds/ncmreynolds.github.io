@@ -15,6 +15,7 @@ function updateTime() {
 
 function initGeolocation()
 {
+	log("Initialising geolocation",'log-info');
 	if(geolocationInitialised == false)
 	{
 		if(follow == true)
