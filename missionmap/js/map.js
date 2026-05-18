@@ -58,19 +58,24 @@ function initMap() {
 			//const marker = new google.maps.marker.AdvancedMarkerElement({map,position: missionMarkerPosition,title: 'Objective'});
 			//Park Ranger Office
 			const parkRangerOfficeLatLong = { lat: 52.38469, lng: -1.66174};
-			const parkRangerOfficeMarker = new google.maps.marker.AdvancedMarkerElement({map,position: parkRangerOfficeLatLong,title: 'Park Ranger Office'});
+			const parkRangerOfficeMarker = new google.maps.marker.AdvancedMarkerElement({map,position: parkRangerOfficeLatLong,title: 'Park Ranger Office'}, gmpClickable: true,);
+			parkRangerOfficeMarker.addEventListener('gmp-click', () => {
+				infoWindow.close();
+				infoWindow.setContent(parkRangerOfficeMarker.title);
+				infoWindow.open(parkRangerOfficeMarker.map, parkRangerOfficeMarker);
+			});
 			//Derelict Tin Mine
 			const derelictTinMineLatLong = { lat: 52.38309, lng: -1.66172};
-			const derelictTinMineMarker = new google.maps.marker.AdvancedMarkerElement({map,position: derelictTinMineLatLong,title: 'Derelict Tin Mine'});
+			const derelictTinMineMarker = new google.maps.marker.AdvancedMarkerElement({map,position: derelictTinMineLatLong,title: 'Derelict Tin Mine'}, gmpClickable: true,);
 			//Derelict Gold Mining Town
 			const derelictGoldMiningTownLatLong = { lat: 52.38398, lng: -1.65998};
-			const derelictGoldMiningTownMarker = new google.maps.marker.AdvancedMarkerElement({map,position: derelictGoldMiningTownLatLong,title: 'Derelict Gold Mining Town'});
+			const derelictGoldMiningTownMarker = new google.maps.marker.AdvancedMarkerElement({map,position: derelictGoldMiningTownLatLong,title: 'Derelict Gold Mining Town', gmpClickable: true,},gmpClickable: true,);
 			//Derelict Gold Mine
 			const derelictGoldMineLatLong = { lat: 52.38387, lng: -1.65899};
-			const derelictGoldMineMarker = new google.maps.marker.AdvancedMarkerElement({map,position: derelictGoldMineLatLong,title: 'Derelict Gold Mine'});
+			const derelictGoldMineMarker = new google.maps.marker.AdvancedMarkerElement({map,position: derelictGoldMineLatLong,title: 'Derelict Gold Mine'}, gmpClickable: true,);
 			//Hunters' Lodges
 			const huntersLodgesLatLong = { lat: 52.38294, lng: -1.6593};
-			const huntersLodgesMarker = new google.maps.marker.AdvancedMarkerElement({map,position: huntersLodgesLatLong,title: "Hunters' Lodges"});
+			const huntersLodgesMarker = new google.maps.marker.AdvancedMarkerElement({map,position: huntersLodgesLatLong,title: "Hunters' Lodges"}, gmpClickable: true,);
 		}
 		mapInitialised = true;
 		initGeolocation();
