@@ -51,11 +51,63 @@ function initMap() {
 
 			// Create the Google Map using our element and options defined above
 			map = new google.maps.Map(mapElement, mapOptions);
+			
+			//Marker positions
 
+			const markers = [
+				{
+					position: { lat: 52.38469, lng: -1.66174 },
+					title: 'Park Ranger Office',
+				},
+				{
+					position: { lat: 52.38469, lng: -1.66174 },
+					title: 'Derelict Tin Mine',
+				},
+				{
+					position: { lat: lat: 52.38398, lng: -1.65998 },
+					title: 'Derelict Gold Mining Town',
+				},
+				{
+					position: { lat: 52.38387, lng: -1.65899 },
+					title: 'Derelict Gold Mine',
+				},
+				{
+					position: { lat: 52.38294, lng: -1.6593 },
+					title: "Hunters' Lodges",
+				},
+			];
+
+			// Create an info window to share between markers.
+			const infoWindow = new InfoWindow();
+
+			// Create the markers.
+			markers.forEach(({ position, title }, i) => {
+				const pin = new PinElement({
+					glyphText: `${i + 1}`,
+					scale: 1.5,
+				});
+				const marker = new AdvancedMarkerElement({
+					position,
+					title: `${i + 1}. ${title}`,
+					gmpClickable: true,
+				});
+				marker.append(pin);
+				mapElement.append(marker);
+				// Add a click listener for each marker, and set up the info window.
+				marker.addEventListener('gmp-click', () => {
+					infoWindow.close();
+					infoWindow.setContent(marker.title);
+					infoWindow.open(marker.map, marker);
+				});
+			});			
+
+			/*
 			// The mission marker position
 			//const missionMarkerPosition = { lat: 52.383105, lng: -1.661714 };
 			// The marker
 			//const marker = new google.maps.marker.AdvancedMarkerElement({map,position: missionMarkerPosition,title: 'Objective'});
+			//Shared Info window
+			const infoWindow = new InfoWindow();
 			//Park Ranger Office
 			const parkRangerOfficeLatLong = { lat: 52.38469, lng: -1.66174};
 			const parkRangerOfficeMarker = new google.maps.marker.AdvancedMarkerElement({map,position: parkRangerOfficeLatLong,title: 'Park Ranger Office'}, gmpClickable: true,);
@@ -76,6 +128,7 @@ function initMap() {
 			//Hunters' Lodges
 			const huntersLodgesLatLong = { lat: 52.38294, lng: -1.6593};
 			const huntersLodgesMarker = new google.maps.marker.AdvancedMarkerElement({map,position: huntersLodgesLatLong,title: "Hunters' Lodges"}, gmpClickable: true,);
+			*/
 		}
 		mapInitialised = true;
 		initGeolocation();
