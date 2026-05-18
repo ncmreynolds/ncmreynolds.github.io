@@ -100,6 +100,14 @@ function changeWakeLock() {
 function changeRotate() {
 	rotate = document.getElementById('rotate').checked == true;
 	saveValue(KEY_NAME_5, rotate);
+	if(rotate == true)
+	{
+		initCompass();
+	}
+	else
+	{
+		rotateMap(0); //Point it north
+	}
 }
 function changeFollow() {
 	follow = document.getElementById('follow').checked == true;

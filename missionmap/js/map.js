@@ -68,6 +68,10 @@ function initMap() {
 	{
 		log("Map already initialised", 'error');
 	}
+	if(rotate == true)
+	{
+		initCompass();
+	}
 }
 
 function centreMap(lat,lon)
@@ -86,5 +90,14 @@ function homeMap()
 	if(mapInitialised == true && mapMethod == 2)
 	{
 		map.setCenter(grangeCentre);	//Jump home
+	}
+}
+
+function rotateMap(angle)
+{
+	if(mapInitialised == true && mapMethod == 2 && map.getHeading() != angle)
+	{
+		log(`Rotating map to ${angle}`,'log-info');
+		map.setHeading(angle);
 	}
 }
