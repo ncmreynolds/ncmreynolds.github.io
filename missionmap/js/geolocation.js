@@ -64,7 +64,7 @@ function enableGeolocationWatchPosition()
 			log("Enabling location watchPosition",'log-info');
 			navigator.geolocation.watchPosition(g => {
 				//Success function
-				geolocationWatchUpdatePosition();
+				geolocationWatchUpdatePosition(g.coords);
 			}, 
 				//Error function
 				geolocationWatchError
