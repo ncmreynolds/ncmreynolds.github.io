@@ -17,7 +17,7 @@ function geolocationPollUpdatePosition() {
 		let min = Math.floor(d / Minute);
 		let sec = Math.floor(d % Minute / Second);
 		lastUpdate = new Date();
-		log(`Geolocation poll update after ${min}m ${sec}s`,'log-info');
+		//log(`Geolocation poll update after ${min}m ${sec}s`,'log-info');
 		navigator.geolocation.getCurrentPosition(geolocationPollSuccess, geolocationPollError);
 	}
 }
@@ -36,7 +36,7 @@ function geolocationPollSuccess(position) {
 	}
 	else
 	{
-		log(`New position lat:${lastKnownLatitude} lon:${lastKnownLongitude}`,'log-info');
+		//log(`New position lat:${lastKnownLatitude} lon:${lastKnownLongitude}`,'log-info');
 	}
 }
 
@@ -61,7 +61,7 @@ function geolocationWatchSuccess(pos) {
 	}
 	else
 	{
-		log(`New position lat:${lastKnownLatitude} lon:${lastKnownLongitude}`,'log-info');
+		//log(`New position lat:${lastKnownLatitude} lon:${lastKnownLongitude}`,'log-info');
 	}
 }
 
