@@ -67,7 +67,7 @@ function saveSettings() {
   saveValue(KEY_NAME_1, scenario);
   mapMethod = document.getElementById('mapMethod').value;
   saveValue(KEY_NAME_2, mapMethod);
-  mapMethod = document.getElementById('rotationOffset').value;
+  rotationOffset = document.getElementById('rotationOffset').value;
   saveValue(KEY_NAME_7, rotationOffset);
   //showScenario(scenario);
   //hideAdminButton();

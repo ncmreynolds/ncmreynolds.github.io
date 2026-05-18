@@ -76,7 +76,7 @@ function initMap() {
 
 function centreMap(lat,lon)
 {
-	log(`Centering map on lat:${lat} lon:${lon}`,'log-info');
+	//log(`Centering map on lat:${lat} lon:${lon}`,'log-info');
 	if(mapInitialised == true && mapMethod == 2)
 	{
 		var latLng = new google.maps.LatLng(lat, lon);
@@ -97,8 +97,8 @@ function rotateMap(angle)
 {
 	if(mapInitialised == true && mapMethod == 2 && map.getHeading() != angle)
 	{
-		log(`Rotating map to ${angle}`,'log-info');
+		//log(`Rotating map to ${angle}`,'log-info');
 		map.setHeading(angle);
-		document.getElementById('heading').innerHTML = `Heading ${angle}`;
+		//document.getElementById('heading').innerHTML = `Heading ${angle}`;
 	}
 }
