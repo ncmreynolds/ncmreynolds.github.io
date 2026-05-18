@@ -99,5 +99,6 @@ function rotateMap(angle)
 	{
 		log(`Rotating map to ${angle}`,'log-info');
 		map.setHeading(angle);
+		document.getElementById('heading').innerHTML = `Heading ${angle}`;
 	}
 }
