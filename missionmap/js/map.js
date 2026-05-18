@@ -1,6 +1,7 @@
 const mapElement = document.getElementById('map');
 let mapsApiReady = false;
 let mapInitialised = false;
+let grangeCentre = new google.maps.LatLng(52.383966,-1.659957);
 
 function mapsReadyCallback() {
 	log("Google maps API ready");
@@ -40,7 +41,7 @@ function initMap() {
 				zoom: 18,
 
 				// The latitude and longitude to center the map (always required)
-				center: new google.maps.LatLng(52.383966,-1.659957)
+				center: grangeCentre //new google.maps.LatLng(52.383966,-1.659957)
 			};
 
 			// Get the HTML DOM element that will contain your map 
@@ -70,4 +71,8 @@ function initMap() {
 function centreMap(lat,lon)
 {
 	log(`Centering map on lat:${lat} lon:${lon}`,'log-info');
+	if(mapInitialised == true && mapMethod == 2)
+	{
+		map.panTo(new google.maps.LatLng(lat, lon));
+	}
 }
