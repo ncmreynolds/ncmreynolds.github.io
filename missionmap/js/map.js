@@ -104,7 +104,7 @@ async function initMap() {
 				const marker = new google.maps.marker.AdvancedMarkerElement(
 					{
 						map,
-						position: parkRangerOfficeLatLong,
+						position: position,
 						title: `${i + 1}. ${title}`,
 						gmpClickable: true,
 					});
