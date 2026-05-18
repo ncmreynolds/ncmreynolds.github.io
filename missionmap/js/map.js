@@ -97,7 +97,7 @@ async function initMap() {
 					gmpClickable: true,
 				});
 				marker.append(pin);
-				mapElement.append(marker);
+				document.querySelector('gmp-map').append(marker);
 				// Add a click listener for each marker, and set up the info window.
 				marker.addEventListener('gmp-click', () => {
 					infoWindow.close();
