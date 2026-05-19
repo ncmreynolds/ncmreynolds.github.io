@@ -4,6 +4,7 @@ let geolocationWatchPositionEnabled = false;
 var lastKnownLatitude;
 var lastKnownLongitude;
 var lastKnownHeading;
+var lastKnownSpeed;
 var geolocationPollingInterval;
 
 // The date of the last geolocation update.
@@ -27,6 +28,7 @@ function geolocationPollSuccess(position) {
 	lastKnownLatitude = position.coords.latitude;
 	lastKnownLongitude = position.coords.longitude;
 	lastKnownHeading = position.coords.heading;
+	lastKnownSpeed = position.coords.speed;
 	geolocationSuccessful = true;
 	if(geolocationWatchPositionEnabled == false)
 	{
@@ -44,7 +46,7 @@ function geolocationPollSuccess(position) {
 	{
 		updatePersonMarker();
 	}
-	if(rotate == true)
+	if(rotate == true && lastKnownSpeed > 0.5)	//Heading only useful while moving
 	{
 		rotateMap(lastKnownHeading);
 	}
@@ -60,9 +62,11 @@ function geolocationWatchSuccess(pos) {
 	const coordinates = pos.coords;
 	lastKnownLatitude = coordinates.latitude;
 	lastKnownLongitude = coordinates.longitude;
-	let d = new Date() - lastUpdate;
-	let min = Math.floor(d / Minute);
-	let sec = Math.floor(d % Minute / Second);
+	lastKnownHeading = position.coords.heading;
+	lastKnownSpeed = position.coords.speed;
+	//let d = new Date() - lastUpdate;
+	//let min = Math.floor(d / Minute);
+	//let sec = Math.floor(d % Minute / Second);
 	lastUpdate = new Date();
 	//log(`Geolocation watch update after ${min}m ${sec}s`,'log-info');
 	if(follow == true)
@@ -76,6 +80,10 @@ function geolocationWatchSuccess(pos) {
 	if(showMarker == true)
 	{
 		updatePersonMarker();
+	}
+	if(rotate == true && lastKnownSpeed > 0.5)	//Heading only useful while moving
+	{
+		rotateMap(lastKnownHeading);
 	}
 }
 
