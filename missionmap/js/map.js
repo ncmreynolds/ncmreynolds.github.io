@@ -136,7 +136,7 @@ async function initMap() {
 				//Old style marker, which CAN be mnoved!
 				personMarker = new google.maps.Marker( {icon: {
 						//url: 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png',
-						url: 'https://ncmreynolds.github.io/missionmap/images/icons/digital-trace.png',
+						url: 'https://ncmreynolds.github.io/missionmap/images/icons/digital-trace-32x32.png',
 						// This marker is 32 pixels wide by 32 pixels high.
 						size: new google.maps.Size(32, 32),
 						// The origin for this image is (0, 0).
