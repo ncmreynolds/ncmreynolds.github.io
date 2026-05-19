@@ -113,10 +113,10 @@ async function initMap() {
 				const pin = new PinElement({
 					//glyphText: `${i + 1}`,
 					glyphText: `${pinLegend}`,
-					glyphColor: 'black',
-					background: 'white',
+					glyphColor: 'white',
+					background: 'red',
 					borderColor: 'grey',
-					scale: 1.5,
+					scale: 1.0,
 				});
 				const marker = new google.maps.marker.AdvancedMarkerElement(
 					{
