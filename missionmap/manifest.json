@@ -69,7 +69,7 @@
 			"type": "image/png",
 			"form_factor": "narrow",
 			"label": "Document display"
-		}
+		},
 		{
 			"src": "/missionmap/images/screenshots/screenshot4.png",
 			"sizes": "857x1005",
