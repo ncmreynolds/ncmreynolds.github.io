@@ -208,7 +208,7 @@ function centreMap(lat,lon)
 		var latLng = new google.maps.LatLng(lat, lon);
 		map.panTo(latLng);	//Move smoothly
 		//map.setCenter(latLng);
-		personMarker.setPosition(latLng);
+		personMarker.position(latLng);
 	}
 }
 
