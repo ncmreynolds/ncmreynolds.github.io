@@ -123,7 +123,7 @@ async function initMap() {
 						title: `${title}`,
 						gmpClickable: true,
 						zIndex: i,
-						collisionBehavior: REQUIRED_AND_HIDES_OPTIONAL,	//Hide other things when this is on top
+						collisionBehavior: 'REQUIRED_AND_HIDES_OPTIONAL',	//Hide other things when this is on top
 					});
 				marker.append(pin);
 				//document.querySelector('gmp-map').append(marker);
@@ -153,7 +153,7 @@ async function initMap() {
 					map,
 					position: grangeCentre,
 					zIndex: 0,	//Lowest so it goes under
-					collisionBehavior: OPTIONAL_AND_HIDES_LOWER_PRIORITY,	//Hide when under other things
+					collisionBehavior: 'OPTIONAL_AND_HIDES_LOWER_PRIORITY',	//Hide when under other things
 					//title: `${title}`,
 					//gmpClickable: true,
 				});
