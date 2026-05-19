@@ -122,6 +122,8 @@ async function initMap() {
 						position: position,
 						title: `${title}`,
 						gmpClickable: true,
+						zIndex: $i,
+						collisionBehavior: REQUIRED_AND_HIDES_OPTIONAL,	//Hide other things when this is on top
 					});
 				marker.append(pin);
 				//document.querySelector('gmp-map').append(marker);
@@ -150,6 +152,8 @@ async function initMap() {
 				{
 					map,
 					position: grangeCentre,
+					zIndex: 0,	//Lowest so it goes under
+					collisionBehavior: OPTIONAL_AND_HIDES_LOWER_PRIORITY,	//Hide when under other things
 					//title: `${title}`,
 					//gmpClickable: true,
 				});
@@ -204,6 +208,7 @@ function centreMap(lat,lon)
 		var latLng = new google.maps.LatLng(lat, lon);
 		map.panTo(latLng);	//Move smoothly
 		//map.setCenter(latLng);
+		personMarker.setPosition(latLng);
 	}
 }
 
