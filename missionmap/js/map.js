@@ -122,7 +122,7 @@ async function initMap() {
 						position: position,
 						title: `${title}`,
 						gmpClickable: true,
-						zIndex: $i,
+						zIndex: i,
 						collisionBehavior: REQUIRED_AND_HIDES_OPTIONAL,	//Hide other things when this is on top
 					});
 				marker.append(pin);
