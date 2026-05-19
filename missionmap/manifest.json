@@ -1,6 +1,6 @@
  {
-    "name": "Mission Map",
-    "short_name": "MissMap",
+    "name": "Tactical Mission Map",
+    "short_name": "TacMap",
 	"description": "A PWA app that gives you an in-character map with GPS based location finding for use in LARP",
 	"categories": ["utilities"],
 	"id": "/missionmap/index.html",
@@ -51,17 +51,31 @@
 	"screenshots": [
 		{
 			"src": "/missionmap/images/screenshots/screenshot1.png",
-			"sizes": "897x618",
+			"sizes": "1500x1005",
 			"type": "image/png",
 			"form_factor": "wide",
-			"label": "Simple PWA"
+			"label": "Document display"
 		},
 		{
 			"src": "/missionmap/images/screenshots/screenshot2.png",
-			"sizes": "467x673",
+			"sizes": "1500x1005",
+			"type": "image/png",
+			"form_factor": "wide",
+			"label": "Tactical Map"
+		},
+		{
+			"src": "/missionmap/images/screenshots/screenshot3.png",
+			"sizes": "857x1005",
 			"type": "image/png",
 			"form_factor": "narrow",
-			"label": "Simple PWA"
+			"label": "Document display"
+		}
+		{
+			"src": "/missionmap/images/screenshots/screenshot4.png",
+			"sizes": "857x1005",
+			"type": "image/png",
+			"form_factor": "narrow",
+			"label": "Tactical Map"
 		}
 	]
 }
