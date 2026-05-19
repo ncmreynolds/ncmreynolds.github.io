@@ -215,6 +215,6 @@ function rotateMap(angle)
 
 function updatePersonMarker()
 {
-	personMarker.setPosition( grangeCentre );
-	//personMarker.setPosition( new google.maps.LatLng( lastKnownLatitude, lastKnownLongitude ) );
+	//personMarker.setPosition( grangeCentre );
+	personMarker.setPosition( new google.maps.LatLng( lastKnownLatitude, lastKnownLongitude ) );
 }
