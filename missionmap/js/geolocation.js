@@ -38,6 +38,10 @@ function geolocationPollSuccess(position) {
 	{
 		//log(`New position lat:${lastKnownLatitude} lon:${lastKnownLongitude}`,'log-info');
 	}
+	if(showPersonMarker == true)
+	{
+		updatePersonMarker();
+	}
 }
 
 function geolocationPollError(err) {
@@ -62,6 +66,10 @@ function geolocationWatchSuccess(pos) {
 	else
 	{
 		//log(`New position lat:${lastKnownLatitude} lon:${lastKnownLongitude}`,'log-info');
+	}
+	if(showPersonMarker == true)
+	{
+		updatePersonMarker();
 	}
 }
 

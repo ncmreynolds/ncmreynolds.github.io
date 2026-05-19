@@ -3,7 +3,8 @@ var map;
 let mapsApiReady = false;
 let mapInitialised = false;
 let grangeCentre;
-//let personMarker;
+let personMarker;
+let showPersonMarker = true;
 
 function mapsReadyCallback() {
 	log("Google maps API ready");
@@ -128,8 +129,23 @@ async function initMap() {
 					infoWindow.setHeaderContent(marker.title);
 					infoWindow.open(marker.map, marker);
 				});
-			});			
-
+			});
+			
+			if(showPersonMarker == true)
+			{
+				//Old style marker, which CAN be mnoved!
+				personMarker = new google.maps.Marker( {icon: {
+						url: 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png',
+						// This marker is 20 pixels wide by 32 pixels high.
+						size: new google.maps.Size(20, 32),
+						// The origin for this image is (0, 0).
+						origin: new google.maps.Point(0, 0),
+						// The anchor for this image is the base of the flagpole at (0, 32).
+						anchor: new google.maps.Point(0, 32)
+					}, position: grangeCentre, map: map} );
+				personMarker.setMap( map );
+				personMarker.setPosition( grangeCentre );
+			}
 			//Add a marker for current position
 			//const personGlyphImgSrc = new URL('images/icons/Person_icon_BLACK-01.svg', import.meta.url);
 			//const personGlyphSvgPinElement = new PinElement({glyphSrc: personGlyphImgSrc,});
@@ -174,8 +190,6 @@ function centreMap(lat,lon)
 	{
 		var latLng = new google.maps.LatLng(lat, lon);
 		map.panTo(latLng);	//Move smoothly
-		//map.setCenter(latLng);
-		//personMarker.position(latLng);
 	}
 }
 
@@ -184,6 +198,7 @@ function homeMap()
 	if(mapInitialised == true && mapMethod == 2)
 	{
 		map.setCenter(grangeCentre);	//Jump home
+		updatePersonMarker();
 	}
 }
 
@@ -195,4 +210,9 @@ function rotateMap(angle)
 		map.setHeading(360-angle);
 		//document.getElementById('heading').innerHTML = `Heading ${angle}`;
 	}
+}
+
+function updatePersonMarker()
+{
+	personMarker.setPosition( new google.maps.LatLng( lastKnownLatitude, lastKnownLongitude ) );
 }
