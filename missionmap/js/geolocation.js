@@ -48,7 +48,7 @@ function geolocationPollSuccess(position) {
 	}
 	if(rotate == true && lastKnownSpeed > 0.5)	//Heading only useful while moving
 	{
-		rotateMap(lastKnownHeading);
+		rotateMap(360-lastKnownHeading);
 	}
 }
 
@@ -83,7 +83,7 @@ function geolocationWatchSuccess(position) {
 	}
 	if(rotate == true && lastKnownSpeed > 0.5)	//Heading only useful while moving
 	{
-		rotateMap(lastKnownHeading);
+		rotateMap(360-lastKnownHeading);
 	}
 }
 
