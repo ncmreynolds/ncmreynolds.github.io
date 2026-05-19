@@ -58,10 +58,10 @@ function geolocationPollError(err) {
 }
 
 
-function geolocationWatchSuccess(pos) {
-	const coordinates = pos.coords;
-	lastKnownLatitude = coordinates.latitude;
-	lastKnownLongitude = coordinates.longitude;
+function geolocationWatchSuccess(position) {
+	//const coordinates = pos.coords;
+	lastKnownLatitude = position.coords.latitude;
+	lastKnownLongitude = position.coords.longitude;
 	lastKnownHeading = position.coords.heading;
 	lastKnownSpeed = position.coords.speed;
 	//let d = new Date() - lastUpdate;
