@@ -3,6 +3,7 @@ let geolocationSuccessful = false;
 let geolocationWatchPositionEnabled = false;
 var lastKnownLatitude;
 var lastKnownLongitude;
+var lastKnownHeading;
 var geolocationPollingInterval;
 
 // The date of the last geolocation update.
@@ -25,6 +26,7 @@ function geolocationPollUpdatePosition() {
 function geolocationPollSuccess(position) {
 	lastKnownLatitude = position.coords.latitude;
 	lastKnownLongitude = position.coords.longitude;
+	lastKnownHeading = position.coords.heading;
 	geolocationSuccessful = true;
 	if(geolocationWatchPositionEnabled == false)
 	{
@@ -41,6 +43,10 @@ function geolocationPollSuccess(position) {
 	if(showMarker == true)
 	{
 		updatePersonMarker();
+	}
+	if(rotate == true)
+	{
+		rotateMap(lastKnownHeading);
 	}
 }
 

@@ -9,13 +9,16 @@ function initCompass()
 		window.addEventListener("deviceorientation", event => {
 			if(rotate == true)
 			{
-				let angle = Math.round(event.alpha)
-				angle = angle + rotationOffset;
-				if(angle > 360)
+				if(geolocationInitialised == false)	//Only use compass if geolocation didn't start
 				{
-					angle = angle - 360;
+					let angle = Math.round(event.alpha)
+					angle = angle + rotationOffset;
+					if(angle > 360)
+					{
+						angle = angle - 360;
+					}
+					rotateMap(angle);
 				}
-				rotateMap(angle);
 			}
 		});
 		compassInitialised = true;
