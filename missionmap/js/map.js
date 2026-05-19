@@ -145,7 +145,7 @@ async function initMap() {
 						anchor: new google.maps.Point(16, 16)
 					}, position: grangeCentre, map: map} );
 				personMarker.setMap( map );
-				//personMarker.setPosition( grangeCentre );
+				personMarker.setPosition( grangeCentre );
 			}
 			//Add a marker for current position
 			//const personGlyphImgSrc = new URL('images/icons/Person_icon_BLACK-01.svg', import.meta.url);
