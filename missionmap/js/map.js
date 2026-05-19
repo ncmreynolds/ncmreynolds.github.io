@@ -3,7 +3,7 @@ var map;
 let mapsApiReady = false;
 let mapInitialised = false;
 let grangeCentre;
-let personMarker;
+//let personMarker;
 
 function mapsReadyCallback() {
 	log("Google maps API ready");
@@ -109,13 +109,6 @@ async function initMap() {
 					borderColor: 'grey',
 					scale: 1.5,
 				});
-				/*
-				const marker = new AdvancedMarkerElement({
-					position,
-					title: `${i + 1}. ${title}`,
-					gmpClickable: true,
-				});
-				*/
 				const marker = new google.maps.marker.AdvancedMarkerElement(
 					{
 						map,
@@ -141,6 +134,7 @@ async function initMap() {
 			//const personGlyphImgSrc = new URL('images/icons/Person_icon_BLACK-01.svg', import.meta.url);
 			//const personGlyphSvgPinElement = new PinElement({glyphSrc: personGlyphImgSrc,});
 			
+			/*
 			const parser = new DOMParser();
 			
 			const pinSvgString =
@@ -158,33 +152,6 @@ async function initMap() {
 					//gmpClickable: true,
 				});
 			personMarker.append(pinSvg);
-			/*
-			// The mission marker position
-			//const missionMarkerPosition = { lat: 52.383105, lng: -1.661714 };
-			// The marker
-			//const marker = new google.maps.marker.AdvancedMarkerElement({map,position: missionMarkerPosition,title: 'Objective'});
-			//Shared Info window
-			const infoWindow = new InfoWindow();
-			//Park Ranger Office
-			const parkRangerOfficeLatLong = { lat: 52.38469, lng: -1.66174};
-			const parkRangerOfficeMarker = new google.maps.marker.AdvancedMarkerElement({map,position: parkRangerOfficeLatLong,title: 'Park Ranger Office'}, gmpClickable: true,);
-			parkRangerOfficeMarker.addEventListener('gmp-click', () => {
-				infoWindow.close();
-				infoWindow.setContent(parkRangerOfficeMarker.title);
-				infoWindow.open(parkRangerOfficeMarker.map, parkRangerOfficeMarker);
-			});
-			//Derelict Tin Mine
-			const derelictTinMineLatLong = { lat: 52.38309, lng: -1.66172};
-			const derelictTinMineMarker = new google.maps.marker.AdvancedMarkerElement({map,position: derelictTinMineLatLong,title: 'Derelict Tin Mine'}, gmpClickable: true,);
-			//Derelict Gold Mining Town
-			const derelictGoldMiningTownLatLong = { lat: 52.38398, lng: -1.65998};
-			const derelictGoldMiningTownMarker = new google.maps.marker.AdvancedMarkerElement({map,position: derelictGoldMiningTownLatLong,title: 'Derelict Gold Mining Town', gmpClickable: true,},gmpClickable: true,);
-			//Derelict Gold Mine
-			const derelictGoldMineLatLong = { lat: 52.38387, lng: -1.65899};
-			const derelictGoldMineMarker = new google.maps.marker.AdvancedMarkerElement({map,position: derelictGoldMineLatLong,title: 'Derelict Gold Mine'}, gmpClickable: true,);
-			//Hunters' Lodges
-			const huntersLodgesLatLong = { lat: 52.38294, lng: -1.6593};
-			const huntersLodgesMarker = new google.maps.marker.AdvancedMarkerElement({map,position: huntersLodgesLatLong,title: "Hunters' Lodges"}, gmpClickable: true,);
 			*/
 		}
 		mapInitialised = true;
@@ -208,7 +175,7 @@ function centreMap(lat,lon)
 		var latLng = new google.maps.LatLng(lat, lon);
 		map.panTo(latLng);	//Move smoothly
 		//map.setCenter(latLng);
-		personMarker.position(latLng);
+		//personMarker.position(latLng);
 	}
 }
 
