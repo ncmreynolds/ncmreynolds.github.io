@@ -11,6 +11,7 @@ const KEY_NAME_4 = 'wakeLock';
 const KEY_NAME_5 = 'rotate';
 const KEY_NAME_6 = 'follow';
 const KEY_NAME_7 = 'rotationOffset';
+const KEY_NAME_8 = 'showMarker';
 
 let db; // Will hold the database object
 
@@ -126,13 +127,25 @@ function changeFollow() {
 		homeMap();
 	}
 }
+function changeMarker() {
+	showMarker = document.getElementById('showMarker').checked == true;
+	saveValue(KEY_NAME_8, showMarker);
+	if(showMarker == true)
+	{
+		initialisePersonMarker();
+	}
+	else
+	{
+		hidePersonMarker();
+	}
+}
 
 function objectLoaded() {
 	if(allSettingsLoaded === false)
 	{
 		objectsLoaded += 1;
 		//log(`Object ${objectsLoaded} loaded`, 'success');
-		if(objectsLoaded >= 7)
+		if(objectsLoaded >= 8)
 		{
 			allSettingsLoaded = true;
 			log("All settings loaded", 'success');
@@ -245,6 +258,20 @@ function loadSettings() {
     }
 	document.getElementById('rotationOffset').value = rotationOffset;
 	log(`${KEY_NAME_7}:${rotationOffset}`, 'success');
+	objectLoaded();
+  };
+
+  const request8 = objectStore.get(KEY_NAME_8);
+
+  request8.onsuccess = (event) => {
+    const result = event.target.result;
+    if (result) {
+	  showMarker = result;
+	  document.getElementById('showMarker').checked = showMarker;
+      log(`${KEY_NAME_8}:${result}`, 'success');
+    } else {
+      log(`${KEY_NAME_8}:false`, 'success');
+    }
 	objectLoaded();
   };
 }

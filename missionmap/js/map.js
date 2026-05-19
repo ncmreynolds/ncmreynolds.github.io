@@ -4,7 +4,8 @@ let mapsApiReady = false;
 let mapInitialised = false;
 let grangeCentre;
 let personMarker;
-let showPersonMarker = true;
+let personMarkerInitialised = false;
+let showMarker = true;
 
 function mapsReadyCallback() {
 	log("Google maps API ready");
@@ -131,21 +132,9 @@ async function initMap() {
 				});
 			});
 			
-			if(showPersonMarker == true)
+			if(showMarker == true)
 			{
-				//Old style marker, which CAN be mnoved!
-				personMarker = new google.maps.Marker( {icon: {
-						//url: 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png',
-						url: 'https://ncmreynolds.github.io/missionmap/images/icons/digital-trace-32x32.png',
-						// This marker is 32 pixels wide by 32 pixels high.
-						size: new google.maps.Size(32, 32),
-						// The origin for this image is (0, 0).
-						origin: new google.maps.Point(0, 0),
-						// The anchor for this image is the centre of the circle
-						anchor: new google.maps.Point(16, 16)
-					}, position: grangeCentre, map: map} );
-				personMarker.setMap( map );
-				personMarker.setPosition( grangeCentre );
+				initialisePersonMarker();
 			}
 			//Add a marker for current position
 			//const personGlyphImgSrc = new URL('images/icons/Person_icon_BLACK-01.svg', import.meta.url);
@@ -181,6 +170,34 @@ async function initMap() {
 	if(rotate == true)
 	{
 		initCompass();
+	}
+}
+
+function initialisePersonMarker()
+{
+	if(personMarkerInitialised == false)
+	{
+		//Old style marker, which CAN be moved!
+		personMarker = new google.maps.Marker( {icon: {
+				//url: 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png',
+				url: 'https://ncmreynolds.github.io/missionmap/images/icons/digital-trace-32x32.png',
+				// This marker is 32 pixels wide by 32 pixels high.
+				size: new google.maps.Size(32, 32),
+				// The origin for this image is (0, 0).
+				origin: new google.maps.Point(0, 0),
+				// The anchor for this image is the centre of the circle
+				anchor: new google.maps.Point(16, 16)
+			}, position: grangeCentre, map: map} );
+		personMarkerInitialised = true;
+	}
+	personMarker.setMap( map );
+	//personMarker.setPosition( grangeCentre );
+}
+function hidePersonMarker()
+{
+	if(personMarkerInitialised == true)
+	{
+		personMarker.setMap( null );
 	}
 }
 
