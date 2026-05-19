@@ -9,7 +9,7 @@ function initCompass()
 		window.addEventListener("deviceorientation", event => {
 			if(rotate == true)
 			{
-				if(geolocationInitialised == false || lastKnownSpeed <= 0.5) //Only use compass if geolocation didn't start or not moving
+				if(geolocationInitialised == false)// || lastKnownSpeed <= 0.5) //Only use compass if geolocation didn't start or not moving
 				{
 					let angle = Math.round(event.alpha)
 					angle = angle + rotationOffset;

@@ -151,7 +151,7 @@ async function initMap() {
 	}
 	if(rotate == true)
 	{
-		initCompass();
+		//initCompass();
 	}
 }
 

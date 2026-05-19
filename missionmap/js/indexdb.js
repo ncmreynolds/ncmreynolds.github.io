@@ -108,7 +108,8 @@ function changeRotate() {
 	saveValue(KEY_NAME_5, rotate);
 	if(rotate == true)
 	{
-		initCompass();
+		//initCompass();
+		initGeolocation();
 	}
 	else
 	{
