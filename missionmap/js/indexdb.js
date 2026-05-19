@@ -127,7 +127,7 @@ function changeFollow() {
 		homeMap();
 	}
 }
-function changeMarker() {
+function changeShowMarker() {
 	showMarker = document.getElementById('showMarker').checked == true;
 	saveValue(KEY_NAME_8, showMarker);
 	if(showMarker == true)
@@ -267,11 +267,12 @@ function loadSettings() {
     const result = event.target.result;
     if (result) {
 	  showMarker = result;
-	  document.getElementById('showMarker').checked = showMarker;
       log(`${KEY_NAME_8}:${result}`, 'success');
     } else {
       log(`${KEY_NAME_8}:false`, 'success');
+	  showMarker = false;
     }
+	document.getElementById('showMarker').checked = showMarker;
 	objectLoaded();
   };
 }
