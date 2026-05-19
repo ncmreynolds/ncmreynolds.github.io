@@ -3,6 +3,7 @@ var map;
 let mapsApiReady = false;
 let mapInitialised = false;
 let grangeCentre;
+let personMarker;
 
 function mapsReadyCallback() {
 	log("Google maps API ready");
@@ -134,6 +135,17 @@ async function initMap() {
 				});
 			});			
 
+			//Add a marker for current position
+			const personGlyphImgSrc = new URL('images/icons/Person_icon_BLACK-01.svg', import.meta.url);
+			const personGlyphSvgPinElement = new PinElement({glyphSrc: personGlyphImgSrc,});
+			const personMarker = new google.maps.marker.AdvancedMarkerElement(
+				{
+					map,
+					position: grangeCentre,
+					//title: `${title}`,
+					//gmpClickable: true,
+				});
+			personMarker.append(personGlyphSvgPinElement);
 			/*
 			// The mission marker position
 			//const missionMarkerPosition = { lat: 52.383105, lng: -1.661714 };
