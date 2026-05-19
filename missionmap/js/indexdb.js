@@ -18,7 +18,7 @@ let db; // Will hold the database object
 
 let scenario = 0;
 let mapMethod = 2; //Default to JS
-let mapType = 'satellite';
+let mapType = 'satellite';	//Default to satellite
 
 let darkMode = false;
 let wakeLock = false;
