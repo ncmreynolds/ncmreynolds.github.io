@@ -148,7 +148,7 @@ async function initMap() {
 			
 			const pinSvg = parser.parseFromString(pinSvgString,'image/svg+xml').documentElement;
 			
-			const personMarker = new google.maps.marker.AdvancedMarkerElement(
+			personMarker = new google.maps.marker.AdvancedMarkerElement(
 				{
 					map,
 					position: grangeCentre,
