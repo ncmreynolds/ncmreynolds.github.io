@@ -47,7 +47,7 @@ async function initMap() {
 				streetViewControl: false,
 				overviewMapControl: false,
 				rotateControl: false,
-				mapTypeId: 'satellite',
+				mapTypeId: mapType,
 				// How zoomed in you want the map to start at (always required)
 				zoom: 18,
 

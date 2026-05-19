@@ -12,11 +12,13 @@ const KEY_NAME_5 = 'rotate';
 const KEY_NAME_6 = 'follow';
 const KEY_NAME_7 = 'rotationOffset';
 const KEY_NAME_8 = 'showMarker';
+const KEY_NAME_9 = 'mapType';
 
 let db; // Will hold the database object
 
 let scenario = 0;
 let mapMethod = 2; //Default to JS
+let mapType = 'satellite';
 
 let darkMode = false;
 let wakeLock = false;
@@ -70,6 +72,8 @@ function saveSettings() {
   saveValue(KEY_NAME_2, mapMethod);
   rotationOffset = document.getElementById('rotationOffset').value;
   saveValue(KEY_NAME_7, Number(rotationOffset));
+  mapType = document.getElementById('mapType').value;
+  saveValue(KEY_NAME_9, Number(mapType));
   //showScenario(scenario);
   //hideAdminButton();
   log("Settings saved", 'success');
@@ -146,7 +150,7 @@ function objectLoaded() {
 	{
 		objectsLoaded += 1;
 		//log(`Object ${objectsLoaded} loaded`, 'success');
-		if(objectsLoaded >= 8)
+		if(objectsLoaded >= 9)
 		{
 			allSettingsLoaded = true;
 			log("All settings loaded", 'success');
@@ -274,6 +278,20 @@ function loadSettings() {
 	  showMarker = false;
     }
 	document.getElementById('showMarker').checked = showMarker;
+	objectLoaded();
+  };
+  
+  const request9 = objectStore.get(KEY_NAME_9);
+
+  request9.onsuccess = (event) => {
+    const result = event.target.result;
+    if (result) {
+	  mapType = result;
+	  document.getElementById('mapType').value = mapType;
+      log(`${KEY_NAME_9}:${mapType}`, 'success');
+    } else {
+      log(`${KEY_NAME_9}:false`, 'error');
+    }
 	objectLoaded();
   };
 }
