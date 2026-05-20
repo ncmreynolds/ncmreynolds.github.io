@@ -5,21 +5,23 @@ const requestWakeLock = async (onVisibilityChange = false) => {
     wakeLockHandle = await navigator.wakeLock.request('screen');
 
     wakeLockHandle.addEventListener('release', () => {
-      console.log('Wake Lock was released');
+	  log('WakeLock was released','log-info');
       wakeLockHandle = null;
     });
-    console.log('Wake Lock is active');
+	log('WakeLock is active','log-info');
   }
   catch(err) {
-    console.error(err);
+	log(`Error ${err}`,'log-error');
   }
 };
 
 const releaseWakeLock = () => {
-  console.log('releasing wakeLock');
-
-  wakeLockHandle.release();
-  wakeLockHandle = null;
+	if(wakeLockHandle)
+	{
+		wakeLockHandle.release();
+		wakeLockHandle = null;
+		log('Releasing wakeLock','log-info');
+	}
 };
 
 const handleVisibilityChange = async () => {
