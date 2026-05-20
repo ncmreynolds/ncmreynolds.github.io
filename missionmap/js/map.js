@@ -142,11 +142,11 @@ async function initMap() {
 			//Label positions
 			const labels = [
 				{
-					position: { lat: 52.384342, lon: -1.659194 },
+					position: { lat: 52.384342, lng: -1.659194 },
 					title: 'Towards Bear Camp',
 				},
 				{
-					position: { lat: 52.382566, lon: -1.658955 },
+					position: { lat: 52.382566, lng: -1.658955 },
 					title: 'Towards Rainy Hollow',
 				},
 			];
