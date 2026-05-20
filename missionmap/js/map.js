@@ -77,31 +77,31 @@ async function initMap() {
 					position: { lat: 52.38469, lng: -1.66174 },
 					title: 'Park Ranger Office',
 					pinLegend: "Rangers",
-					pinInfo: "Lots more info",
+					pinInfo: "No further information available",
 				},
 				{
 					position: { lat: 52.38309, lng: -1.66172 },
 					title: 'Derelict Tin Mine',
 					pinLegend: "Tin Mine",
-					pinInfo: "Lots more info",
+					pinInfo: "No further information available",
 				},
 				{
 					position: { lat: 52.38398, lng: -1.65998 },
 					title: 'Derelict Gold Mining Town',
 					pinLegend: "Town",
-					pinInfo: "Lots more info",
+					pinInfo: "No further information available",
 				},
 				{
 					position: { lat: 52.38387, lng: -1.65899 },
 					title: 'Derelict Gold Mine',
 					pinLegend: "Gold Mine",
-					pinInfo: "Lots more info",
+					pinInfo: "No further information available",
 				},
 				{
 					position: { lat: 52.38294, lng: -1.6593 },
 					title: "Hunters' Lodges",
 					pinLegend: "Lodges",
-					pinInfo: "Lots more info",
+					pinInfo: "No further information available",
 				},
 			];
 
