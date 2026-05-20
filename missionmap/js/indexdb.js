@@ -74,7 +74,7 @@ function saveSettings() {
   saveValue(KEY_NAME_7, Number(rotationOffset));
   mapType = document.getElementById('mapType').value;
   saveValue(KEY_NAME_9, mapType);
-  //showScenario(scenario);
+  showScenario(scenario);
   //hideAdminButton();
   log("Settings saved", 'success');
 }
