@@ -139,6 +139,31 @@ async function initMap() {
 				});
 			});
 			
+			//Label positions
+			const labels = [
+				{
+					position: { lat: 52.384342, lon: -1.659194 },
+					title: 'Towards Bear Camp',
+				},
+				{
+					position: { lat: 52.382566, lon: -1.658955 },
+					title: 'Towards Rainy Hollow',
+				},
+			];
+			
+			labels.forEach(({ position, title }, i) => {
+				
+				const label = document.createElement('div');
+				label.className = 'map-tag';
+				label.textContent = `${title}`;
+				
+				const marker = new AdvancedMarkerElement({
+					position: position,,
+				});
+				marker.append(label);
+				mapElement.append(marker);
+			}
+			
 			if(showMarker == true)
 			{
 				initialisePersonMarker();
