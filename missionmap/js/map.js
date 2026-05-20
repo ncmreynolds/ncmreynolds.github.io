@@ -162,7 +162,7 @@ async function initMap() {
 				});
 				marker.append(label);
 				mapElement.append(marker);
-			}
+			});
 			
 			if(showMarker == true)
 			{
