@@ -158,7 +158,7 @@ async function initMap() {
 				label.textContent = `${title}`;
 				
 				const marker = new AdvancedMarkerElement({
-					position: position,,
+					position: position,
 				});
 				marker.append(label);
 				mapElement.append(marker);
