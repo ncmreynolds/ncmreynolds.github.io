@@ -106,6 +106,7 @@ function changeDarkMode() {
 function changeWakeLock() {
 	wakelock = document.getElementById('wakelock').checked == true;
 	saveValue(KEY_NAME_4, wakelock);
+	wakelock ? requestWakeLock() : releaseWakeLock();	//Change wakelock state
 }
 function changeRotate() {
 	rotate = document.getElementById('rotate').checked == true;
@@ -217,6 +218,10 @@ function loadSettings() {
     if (result) {
 	  wakeLock = result;
 	  document.getElementById('wakelock').checked = wakeLock;
+	  if(wakelock == true)
+	  {
+		  requestWakeLock();
+	  }
       log(`${KEY_NAME_4}:${result}`, 'success');
     } else {
       log(`${KEY_NAME_4}:false`, 'success');
